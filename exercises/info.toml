@@ -1,0 +1,517 @@
+# Bashlings — Mashqlar registry
+#
+# Har mashq quyidagi maydonlarga ega:
+#   name     — noyob qisqa nom (bashlings run <name> orqali chaqiriladi)
+#   path     — exercises/ ga nisbatan yo'l
+#   mode     — test rejimi: "stdout" | "stdout-cmd" | "exit" | "regex" | "file"
+#   hint     — maslahat fayli yo'li
+#   chapter  — kitobdagi bog'langan bob
+
+# ============================================================================
+# 01 — Kirish: Shell, Terminal, Bash
+# ============================================================================
+
+[[exercises]]
+name = "intro1"
+path = "01_intro/intro1.sh"
+mode = "stdout"
+hint = "01_intro/intro1.hint.md"
+chapter = "part1/01-introduction"
+
+[[exercises]]
+name = "intro2"
+path = "01_intro/intro2.sh"
+mode = "stdout-cmd"
+hint = "01_intro/intro2.hint.md"
+chapter = "part1/01-introduction"
+
+[[exercises]]
+name = "intro3"
+path = "01_intro/intro3.sh"
+mode = "stdout-cmd"
+hint = "01_intro/intro3.hint.md"
+chapter = "part1/01-introduction"
+
+[[exercises]]
+name = "intro4"
+path = "01_intro/intro4.sh"
+mode = "stdout-cmd"
+hint = "01_intro/intro4.hint.md"
+chapter = "part1/01-introduction"
+
+[[exercises]]
+name = "intro5"
+path = "01_intro/intro5.sh"
+mode = "stdout-cmd"
+hint = "01_intro/intro5.hint.md"
+chapter = "part1/01-introduction"
+
+# ============================================================================
+# 02 — Fayl tizimi va navigatsiya
+# ============================================================================
+
+[[exercises]]
+name = "nav1"
+path = "02_navigation/nav1.sh"
+mode = "stdout-cmd"
+hint = "02_navigation/nav1.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav2"
+path = "02_navigation/nav2.sh"
+mode = "stdout-cmd"
+hint = "02_navigation/nav2.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav3"
+path = "02_navigation/nav3.sh"
+mode = "stdout-cmd"
+hint = "02_navigation/nav3.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav4"
+path = "02_navigation/nav4.sh"
+mode = "stdout-cmd"
+hint = "02_navigation/nav4.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav5"
+path = "02_navigation/nav5.sh"
+mode = "stdout-cmd"
+hint = "02_navigation/nav5.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav6"
+path = "02_navigation/nav6.sh"
+mode = "stdout"
+hint = "02_navigation/nav6.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav7"
+path = "02_navigation/nav7.sh"
+mode = "stdout"
+hint = "02_navigation/nav7.hint.md"
+chapter = "part1/02-navigation"
+
+[[exercises]]
+name = "nav8"
+path = "02_navigation/nav8.sh"
+mode = "stdout-cmd"
+hint = "02_navigation/nav8.hint.md"
+chapter = "part1/02-navigation"
+
+# ============================================================================
+# 03 — I/O Redirection va Pipelines
+# ============================================================================
+
+[[exercises]]
+name = "pipe1"
+path = "03_pipes/pipe1.sh"
+mode = "stdout"
+hint = "03_pipes/pipe1.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe2"
+path = "03_pipes/pipe2.sh"
+mode = "stdout-cmd"
+hint = "03_pipes/pipe2.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe3"
+path = "03_pipes/pipe3.sh"
+mode = "stdout-cmd"
+hint = "03_pipes/pipe3.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe4"
+path = "03_pipes/pipe4.sh"
+mode = "stdout-cmd"
+hint = "03_pipes/pipe4.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe5"
+path = "03_pipes/pipe5.sh"
+mode = "stdout"
+hint = "03_pipes/pipe5.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe6"
+path = "03_pipes/pipe6.sh"
+mode = "stdout-cmd"
+hint = "03_pipes/pipe6.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe7"
+path = "03_pipes/pipe7.sh"
+mode = "stdout"
+hint = "03_pipes/pipe7.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+[[exercises]]
+name = "pipe8"
+path = "03_pipes/pipe8.sh"
+mode = "stdout"
+hint = "03_pipes/pipe8.hint.md"
+chapter = "part1/03-pipes-redirection"
+
+# ============================================================================
+# 04 — Matnlar bilan ishlash
+# ============================================================================
+
+[[exercises]]
+name = "text1"
+path = "04_text/text1.sh"
+mode = "stdout-cmd"
+hint = "04_text/text1.hint.md"
+chapter = "part1/04-text-processing"
+
+[[exercises]]
+name = "text2"
+path = "04_text/text2.sh"
+mode = "stdout"
+hint = "04_text/text2.hint.md"
+chapter = "part1/04-text-processing"
+
+[[exercises]]
+name = "text3"
+path = "04_text/text3.sh"
+mode = "stdout-cmd"
+hint = "04_text/text3.hint.md"
+chapter = "part1/04-text-processing"
+
+[[exercises]]
+name = "text4"
+path = "04_text/text4.sh"
+mode = "stdout-cmd"
+hint = "04_text/text4.hint.md"
+chapter = "part1/04-text-processing"
+
+[[exercises]]
+name = "text5"
+path = "04_text/text5.sh"
+mode = "stdout-cmd"
+hint = "04_text/text5.hint.md"
+chapter = "part1/04-text-processing"
+
+# ============================================================================
+# 05 — Birinchi Bash skript
+# ============================================================================
+
+[[exercises]]
+name = "script1"
+path = "05_scripting/script1.sh"
+mode = "stdout"
+hint = "05_scripting/script1.hint.md"
+chapter = "part1/05-basic-scripting"
+
+[[exercises]]
+name = "script2"
+path = "05_scripting/script2.sh"
+mode = "stdout-cmd"
+hint = "05_scripting/script2.hint.md"
+chapter = "part1/05-basic-scripting"
+
+[[exercises]]
+name = "script3"
+path = "05_scripting/script3.sh"
+mode = "stdout"
+hint = "05_scripting/script3.hint.md"
+chapter = "part1/05-basic-scripting"
+
+[[exercises]]
+name = "script4"
+path = "05_scripting/script4.sh"
+mode = "stdout-cmd"
+hint = "05_scripting/script4.hint.md"
+chapter = "part1/05-basic-scripting"
+
+[[exercises]]
+name = "script5"
+path = "05_scripting/script5.sh"
+mode = "stdout"
+hint = "05_scripting/script5.hint.md"
+chapter = "part1/05-basic-scripting"
+
+[[exercises]]
+name = "script6"
+path = "05_scripting/script6.sh"
+mode = "stdout-cmd"
+hint = "05_scripting/script6.hint.md"
+chapter = "part1/05-basic-scripting"
+
+# ============================================================================
+# 06 — Funksiyalar va modullik (Part 2/01)
+# ============================================================================
+
+[[exercises]]
+name = "func1"
+path = "06_functions/func1.sh"
+mode = "stdout"
+hint = "06_functions/func1.hint.md"
+chapter = "part2/01-functions"
+
+[[exercises]]
+name = "func2"
+path = "06_functions/func2.sh"
+mode = "stdout"
+hint = "06_functions/func2.hint.md"
+chapter = "part2/01-functions"
+
+[[exercises]]
+name = "func3"
+path = "06_functions/func3.sh"
+mode = "stdout-cmd"
+hint = "06_functions/func3.hint.md"
+chapter = "part2/01-functions"
+
+[[exercises]]
+name = "func4"
+path = "06_functions/func4.sh"
+mode = "stdout-cmd"
+hint = "06_functions/func4.hint.md"
+chapter = "part2/01-functions"
+
+[[exercises]]
+name = "func5"
+path = "06_functions/func5.sh"
+mode = "stdout"
+hint = "06_functions/func5.hint.md"
+chapter = "part2/01-functions"
+
+[[exercises]]
+name = "func6"
+path = "06_functions/func6.sh"
+mode = "stdout-cmd"
+hint = "06_functions/func6.hint.md"
+chapter = "part2/01-functions"
+
+# ============================================================================
+# 07 — Massivlar va lug'atlar (Part 2/02)
+# ============================================================================
+
+[[exercises]]
+name = "arr1"
+path = "07_arrays/arr1.sh"
+mode = "stdout"
+hint = "07_arrays/arr1.hint.md"
+chapter = "part2/02-arrays"
+
+[[exercises]]
+name = "arr2"
+path = "07_arrays/arr2.sh"
+mode = "stdout"
+hint = "07_arrays/arr2.hint.md"
+chapter = "part2/02-arrays"
+
+[[exercises]]
+name = "arr3"
+path = "07_arrays/arr3.sh"
+mode = "stdout"
+hint = "07_arrays/arr3.hint.md"
+chapter = "part2/02-arrays"
+
+[[exercises]]
+name = "arr4"
+path = "07_arrays/arr4.sh"
+mode = "stdout-cmd"
+hint = "07_arrays/arr4.hint.md"
+chapter = "part2/02-arrays"
+
+[[exercises]]
+name = "arr5"
+path = "07_arrays/arr5.sh"
+mode = "stdout"
+hint = "07_arrays/arr5.hint.md"
+chapter = "part2/02-arrays"
+
+[[exercises]]
+name = "arr6"
+path = "07_arrays/arr6.sh"
+mode = "stdout"
+hint = "07_arrays/arr6.hint.md"
+chapter = "part2/02-arrays"
+
+# ============================================================================
+# 08 — sed va awk mahorat (Part 2/03)
+# ============================================================================
+
+[[exercises]]
+name = "sed1"
+path = "08_text_advanced/sed1.sh"
+mode = "stdout-cmd"
+hint = "08_text_advanced/sed1.hint.md"
+chapter = "part2/03-sed-awk"
+
+[[exercises]]
+name = "sed2"
+path = "08_text_advanced/sed2.sh"
+mode = "stdout-cmd"
+hint = "08_text_advanced/sed2.hint.md"
+chapter = "part2/03-sed-awk"
+
+[[exercises]]
+name = "awk1"
+path = "08_text_advanced/awk1.sh"
+mode = "stdout-cmd"
+hint = "08_text_advanced/awk1.hint.md"
+chapter = "part2/03-sed-awk"
+
+[[exercises]]
+name = "awk2"
+path = "08_text_advanced/awk2.sh"
+mode = "stdout"
+hint = "08_text_advanced/awk2.hint.md"
+chapter = "part2/03-sed-awk"
+
+[[exercises]]
+name = "awk3"
+path = "08_text_advanced/awk3.sh"
+mode = "stdout-cmd"
+hint = "08_text_advanced/awk3.hint.md"
+chapter = "part2/03-sed-awk"
+
+[[exercises]]
+name = "sed3"
+path = "08_text_advanced/sed3.sh"
+mode = "stdout-cmd"
+hint = "08_text_advanced/sed3.hint.md"
+chapter = "part2/03-sed-awk"
+
+# ============================================================================
+# 09 — Signallar va traps (Part 2/04)
+# ============================================================================
+
+[[exercises]]
+name = "trap1"
+path = "09_traps/trap1.sh"
+mode = "stdout-cmd"
+hint = "09_traps/trap1.hint.md"
+chapter = "part2/04-traps-signals"
+
+[[exercises]]
+name = "trap2"
+path = "09_traps/trap2.sh"
+mode = "stdout-cmd"
+hint = "09_traps/trap2.hint.md"
+chapter = "part2/04-traps-signals"
+
+[[exercises]]
+name = "trap3"
+path = "09_traps/trap3.sh"
+mode = "stdout-cmd"
+hint = "09_traps/trap3.hint.md"
+chapter = "part2/04-traps-signals"
+
+[[exercises]]
+name = "trap4"
+path = "09_traps/trap4.sh"
+mode = "stdout-cmd"
+hint = "09_traps/trap4.hint.md"
+chapter = "part2/04-traps-signals"
+
+[[exercises]]
+name = "trap5"
+path = "09_traps/trap5.sh"
+mode = "stdout-cmd"
+hint = "09_traps/trap5.hint.md"
+chapter = "part2/04-traps-signals"
+
+# ============================================================================
+# 10 — Robust skriptlar (Part 2/05)
+# ============================================================================
+
+[[exercises]]
+name = "rob1"
+path = "10_robust/rob1.sh"
+mode = "stdout-cmd"
+hint = "10_robust/rob1.hint.md"
+chapter = "part2/05-robust-scripting"
+
+[[exercises]]
+name = "rob2"
+path = "10_robust/rob2.sh"
+mode = "stdout"
+hint = "10_robust/rob2.hint.md"
+chapter = "part2/05-robust-scripting"
+
+[[exercises]]
+name = "rob3"
+path = "10_robust/rob3.sh"
+mode = "stdout"
+hint = "10_robust/rob3.hint.md"
+chapter = "part2/05-robust-scripting"
+
+[[exercises]]
+name = "rob4"
+path = "10_robust/rob4.sh"
+mode = "stdout"
+hint = "10_robust/rob4.hint.md"
+chapter = "part2/05-robust-scripting"
+
+[[exercises]]
+name = "rob5"
+path = "10_robust/rob5.sh"
+mode = "stdout"
+hint = "10_robust/rob5.hint.md"
+chapter = "part2/05-robust-scripting"
+
+# ============================================================================
+# 13 — JSON va jq (Part 3/03)
+# ============================================================================
+# Prerequisite: jq o'rnatilgan bo'lishi kerak
+#   macOS:  brew install jq
+#   Ubuntu: sudo apt install jq
+
+[[exercises]]
+name = "jq1"
+path = "13_jq/jq1.sh"
+mode = "stdout"
+hint = "13_jq/jq1.hint.md"
+chapter = "part3/03-jq"
+
+[[exercises]]
+name = "jq2"
+path = "13_jq/jq2.sh"
+mode = "stdout-cmd"
+hint = "13_jq/jq2.hint.md"
+chapter = "part3/03-jq"
+
+[[exercises]]
+name = "jq3"
+path = "13_jq/jq3.sh"
+mode = "stdout"
+hint = "13_jq/jq3.hint.md"
+chapter = "part3/03-jq"
+
+[[exercises]]
+name = "jq4"
+path = "13_jq/jq4.sh"
+mode = "stdout"
+hint = "13_jq/jq4.hint.md"
+chapter = "part3/03-jq"
+
+[[exercises]]
+name = "jq5"
+path = "13_jq/jq5.sh"
+mode = "stdout"
+hint = "13_jq/jq5.hint.md"
+chapter = "part3/03-jq"
+
+[[exercises]]
+name = "jq6"
+path = "13_jq/jq6.sh"
+mode = "stdout"
+hint = "13_jq/jq6.hint.md"
+chapter = "part3/03-jq"

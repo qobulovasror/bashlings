@@ -1,0 +1,35 @@
+[package]
+name = "bashlings"
+version = "0.1.0"
+edition = "2021"
+description = "Rustlings-style interactive Bash exercises in Uzbek — runner, watcher, and hint renderer"
+license = "MIT"
+authors = ["Bash UZ Team"]
+repository = "https://github.com/your-org/bash-doc"
+homepage = "https://github.com/your-org/bash-doc"
+documentation = "https://github.com/your-org/bash-doc#readme"
+readme = "README.md"
+keywords = ["bash", "shell", "learning", "exercises", "rustlings"]
+categories = ["command-line-utilities", "development-tools"]
+rust-version = "1.70"
+
+[[bin]]
+name = "bashlings"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+anyhow = "1.0"
+owo-colors = "4.0"
+notify = "6"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+opt-level = "z"
