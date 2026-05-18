@@ -36,7 +36,7 @@ cp target/release/bashlings ~/.local/bin/   # PATH ichida bo'lsin
 **Homebrew (yaqin kelajakda):**
 
 ```bash
-brew install your-org/bashlings/bashlings
+brew install qobulovasror/bashlings/bashlings
 ```
 
 ### 2. Mashqlarni ishga tushirish

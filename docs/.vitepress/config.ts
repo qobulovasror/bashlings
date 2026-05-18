@@ -120,7 +120,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/your-org/bash-doc-uz/edit/main/docs/:path',
+      pattern: 'https://github.com/qobulovasror/bash-doc-uz/edit/main/docs/:path',
       text: 'Bu sahifani tahrirlash'
     },
 

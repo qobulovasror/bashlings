@@ -29,7 +29,7 @@ Stripped + LTO bilan ~1 MB.
 
 Release qilingach:
 ```bash
-brew install your-org/bashlings/bashlings
+brew install qobulovasror/bashlings/bashlings
 ```
 
 Hozir formula `Formula/bashlings.rb` da — release tag chiqarilgach to'ldiriladi.

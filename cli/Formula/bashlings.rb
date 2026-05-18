@@ -1,7 +1,7 @@
 # Homebrew formula for bashlings
 #
 # Foydalanish (release qilingach):
-#   brew install your-org/bashlings/bashlings
+#   brew install qobulovasror/bashlings/bashlings
 #
 # Yoki tap'siz:
 #   brew install --build-from-source ./Formula/bashlings.rb
@@ -11,17 +11,17 @@
 
 class Bashlings < Formula
   desc "Rustlings-style interactive Bash exercises (Uzbek)"
-  homepage "https://github.com/your-org/bash-doc"
+  homepage "https://github.com/qobulovasror/bash-doc"
   license "MIT"
 
   # === Release qilingach to'ldiriladi ===
-  # url "https://github.com/your-org/bash-doc/archive/refs/tags/v0.1.0.tar.gz"
+  # url "https://github.com/qobulovasror/bash-doc/archive/refs/tags/v0.1.0.tar.gz"
   # sha256 "PLACEHOLDER_SHA256"
   # version "0.1.0"
   # ====================================
 
   # Hozircha: HEAD installation (yangi commit'lar bo'yicha quriladi)
-  head "https://github.com/your-org/bash-doc.git", branch: "main"
+  head "https://github.com/qobulovasror/bash-doc.git", branch: "main"
 
   depends_on "rust" => :build
 
