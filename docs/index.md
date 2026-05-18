@@ -14,7 +14,7 @@ hero:
       link: /part1/01-introduction
     - theme: alt
       text: "GitHub"
-      link: https://github.com/
+      link: https://github.com/qobulovasror/bashlings
     - theme: alt
       text: "Advanced bo'lim"
       link: /part2/01-functions
