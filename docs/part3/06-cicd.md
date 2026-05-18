@@ -854,8 +854,8 @@ Sintaksis farqli, **mantiq bir xil**: trigger → job → step → script.
 | `runs-on:`                  | `ubuntu-latest`, `macos-latest`, ...               |
 | `needs:`                    | Job dependency                                     |
 | `steps:`                    | `uses:` (action) yoki `run:` (shell)               |
-| `${{ secrets.X }}`          | Repo Secrets'dan o'qish                            |
-| `${{ matrix.os }}`          | Matrix qiymatiga kirish                            |
+| <span v-pre>`${{ secrets.X }}`</span> | Repo Secrets'dan o'qish                            |
+| <span v-pre>`${{ matrix.os }}`</span> | Matrix qiymatiga kirish                            |
 | `actions/checkout@v4`       | Klassik birinchi step                              |
 | `actions/cache@v4`          | Build vaqtini 10× kamaytirish                      |
 | `actions/upload-artifact@v4`| Build natijalarni saqlash                          |
