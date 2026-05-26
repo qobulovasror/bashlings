@@ -8,8 +8,3 @@ O'tib bo'lgach, joriy katalog yo'lini chiqarish uchun `pwd` ishlatiladi.
 
 ## 3-bosqich
 Ikki buyruqni `&&` bilan zanjirlang — birinchi muvaffaqiyatli bo'lsagina ikkinchisi bajariladi.
-
-## ✅ Yechim
-```bash
-cd ~ && pwd
-```

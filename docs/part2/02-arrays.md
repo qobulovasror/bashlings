@@ -13,7 +13,7 @@ description: "Indexed va associative array'lar, iteratsiya, IFS, parsing va real
 > - Real misol — kichik TODO list manager
 >
 > **⏱ Vaqt:** ~30 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 07_arrays` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 6 ta interaktiv mashq tayyor ([`exercises/07_arrays/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/07_arrays))
 
 ---
 
@@ -612,7 +612,19 @@ $ todo.sh list
 
 ## 2.10. Mashqlar
 
-> 🧪 Kelajakda quyidagilar `bashlings watch 07_arrays` orqali avto-tekshiriladi.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **6 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run arr1           # bitta mashqni tekshirish
+bashlings hint arr1          # bosqichli maslahat
+```
+
+Manba: [`exercises/07_arrays/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/07_arrays)
+:::
+
+Quyidagi kontseptual mashqlarni esa o'zingiz qo'l bilan sinab ko'ring:
 
 1. **`reverse_array`** — funksiya yozing, massivni teskari tartibda chiqarsin.
    Hint: `for ((i=${#arr[@]}-1; i>=0; i--))`

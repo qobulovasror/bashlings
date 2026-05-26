@@ -15,7 +15,7 @@ description: "ssh, scp, rsync, public/private keys, ~/.ssh/config, tunneling va 
 > - Real misol — **Deploy skript** (build + rsync + restart + health check)
 >
 > **⏱ Vaqt:** ~35 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 12_ssh` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 7 ta interaktiv mashq tayyor ([`exercises/12_ssh/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/12_ssh))
 
 ---
 
@@ -708,7 +708,21 @@ sudo systemctl restart sshd
 
 ## 2.15. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 12_ssh` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **7 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan. Hammasi
+**offline-friendly** — haqiqiy SSH server talab qilmaydi (komandalarni STRING
+sifatida qurib chiqarish):
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run ssh1           # bitta mashqni tekshirish
+bashlings hint ssh1          # bosqichli maslahat
+```
+
+Manba: [`exercises/12_ssh/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/12_ssh)
+:::
+
+Quyidagi real-world mashqlarni server bor joyda sinab ko'ring:
 
 1. **Kalit yaratish** — `ssh-keygen -t ed25519 -f ~/test_key -N ""` orqali kalit yarating. Public va private fayllar borligini tasdiqlang.
 

@@ -21,8 +21,3 @@ seq 1 10 | tail -n 3
 
 ## 3-bosqich
 Pipe operatori `|` bilan ulang.
-
-## ✅ Yechim
-```bash
-seq 1 10 | tail -n 3
-```

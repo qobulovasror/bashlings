@@ -26,8 +26,3 @@ Fayl bilan ham ishlaydi:
 ```bash
 cut -d',' -f1 users.csv
 ```
-
-## ✅ Yechim
-```bash
-cut -d ',' -f 1 users.csv
-```

@@ -9,8 +9,3 @@ O'zgaruvchining nomi to'rt harfli, katta harflar bilan: **H _ _ _**
 ## 3-bosqich
 `$HOME` o'zgaruvchisi. Uni `echo` bilan chiqaring. **Qo'shtirnoq** ichiga oling:
 `echo "$HOME"`.
-
-## ✅ Yechim
-```bash
-echo "$HOME"
-```

@@ -21,8 +21,3 @@ Ikkalasini birlashtirib bitta `echo` ichida ishlating:
 ```bash
 echo "$PWD ($(basename "$PWD"))"
 ```
-
-## ✅ Yechim
-```bash
-echo "$PWD ($(basename "$PWD"))"
-```

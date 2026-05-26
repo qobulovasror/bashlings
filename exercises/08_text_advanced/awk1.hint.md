@@ -11,8 +11,3 @@
 ```bash
 awk '{print $3}' data.txt
 ```
-
-## ✅ Yechim
-```bash
-awk '{print $3}' data.txt
-```

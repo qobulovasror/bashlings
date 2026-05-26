@@ -468,6 +468,114 @@ hint = "10_robust/rob5.hint.md"
 chapter = "part2/05-robust-scripting"
 
 # ============================================================================
+# 11 — Tarmoq buyruqlari (Part 3/01)
+# ============================================================================
+# Offline-friendly: haqiqiy internet talab qilmaydi.
+
+[[exercises]]
+name = "net1"
+path = "11_network/net1.sh"
+mode = "stdout"
+hint = "11_network/net1.hint.md"
+chapter = "part3/01-network"
+
+[[exercises]]
+name = "net2"
+path = "11_network/net2.sh"
+mode = "stdout"
+hint = "11_network/net2.hint.md"
+chapter = "part3/01-network"
+
+[[exercises]]
+name = "net3"
+path = "11_network/net3.sh"
+mode = "stdout"
+hint = "11_network/net3.hint.md"
+chapter = "part3/01-network"
+
+[[exercises]]
+name = "net4"
+path = "11_network/net4.sh"
+mode = "stdout"
+hint = "11_network/net4.hint.md"
+chapter = "part3/01-network"
+
+[[exercises]]
+name = "net5"
+path = "11_network/net5.sh"
+mode = "stdout"
+hint = "11_network/net5.hint.md"
+chapter = "part3/01-network"
+
+[[exercises]]
+name = "net6"
+path = "11_network/net6.sh"
+mode = "stdout-cmd"
+hint = "11_network/net6.hint.md"
+chapter = "part3/01-network"
+
+[[exercises]]
+name = "net7"
+path = "11_network/net7.sh"
+mode = "stdout-cmd"
+hint = "11_network/net7.hint.md"
+chapter = "part3/01-network"
+
+# ============================================================================
+# 12 — SSH va remote management (Part 3/02)
+# ============================================================================
+# Offline-friendly: haqiqiy SSH server talab qilmaydi.
+
+[[exercises]]
+name = "ssh1"
+path = "12_ssh/ssh1.sh"
+mode = "stdout"
+hint = "12_ssh/ssh1.hint.md"
+chapter = "part3/02-ssh"
+
+[[exercises]]
+name = "ssh2"
+path = "12_ssh/ssh2.sh"
+mode = "stdout"
+hint = "12_ssh/ssh2.hint.md"
+chapter = "part3/02-ssh"
+
+[[exercises]]
+name = "ssh3"
+path = "12_ssh/ssh3.sh"
+mode = "stdout"
+hint = "12_ssh/ssh3.hint.md"
+chapter = "part3/02-ssh"
+
+[[exercises]]
+name = "ssh4"
+path = "12_ssh/ssh4.sh"
+mode = "stdout-cmd"
+hint = "12_ssh/ssh4.hint.md"
+chapter = "part3/02-ssh"
+
+[[exercises]]
+name = "ssh5"
+path = "12_ssh/ssh5.sh"
+mode = "stdout"
+hint = "12_ssh/ssh5.hint.md"
+chapter = "part3/02-ssh"
+
+[[exercises]]
+name = "ssh6"
+path = "12_ssh/ssh6.sh"
+mode = "stdout"
+hint = "12_ssh/ssh6.hint.md"
+chapter = "part3/02-ssh"
+
+[[exercises]]
+name = "ssh7"
+path = "12_ssh/ssh7.sh"
+mode = "stdout-cmd"
+hint = "12_ssh/ssh7.hint.md"
+chapter = "part3/02-ssh"
+
+# ============================================================================
 # 13 — JSON va jq (Part 3/03)
 # ============================================================================
 # Prerequisite: jq o'rnatilgan bo'lishi kerak
@@ -515,3 +623,165 @@ path = "13_jq/jq6.sh"
 mode = "stdout"
 hint = "13_jq/jq6.hint.md"
 chapter = "part3/03-jq"
+
+# ============================================================================
+# 14 — Cron, at va systemd timer'lar (Part 3/04)
+# ============================================================================
+# Cron daemon talab qilmaydi — sintaksis bilan ishlash.
+
+[[exercises]]
+name = "cron1"
+path = "14_cron/cron1.sh"
+mode = "stdout"
+hint = "14_cron/cron1.hint.md"
+chapter = "part3/04-cron"
+
+[[exercises]]
+name = "cron2"
+path = "14_cron/cron2.sh"
+mode = "stdout"
+hint = "14_cron/cron2.hint.md"
+chapter = "part3/04-cron"
+
+[[exercises]]
+name = "cron3"
+path = "14_cron/cron3.sh"
+mode = "stdout"
+hint = "14_cron/cron3.hint.md"
+chapter = "part3/04-cron"
+
+[[exercises]]
+name = "cron4"
+path = "14_cron/cron4.sh"
+mode = "stdout"
+hint = "14_cron/cron4.hint.md"
+chapter = "part3/04-cron"
+
+[[exercises]]
+name = "cron5"
+path = "14_cron/cron5.sh"
+mode = "stdout"
+hint = "14_cron/cron5.hint.md"
+chapter = "part3/04-cron"
+
+[[exercises]]
+name = "cron6"
+path = "14_cron/cron6.sh"
+mode = "stdout"
+hint = "14_cron/cron6.hint.md"
+chapter = "part3/04-cron"
+
+[[exercises]]
+name = "cron7"
+path = "14_cron/cron7.sh"
+mode = "stdout"
+hint = "14_cron/cron7.hint.md"
+chapter = "part3/04-cron"
+
+# ============================================================================
+# 15 — Docker asoslari (Part 3/05)
+# ============================================================================
+# Docker daemon talab qilmaydi — sintaksis va konfiguratsiya bilan ishlash.
+
+[[exercises]]
+name = "docker1"
+path = "15_docker/docker1.sh"
+mode = "stdout"
+hint = "15_docker/docker1.hint.md"
+chapter = "part3/05-docker"
+
+[[exercises]]
+name = "docker2"
+path = "15_docker/docker2.sh"
+mode = "stdout-cmd"
+hint = "15_docker/docker2.hint.md"
+chapter = "part3/05-docker"
+
+[[exercises]]
+name = "docker3"
+path = "15_docker/docker3.sh"
+mode = "stdout"
+hint = "15_docker/docker3.hint.md"
+chapter = "part3/05-docker"
+
+[[exercises]]
+name = "docker4"
+path = "15_docker/docker4.sh"
+mode = "stdout-cmd"
+hint = "15_docker/docker4.hint.md"
+chapter = "part3/05-docker"
+
+[[exercises]]
+name = "docker5"
+path = "15_docker/docker5.sh"
+mode = "stdout"
+hint = "15_docker/docker5.hint.md"
+chapter = "part3/05-docker"
+
+[[exercises]]
+name = "docker6"
+path = "15_docker/docker6.sh"
+mode = "stdout-cmd"
+hint = "15_docker/docker6.hint.md"
+chapter = "part3/05-docker"
+
+[[exercises]]
+name = "docker7"
+path = "15_docker/docker7.sh"
+mode = "stdout-cmd"
+hint = "15_docker/docker7.hint.md"
+chapter = "part3/05-docker"
+
+# ============================================================================
+# 16 — CI/CD va GitHub Actions (Part 3/06)
+# ============================================================================
+# GitHub Actions runner talab qilmaydi — YAML va shell parsing.
+
+[[exercises]]
+name = "cicd1"
+path = "16_cicd/cicd1.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd1.hint.md"
+chapter = "part3/06-cicd"
+
+[[exercises]]
+name = "cicd2"
+path = "16_cicd/cicd2.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd2.hint.md"
+chapter = "part3/06-cicd"
+
+[[exercises]]
+name = "cicd3"
+path = "16_cicd/cicd3.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd3.hint.md"
+chapter = "part3/06-cicd"
+
+[[exercises]]
+name = "cicd4"
+path = "16_cicd/cicd4.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd4.hint.md"
+chapter = "part3/06-cicd"
+
+[[exercises]]
+name = "cicd5"
+path = "16_cicd/cicd5.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd5.hint.md"
+chapter = "part3/06-cicd"
+
+[[exercises]]
+name = "cicd6"
+path = "16_cicd/cicd6.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd6.hint.md"
+chapter = "part3/06-cicd"
+
+[[exercises]]
+name = "cicd7"
+path = "16_cicd/cicd7.sh"
+mode = "stdout-cmd"
+hint = "16_cicd/cicd7.hint.md"
+chapter = "part3/06-cicd"

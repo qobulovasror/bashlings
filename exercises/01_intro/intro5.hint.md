@@ -18,10 +18,3 @@ Birinchi qatorni shunday yozing:
 echo "Foydalanuvchi: $USER"
 ```
 Qolgan ikkita qator ham xuddi shu shaklda.
-
-## ✅ Yechim
-```bash
-echo "Foydalanuvchi: $USER"
-echo "Home: $HOME"
-echo "Joriy: $PWD"
-```

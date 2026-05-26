@@ -68,12 +68,14 @@ npm run docs:dev         # http://localhost:5173
 bash-doc/
 ├── docs/                 # 📘 Kitob (VitePress markdown)
 │   ├── index.md
+│   ├── foreword.md / setup.md / glossary.md
 │   ├── part1/            # 5 bob — Linux & Bash asoslari
-│   └── part2/            # 5 bob — Advanced scripting
+│   ├── part2/            # 5 bob — Advanced scripting
+│   └── part3/            # 6 bob — Real-world ko'nikmalar
 ├── exercises/            # 🧪 Mashqlar (har biri "# I AM NOT DONE" markerli)
 │   ├── info.toml         # markaziy registry
-│   ├── 01_intro/         ... 10_robust/
-├── solutions/            # 🔐 Yechimlar (har mashq uchun)
+│   ├── 01_intro/         ... 16_cicd/
+├── .solutions/           # 🔐 Yechimlar (yashirin — CLI orqali ochiladi)
 ├── cli/                  # ⚡ bashlings (Rust)
 │   ├── src/
 │   ├── Cargo.toml
@@ -95,7 +97,9 @@ exercises/01_intro/
 └── README.md             # bobni umumiy tavsifi
 ```
 
-Yechimlar `solutions/01_intro/intro1.sh` ichida.
+Yechimlar yashirin `.solutions/` katalogida — to'g'ridan-to'g'ri ko'rilmaydi.
+Mashq pass bo'lgandan keyin `bashlings solution <name>` orqali ochiladi
+(rustlings-style gating).
 
 ### Test format
 
@@ -137,15 +141,30 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 
 ## bashlings CLI buyruqlari
 
-| Buyruq                  | Vazifasi                                           |
-|-------------------------|----------------------------------------------------|
-| `bashlings list`        | Hamma mashqlar va statusi (progress bar bilan)     |
-| `bashlings run <name>`  | Bitta mashqni tekshirish (diff bilan)               |
-| `bashlings watch`       | **Avto-tekshiruv** rejimi (rustlings-style)         |
-| `bashlings hint <name>` | Markdown hint terminalda chiroyli render            |
-| `bashlings next`        | Birinchi pending mashq nomini chiqarish (CI uchun)  |
-| `bashlings --help`      | Yordam                                              |
-| `bashlings --version`   | Versiyani ko'rsatish                                |
+| Buyruq                       | Vazifasi                                              |
+|------------------------------|-------------------------------------------------------|
+| `bashlings list`             | Hamma mashqlar va statusi (progress bar bilan)        |
+| `bashlings list --pending`   | Faqat hali tugatilmagan mashqlar                       |
+| `bashlings list --done`      | Faqat tugatilgan mashqlar                              |
+| `bashlings run <name>`       | Bitta mashqni tekshirish + pass'da marker avto-o'chadi |
+| `bashlings watch`            | **Interaktiv rejim** — fayl saqlash + hotkeys (h/s/r/l/q) |
+| `bashlings hint <name>`      | 3-bosqichli maslahat (yechim YO'Q)                     |
+| `bashlings solution <name>`  | Yechim — **faqat mashq pass bo'lgandan keyin ochiladi** |
+| `bashlings reset <name>`     | Mashqni boshlang'ich holatga qaytarish (marker'ni qaytaradi) |
+| `bashlings progress`         | Compact statistika — umumiy + qism bo'yicha           |
+| `bashlings next`             | Birinchi pending mashq nomini chiqarish (CI uchun)     |
+| `bashlings --help`           | Yordam                                                 |
+| `bashlings --version`        | Versiyani ko'rsatish                                   |
+
+### Watch rejimida hotkeys
+
+| Tugma     | Harakat                                          |
+|-----------|--------------------------------------------------|
+| `h`       | Maslahat ko'rsatish                              |
+| `s`       | Yechimni ko'rsatish (faqat test pass bo'lsa)      |
+| `r` / `Enter` | Joriy mashqni qayta tekshirish                |
+| `l` / `p` | Progress overview                                |
+| `q` / `Esc` / `Ctrl+C` | Chiqish                              |
 
 ---
 

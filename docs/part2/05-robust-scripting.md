@@ -14,7 +14,7 @@ description: "Strict mode, getopts, logging, ShellCheck, security va production-
 > - **Production template** — copy-paste qilsa bo'ladigan skelet
 >
 > **⏱ Vaqt:** ~40 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 10_robust` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 5 ta interaktiv mashq tayyor ([`exercises/10_robust/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/10_robust))
 
 ---
 
@@ -945,7 +945,19 @@ Bu shablonni `template.sh` deb saqlang. Yangi skript yozayotganda nusxa olib bos
 
 ## 5.14. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 10_robust` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **5 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run rob1           # bitta mashqni tekshirish
+bashlings hint rob1          # bosqichli maslahat
+```
+
+Manba: [`exercises/10_robust/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/10_robust)
+:::
+
+Quyidagi kontseptual mashqlarni esa o'zingiz qo'l bilan sinab ko'ring:
 
 1. **Strict-mode lab** — quyidagi skript faqat strict mode'da xato beradi. Sababini tushuntiring va tuzating:
    ```bash

@@ -20,12 +20,3 @@ Muqobillari:
 
 ## 3-bosqich
 ⚠ Hisoblagichni oshirishni unutmang — aks holda **cheksiz loop** bo'ladi!
-
-## ✅ Yechim
-```bash
-i=1
-while [[ $i -le 3 ]]; do
-    echo "Qadam $i"
-    ((i++))
-done
-```

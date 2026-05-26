@@ -8,8 +8,3 @@
 
 ## 3-bosqich
 `*.txt` bizning holatda `a.txt` va `b.txt` ga ochiladi — `c.log` o'tmaydi.
-
-## ✅ Yechim
-```bash
-ls *.txt
-```

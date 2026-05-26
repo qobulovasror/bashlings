@@ -1,20 +1,38 @@
 //! `bashlings watch` — re-runs the first pending exercise every time a `.sh`
 //! file under `exercises/` is saved. Auto-advances when an exercise passes
-//! and its `# I AM NOT DONE` marker is removed.
+//! (the `# I AM NOT DONE` marker is auto-removed by `run::run_exercise`).
+//!
+//! Also accepts keyboard hotkeys via crossterm raw mode:
+//!   - `h`        — show hint for current exercise
+//!   - `s`        — show solution (gated on test pass)
+//!   - `r`        — re-run current exercise
+//!   - `l`        — list compact progress
+//!   - `q` / Esc  — quit
+//!   - Ctrl+C     — quit
 
 use crate::{commands, info};
 use anyhow::{Context, Result};
-use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyModifiers};
+use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
+use notify::{Event as NotifyEvent, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use owo_colors::OwoColorize;
 use std::io::Write;
 use std::sync::mpsc;
 use std::time::{Duration, Instant};
 
+enum Action {
+    Rerun,
+    Hint,
+    Solution,
+    List,
+    Quit,
+}
+
 pub fn run() -> Result<bool> {
     let root = info::find_workspace_root()?;
     let watch_dir = root.join("exercises");
 
-    let (tx, rx) = mpsc::channel::<notify::Result<Event>>();
+    let (tx, rx) = mpsc::channel::<notify::Result<NotifyEvent>>();
     let mut watcher: RecommendedWatcher = notify::recommended_watcher(move |res| {
         let _ = tx.send(res);
     })
@@ -65,12 +83,38 @@ pub fn run() -> Result<bool> {
 
         print_footer();
 
-        // Make sure output reaches the terminal before we block on the channel.
         let _ = std::io::stdout().flush();
 
         last_name = Some(ex.name.clone());
 
-        wait_for_change(&rx, &mut last_event)?;
+        let name = ex.name.clone();
+        let action = wait_for_action(&rx, &mut last_event)?;
+        match action {
+            Action::Rerun => {
+                // Loop continues — re-render and re-test.
+            }
+            Action::Quit => {
+                println!();
+                println!("  {} {}", "👋".to_string(), "Chiqildi.".dimmed());
+                println!();
+                return Ok(true);
+            }
+            Action::Hint => {
+                clear_screen();
+                let _ = commands::hint::run(&name);
+                pause_until_keypress()?;
+            }
+            Action::Solution => {
+                clear_screen();
+                let _ = commands::solution::run(&name);
+                pause_until_keypress()?;
+            }
+            Action::List => {
+                clear_screen();
+                let _ = commands::progress::run();
+                pause_until_keypress()?;
+            }
+        }
     }
 }
 
@@ -100,7 +144,15 @@ fn print_footer() {
     println!(
         "  {} {}",
         "👀".to_string(),
-        "Faylni saqlang — avto-tekshiriladi.  (Ctrl+C — chiqish)".dimmed()
+        "Faylni saqlang yoki tugma bosing:".dimmed()
+    );
+    println!(
+        "     {}  hint    {}  solution    {}  re-run    {}  progress    {}  quit",
+        "h".bold().cyan(),
+        "s".bold().cyan(),
+        "r".bold().cyan(),
+        "l".bold().cyan(),
+        "q".bold().cyan()
     );
 }
 
@@ -117,11 +169,6 @@ fn celebrate(total: usize) {
     println!(
         "  Siz {} ta mashqning hammasini muvaffaqiyatli yechib chiqdingiz.",
         total.to_string().bold()
-    );
-    println!();
-    println!(
-        "  Keyingi qadam: {}",
-        "2-qism — Advanced Bash Scripting".cyan().bold()
     );
     println!();
 }
@@ -146,41 +193,98 @@ fn progress_bar(done: usize, total: usize) -> String {
     )
 }
 
-/// Block until at least one `.sh` modify/create/remove event arrives,
-/// then coalesce a short burst before returning.
-fn wait_for_change(
-    rx: &mpsc::Receiver<notify::Result<Event>>,
+/// Wait for either a `.sh` file change OR a keyboard hotkey.
+/// Uses crossterm raw mode just for the wait window — restores cooked mode
+/// on every exit path so terminal output stays clean.
+fn wait_for_action(
+    file_rx: &mpsc::Receiver<notify::Result<NotifyEvent>>,
     last_event: &mut Instant,
-) -> Result<()> {
+) -> Result<Action> {
+    enable_raw_mode().context("terminal raw mode'ga o'tkaza olmadik")?;
+    let result = wait_for_action_inner(file_rx, last_event);
+    let _ = disable_raw_mode();
+    result
+}
+
+fn wait_for_action_inner(
+    file_rx: &mpsc::Receiver<notify::Result<NotifyEvent>>,
+    last_event: &mut Instant,
+) -> Result<Action> {
     loop {
-        let event = rx.recv().context("watcher kanali yopildi")?;
-        let Ok(event) = event else { continue };
-
-        if !matches!(
-            event.kind,
-            EventKind::Modify(_) | EventKind::Create(_) | EventKind::Remove(_)
-        ) {
-            continue;
+        // Drain any pending file events first.
+        let mut got_file_event = false;
+        while let Ok(event) = file_rx.try_recv() {
+            if event_is_relevant(event) {
+                got_file_event = true;
+            }
+        }
+        if got_file_event {
+            let now = Instant::now();
+            if now.duration_since(*last_event) >= Duration::from_millis(250) {
+                *last_event = now;
+                // Coalesce burst from editors (vim, VS Code) that emit several
+                // events per save.
+                std::thread::sleep(Duration::from_millis(80));
+                while file_rx.try_recv().is_ok() {}
+                return Ok(Action::Rerun);
+            }
         }
 
-        let is_sh = event
-            .paths
-            .iter()
-            .any(|p| p.extension().and_then(|s| s.to_str()) == Some("sh"));
-        if !is_sh {
-            continue;
+        // Then poll keypress with short timeout.
+        if event::poll(Duration::from_millis(150))? {
+            if let Event::Key(KeyEvent {
+                code, modifiers, ..
+            }) = event::read()?
+            {
+                if modifiers.contains(KeyModifiers::CONTROL) {
+                    if let KeyCode::Char('c') = code {
+                        return Ok(Action::Quit);
+                    }
+                }
+                match code {
+                    KeyCode::Char('q') | KeyCode::Esc => return Ok(Action::Quit),
+                    KeyCode::Char('h') => return Ok(Action::Hint),
+                    KeyCode::Char('s') => return Ok(Action::Solution),
+                    KeyCode::Char('r') | KeyCode::Enter => return Ok(Action::Rerun),
+                    KeyCode::Char('l') | KeyCode::Char('p') => return Ok(Action::List),
+                    _ => continue,
+                }
+            }
         }
-
-        let now = Instant::now();
-        if now.duration_since(*last_event) < Duration::from_millis(250) {
-            continue;
-        }
-        *last_event = now;
-
-        // Coalesce: editors (vim, VS Code) emit several events per save.
-        std::thread::sleep(Duration::from_millis(80));
-        while rx.try_recv().is_ok() {}
-
-        return Ok(());
     }
+}
+
+fn event_is_relevant(event: notify::Result<NotifyEvent>) -> bool {
+    let Ok(event) = event else { return false };
+    if !matches!(
+        event.kind,
+        EventKind::Modify(_) | EventKind::Create(_) | EventKind::Remove(_)
+    ) {
+        return false;
+    }
+    event
+        .paths
+        .iter()
+        .any(|p| p.extension().and_then(|s| s.to_str()) == Some("sh"))
+}
+
+/// After a non-rerun action (hint, solution, progress), wait for any key
+/// before going back to the watch loop. Keeps the output visible.
+fn pause_until_keypress() -> Result<()> {
+    println!(
+        "  {} {}",
+        "↩".dimmed(),
+        "Davom etish uchun istalgan tugmani bosing...".dimmed()
+    );
+    let _ = std::io::stdout().flush();
+    enable_raw_mode()?;
+    loop {
+        if event::poll(Duration::from_millis(500))? {
+            if let Event::Key(_) = event::read()? {
+                break;
+            }
+        }
+    }
+    let _ = disable_raw_mode();
+    Ok(())
 }

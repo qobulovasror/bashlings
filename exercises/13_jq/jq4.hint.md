@@ -22,8 +22,3 @@ echo '{"a":"hi","b":"ali"}' | jq '{msg: (.a + " " + .b)}'
 jq '{a: 1}'    # multi-line
 jq -c '{a: 1}' # {"a":1}
 ```
-
-## ✅ Yechim
-```bash
-echo "$input" | jq -c '{fullName: (.firstName + " " + .lastName)}'
-```

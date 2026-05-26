@@ -14,7 +14,7 @@ description: "Unix signallari, trap, EXIT pseudo-signali, cleanup pattern, grace
 > - **Background jarayonlar** — `&`, `wait`, signal propagation
 >
 > **⏱ Vaqt:** ~25 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 09_traps` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 5 ta interaktiv mashq tayyor ([`exercises/09_traps/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/09_traps))
 
 ---
 
@@ -571,7 +571,19 @@ Bu skript:
 
 ## 4.14. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 09_traps` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **5 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run trap1          # bitta mashqni tekshirish
+bashlings hint trap1         # bosqichli maslahat
+```
+
+Manba: [`exercises/09_traps/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/09_traps)
+:::
+
+Quyidagi kontseptual mashqlarni esa o'zingiz qo'l bilan sinab ko'ring:
 
 1. **Countdown** — 10 dan 1 gacha har soniyada chiqaruvchi skript yozing. `Ctrl+C` bosilsa "uzr, davom eta olmadi" deb chiqarsin va exit 130 qaytarsin.
 

@@ -14,8 +14,3 @@ Yoki qisqartirilgan:
 ```bash
 head -5 fayl.txt
 ```
-
-## ✅ Yechim
-```bash
-head -n 3 log.txt
-```

@@ -22,7 +22,14 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Barcha mashqlarni va ularning holatini ko'rsatish
-    List,
+    List {
+        /// Faqat hali tugatilmagan mashqlarni ko'rsatish
+        #[arg(long)]
+        pending: bool,
+        /// Faqat tugatilgan mashqlarni ko'rsatish
+        #[arg(long, conflicts_with = "pending")]
+        done: bool,
+    },
 
     /// Bitta mashqni tekshirish
     Run {
@@ -30,7 +37,7 @@ enum Commands {
         name: String,
     },
 
-    /// Mashqlar saqlanganda avto-tekshirish (birinchi pending mashqqa to'g'rilanadi)
+    /// Mashqlar saqlanganda avto-tekshirish (interaktiv hotkeys: h/s/r/q)
     Watch,
 
     /// Maslahat ko'rsatish (markdown hint faylini terminalda render qiladi)
@@ -38,6 +45,21 @@ enum Commands {
         /// Mashq nomi
         name: String,
     },
+
+    /// Yechimni ko'rsatish (faqat mashq pass bo'lgandan keyin)
+    Solution {
+        /// Mashq nomi
+        name: String,
+    },
+
+    /// Mashqni boshlang'ich holatga qaytarish (`# I AM NOT DONE` ni qaytaradi)
+    Reset {
+        /// Mashq nomi
+        name: String,
+    },
+
+    /// Compact progress overview — umumiy va qism bo'yicha
+    Progress,
 
     /// Birinchi pending mashq nomini chiqarish (CI/skript uchun)
     Next,
@@ -67,10 +89,22 @@ fn main() -> ExitCode {
 /// but reported failure (e.g. failing tests), and `Err` for unrecoverable errors.
 fn dispatch(cli: Cli) -> Result<bool> {
     match cli.command {
-        Commands::List => commands::list::run().map(|_| true),
+        Commands::List { pending, done } => {
+            let filter = if pending {
+                commands::list::Filter::Pending
+            } else if done {
+                commands::list::Filter::Done
+            } else {
+                commands::list::Filter::All
+            };
+            commands::list::run(filter).map(|_| true)
+        }
         Commands::Run { name } => commands::run::run(&name),
         Commands::Watch => commands::watch::run(),
         Commands::Hint { name } => commands::hint::run(&name),
+        Commands::Solution { name } => commands::solution::run(&name),
+        Commands::Reset { name } => commands::reset::run(&name),
+        Commands::Progress => commands::progress::run(),
         Commands::Next => commands::next::run(),
     }
 }

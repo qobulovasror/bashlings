@@ -15,13 +15,3 @@ cleanup() {
 }
 trap cleanup EXIT
 ```
-
-## ✅ Yechim
-```bash
-cleanup() {
-    rm -f "$tmpfile"
-    echo "tmp o'chirildi"
-}
-trap cleanup EXIT
-echo "asosiy ish"
-```

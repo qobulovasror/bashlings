@@ -14,10 +14,3 @@ Bu xavfli — pipeline ichidagi xatolar yashirinadi.
 set -o pipefail
 false | true   # exit 1 (false ning exit'i)
 ```
-
-## ✅ Yechim
-```bash
-set -o pipefail
-echo "ish"
-false | echo "yashirildi"
-```

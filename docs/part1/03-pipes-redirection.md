@@ -300,6 +300,20 @@ ps aux --sort=-%mem | head -10
 
 ## 3.14. Mashqlar
 
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **8 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run pipe1          # bitta mashqni tekshirish
+bashlings hint pipe1         # bosqichli maslahat
+```
+
+Manba: [`exercises/03_pipes/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/03_pipes)
+:::
+
+Quyidagi qo'shimcha vazifalarni terminalda qo'l bilan bajaring:
+
 1. `ls -la` natijasini `directory.txt`ga yozing va ekranda ham ko'rsating (`tee` bilan).
 2. `/etc/passwd` faylida nechta foydalanuvchi borligini bitta pipeline bilan toping.
 3. `ps aux` natijasidagi eng ko'p CPU yegan 5 ta jarayonni topadigan pipeline yozing.

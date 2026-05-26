@@ -8,8 +8,3 @@ Barcha elementlar uchun `"${arr[@]}"` ishlatiladi:
 ```bash
 echo "${fruits[@]}"   # olma anor uzum
 ```
-
-## ✅ Yechim
-```bash
-echo "${fruits[@]}"
-```

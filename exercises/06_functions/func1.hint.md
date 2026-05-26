@@ -24,12 +24,3 @@ Chaqirish — **qavslarsiz**:
 greet "Ali"        # ✓
 greet("Ali")       # ❌ XATO
 ```
-
-## ✅ Yechim
-```bash
-greet() {
-    echo "Salom, $1!"
-}
-
-greet "Ali"
-```

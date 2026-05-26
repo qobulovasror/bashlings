@@ -3,8 +3,6 @@ use anyhow::{anyhow, Result};
 use owo_colors::OwoColorize;
 use std::path::Path;
 
-const DONE_MARKER: &str = "# I AM NOT DONE";
-
 /// CLI entry: look up `name`, then delegate to [`run_exercise`].
 pub fn run(name: &str) -> Result<bool> {
     let root = info::find_workspace_root()?;
@@ -95,14 +93,14 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
             total
         );
 
-        // Friendly nudge to remove the marker so `list` will count it as done.
-        let content = std::fs::read_to_string(&path)?;
-        if content.contains(DONE_MARKER) {
+        // Auto-strip the marker so subsequent runs (and `list`) treat this as done.
+        let removed = info::strip_done_marker(&path)?;
+        if removed {
             println!();
             println!(
-                "  {} Endi {} qatorini fayldan o'chiring.",
-                "💡".yellow(),
-                "`# I AM NOT DONE`".yellow().bold()
+                "  {} {} marker avto-o'chirildi.",
+                "✨".cyan(),
+                "`# I AM NOT DONE`".dimmed()
             );
         }
         println!();

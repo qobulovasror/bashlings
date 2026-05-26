@@ -25,21 +25,3 @@ if is_even 4; then
     echo "juft"
 fi
 ```
-
-## ✅ Yechim
-```bash
-is_even() {
-    return $(( $1 % 2 ))
-}
-```
-
-Yoki aniq:
-```bash
-is_even() {
-    if (( $1 % 2 == 0 )); then
-        return 0
-    else
-        return 1
-    fi
-}
-```

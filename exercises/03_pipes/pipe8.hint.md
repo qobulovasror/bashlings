@@ -17,8 +17,3 @@ Ikkalasini birlashtirib, here-string'dan foydalaning:
 ```bash
 bc <<< "3+4"
 ```
-
-## ✅ Yechim
-```bash
-bc <<< "5+7"
-```

@@ -19,13 +19,3 @@ echo "$r"        # 10
 Arifmetika: `$((expression))` — ichida `*`, `+`, `-`, `/`, `%` ishlatish mumkin.
 
 Kvadrat: `$1 * $1` yoki `$1 ** 2`.
-
-## ✅ Yechim
-```bash
-square() {
-    echo $(( $1 * $1 ))
-}
-
-result=$(square 5)
-echo "5 ning kvadrati: $result"
-```

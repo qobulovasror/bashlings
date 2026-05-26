@@ -27,12 +27,3 @@ fi
 
 ## 3-bosqich
 Sizga kerak: `[[ $yosh -gt 18 ]]`
-
-## ✅ Yechim
-```bash
-if [[ $yosh -gt 18 ]]; then
-    echo "kattalar"
-else
-    echo "yoshlar"
-fi
-```

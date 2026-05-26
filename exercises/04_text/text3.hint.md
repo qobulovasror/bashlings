@@ -19,8 +19,3 @@ echo $'100\n23\n5' | sort -n
 # 23
 # 100
 ```
-
-## ✅ Yechim
-```bash
-sort -n scores.txt
-```

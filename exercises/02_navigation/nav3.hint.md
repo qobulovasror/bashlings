@@ -8,10 +8,3 @@
 
 ## 3-bosqich
 Sizning vazifangiz: `docs`, `src`, `tests` — 3 ta katalog. `ls` ularni alphabet bo'yicha chiqaradi.
-
-## ✅ Yechim
-```bash
-mkdir -p docs src tests
-```
-
-`ls` allaqachon skript ichida — yana yozish kerak emas.

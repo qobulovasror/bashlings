@@ -16,8 +16,3 @@ Yoki bitta qatorda:
 ```bash
 echo "Bugun: $(date +%F)"
 ```
-
-## ✅ Yechim
-```bash
-echo "Bugun: $(date +%F)"
-```

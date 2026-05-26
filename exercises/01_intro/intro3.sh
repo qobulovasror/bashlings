@@ -11,7 +11,7 @@
 
 # I AM NOT DONE
 
-echo "TODO: home katalog"
+echo $HOME
 
 # === TEST META ===
 # @test:stdout-cmd: echo "$HOME"

@@ -17,9 +17,3 @@ echo "Salom, $name!"   # Salom, Bash!
 ```bash
 echo 'Salom, $name!'   # Salom, $name! — literal
 ```
-
-## ✅ Yechim
-```bash
-name="Bash"
-echo "Salom, $name!"
-```

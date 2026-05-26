@@ -16,9 +16,3 @@ Eski bash uchun:
 ```bash
 echo "${colors[${#colors[@]}-1]}"
 ```
-
-## ✅ Yechim
-```bash
-colors+=("yashil")
-echo "${colors[-1]}"
-```

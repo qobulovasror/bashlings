@@ -9,9 +9,8 @@
 #
 # Tuzating va quyidagi `# I AM NOT DONE` qatorini o'chiring.
 
-# I AM NOT DONE
 
-eko "Salom, Bash!"
+echo "Salom, Bash!"
 
 # === TEST META (qo'l urmang) ===
 # @test:stdout: Salom, Bash!

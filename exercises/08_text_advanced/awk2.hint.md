@@ -21,8 +21,3 @@ O'rtacha hisoblash uchun:
 ```bash
 awk '{sum += $2; n++} END {print sum/n}'
 ```
-
-## ✅ Yechim
-```bash
-awk '{sum += $2} END {print sum}' scores.txt
-```

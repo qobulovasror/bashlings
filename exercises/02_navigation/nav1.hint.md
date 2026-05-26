@@ -8,8 +8,3 @@ Buyruqning nomi inglizcha **P**rint **W**orking **D**irectory dan kelib chiqqan.
 
 ## 3-bosqich
 `pwd` — hech qanday argument talab qilmaydi.
-
-## ✅ Yechim
-```bash
-pwd
-```

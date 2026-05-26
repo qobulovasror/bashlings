@@ -19,8 +19,3 @@ Bu eng tezkor usul. Pipe ham mumkin, lekin `wc -l` macOS'da leading whitespace b
 ```bash
 grep "ERROR" log.txt | wc -l   # "       2" — bo'shliqlar bilan
 ```
-
-## ✅ Yechim
-```bash
-grep -c "ERROR" log.txt
-```

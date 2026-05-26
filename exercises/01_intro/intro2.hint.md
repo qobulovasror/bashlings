@@ -10,11 +10,3 @@ Buyruqning nomi inglizcha **"who am I"** dan kelib chiqqan, lekin probelsiz.
 
 ## 3-bosqich
 Yoki: `$USER` o'zgaruvchisini `echo` bilan chiqaring.
-
-## ✅ Yechim
-```bash
-whoami
-# yoki
-echo "$USER"
-```
-Ikkalasi ham bir xil natija beradi.

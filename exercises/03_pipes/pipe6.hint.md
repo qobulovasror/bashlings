@@ -17,13 +17,3 @@ sort fruits.txt | uniq
 
 ## 3-bosqich
 **Bonus:** `sort -u` aynan shu vazifani bitta buyruqda bajaradi.
-
-## ✅ Yechim
-```bash
-sort fruits.txt | uniq
-```
-
-Yoki:
-```bash
-sort -u fruits.txt
-```

@@ -17,8 +17,3 @@ tr <eski_belgi> <yangi_belgi>
 
 ## 3-bosqich
 Sizga kerak: bo'shliqni (' ') yangi qatorga ('\n') almashtirish.
-
-## ✅ Yechim
-```bash
-echo "salom dunyo bash" | tr ' ' '\n'
-```

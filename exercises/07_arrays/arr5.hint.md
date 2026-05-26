@@ -19,11 +19,3 @@ Yoki bir martda:
 ```bash
 declare -A user=([name]="Ali" [city]="Toshkent")
 ```
-
-## ✅ Yechim
-```bash
-declare -A user
-user[name]="Ali"
-user[city]="Toshkent"
-echo "${user[name]} ${user[city]}"
-```

@@ -13,12 +13,3 @@ cleanup() {
 ```bash
 trap cleanup EXIT
 ```
-
-## ✅ Yechim
-```bash
-cleanup() {
-    echo "tozalandi"
-}
-trap cleanup EXIT
-echo "asosiy ish"
-```

@@ -10,8 +10,3 @@ echo "${#fruits[@]}"
 - `${#string}` — string uzunligi
 - `${#arr[@]}` — massiv element soni
 - `${#arr[0]}` — birinchi element uzunligi
-
-## ✅ Yechim
-```bash
-echo "${#fruits[@]}"
-```

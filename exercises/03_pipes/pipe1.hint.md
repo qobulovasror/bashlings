@@ -12,9 +12,3 @@ Fayl mazmunini chiqarish uchun `cat <fayl>` ishlatiladi.
 
 ## 3-bosqich
 Ikki buyruqni alohida qatorda yozing yoki `&&` bilan zanjirlang.
-
-## ✅ Yechim
-```bash
-echo "salom" > hello.txt
-cat hello.txt
-```

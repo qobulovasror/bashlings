@@ -14,8 +14,3 @@ echo "salom" | tee out.txt
 
 ## 3-bosqich
 `tee -a fayl.txt` — append rejimi (`>>` ekvivalenti).
-
-## ✅ Yechim
-```bash
-echo "salom" | tee out.txt
-```

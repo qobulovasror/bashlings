@@ -13,9 +13,3 @@
 
 ## 3-bosqich
 **Idempotent skript** — bir necha marta ishga tushirsangiz ham xato bermaydi.
-
-## ✅ Yechim
-```bash
-mkdir -p "$work"
-mkdir -p "$work"   # bezarar
-```

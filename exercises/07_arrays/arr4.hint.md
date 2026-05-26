@@ -13,10 +13,3 @@ done
 ```bash
 echo "Element $((i+1)): ${nums[$i]}"
 ```
-
-## ✅ Yechim
-```bash
-for i in "${!nums[@]}"; do
-    echo "Element $((i+1)): ${nums[$i]}"
-done
-```

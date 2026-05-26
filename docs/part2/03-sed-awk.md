@@ -12,7 +12,7 @@ description: "sed — stream editor, awk — field-based processor. Substitution
 > - **macOS BSD sed** vs **GNU sed** farqlari (`-i` gotcha)
 >
 > **⏱ Vaqt:** ~40 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 08_text_advanced` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 6 ta interaktiv mashq tayyor ([`exercises/08_text_advanced/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/08_text_advanced))
 
 ---
 
@@ -685,7 +685,19 @@ Ammo: **`sed` va `awk` har tizimda mavjud**. Birinchi navbatda ularni o'rganing,
 
 ## 3.17. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 08_text_advanced` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **6 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run sed1           # bitta mashqni tekshirish
+bashlings hint sed1          # bosqichli maslahat
+```
+
+Manba: [`exercises/08_text_advanced/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/08_text_advanced)
+:::
+
+Quyidagi kontseptual mashqlarni esa o'zingiz qo'l bilan sinab ko'ring:
 
 1. **Email maskala** — `ali@example.com` ni `a***@example.com` qiling. `sed` regex bilan.
 

@@ -11,14 +11,3 @@ cleanup() {
 
 ## 2-bosqich
 Agar `local rc=$?` boshqa qatorlardan keyin yozsangiz — undan oldingi buyruqning exit code bo'ladi, sizniki emas.
-
-## ✅ Yechim
-```bash
-cleanup() {
-    local rc=$?
-    echo "Exit: $rc"
-}
-trap cleanup EXIT
-echo "ish boshlandi"
-exit 7
-```

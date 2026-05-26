@@ -16,8 +16,3 @@ awk '{count[$1]++} END {for (k in count) print k, count[k]}' log.txt | sort
 
 ## 3-bosqich
 Bu pattern DevOps'da eng ko'p ishlatiladigan idioma — log statistikasi, IP frequency va h.k.
-
-## ✅ Yechim
-```bash
-awk '{count[$1]++} END {for (k in count) print k, count[k]}' log.txt | sort
-```

@@ -26,11 +26,3 @@ echo "$name"             # tashqi ✓
 
 ## 3-bosqich
 **Best practice:** funksiya ichidagi har yangi o'zgaruvchi uchun `local` ishlating — hatto ulgurmasangiz ham odat qilib qo'ying.
-
-## ✅ Yechim
-```bash
-inner() {
-    local name="ichki"
-    echo "Funksiya ichida: $name"
-}
-```

@@ -20,13 +20,3 @@ Yoki `map` orqali — ekvivalent:
 ```bash
 echo '[1,2,3]' | jq 'map(select(. > 1)) | length'
 ```
-
-## ✅ Yechim
-```bash
-echo "$input" | jq '[.[] | select(.age >= 18)] | length'
-```
-
-Yoki:
-```bash
-echo "$input" | jq 'map(select(.age >= 18)) | length'
-```

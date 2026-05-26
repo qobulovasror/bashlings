@@ -11,8 +11,3 @@ echo '{"name":"Ali"}' | jq -r '.name'   # Ali — raw
 ```
 
 Shell o'zgaruvchisida yoki test uchun har doim `-r` ishlating.
-
-## ✅ Yechim
-```bash
-echo "$input" | jq -r '.name'
-```

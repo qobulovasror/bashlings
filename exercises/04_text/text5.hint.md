@@ -24,8 +24,3 @@ big.txt: 1 2 3 4 5 6 7 8 9 ... 100
 **Bonus** — bu pattern juda ko'p ishlatiladi:
 - 50-100 qatorlar: `head -n 100 fayl | tail -n 51`
 - Yoki `sed` bilan: `sed -n '5,7p' big.txt` (sed mavzusi 2-qismda)
-
-## ✅ Yechim
-```bash
-head -n 7 big.txt | tail -n 3
-```

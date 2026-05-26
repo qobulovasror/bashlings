@@ -12,9 +12,3 @@ EXIT — Bash pseudo-signali, **har holatda** ishlaydi (normal exit, xato, signa
 ```bash
 trap 'echo "tozalandi"' EXIT
 ```
-
-## ✅ Yechim
-```bash
-trap 'echo "tozalandi"' EXIT
-echo "ishlayapti"
-```

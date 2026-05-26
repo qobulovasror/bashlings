@@ -16,7 +16,7 @@ description: "docker run, exec, logs, Dockerfile, docker compose va Bash skriptl
 > - Real misol — **PostgreSQL test sandbox**
 >
 > **⏱ Vaqt:** ~35 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 15_docker` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 7 ta interaktiv mashq tayyor ([`exercises/15_docker/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/15_docker))
 
 ---
 
@@ -714,7 +714,20 @@ FROM node:20.11.0-alpine        # ✓ specific
 
 ## 5.14. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 15_docker` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **7 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan. Hammasi
+Docker daemon talab qilmaydi — sintaksis va konfiguratsiya bilan ishlash:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run docker1        # bitta mashqni tekshirish
+bashlings hint docker1       # bosqichli maslahat
+```
+
+Manba: [`exercises/15_docker/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/15_docker)
+:::
+
+Quyidagi real-world mashqlarni Docker o'rnatilgan joyda sinab ko'ring:
 
 1. **Nginx tezkor** — `docker run` orqali nginx ishga tushiring (8080 portda), `curl localhost:8080` ishlashini tasdiqlang, `docker rm -f` bilan tozalang.
 

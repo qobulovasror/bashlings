@@ -16,7 +16,7 @@ description: "GitHub Actions workflow'lari, ShellCheck, bats testlari, matrix bu
 > - Real misol — **bashlings uchun to'liq CI** pipeline
 >
 > **⏱ Vaqt:** ~35 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 16_cicd` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 7 ta interaktiv mashq tayyor ([`exercises/16_cicd/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/16_cicd))
 
 ---
 
@@ -830,7 +830,20 @@ Sintaksis farqli, **mantiq bir xil**: trigger → job → step → script.
 
 ## 6.17. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 16_cicd` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **7 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan. Hammasi
+GitHub Actions runner talab qilmaydi — YAML va shell parsing bilan ishlash:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run cicd1          # bitta mashqni tekshirish
+bashlings hint cicd1         # bosqichli maslahat
+```
+
+Manba: [`exercises/16_cicd/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/16_cicd)
+:::
+
+Quyidagi real-world mashqlarni GitHub'da repo bor joyda sinab ko'ring:
 
 1. **Birinchi workflow** — repo'da `.github/workflows/ci.yml` yarating. `push` da `echo "Hello CI"` chiqarsin.
 

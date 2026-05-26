@@ -490,6 +490,20 @@ exit 1          # umumiy xato
 
 ## 5.12. Mashqlar
 
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **6 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run script1        # bitta mashqni tekshirish
+bashlings hint script1       # bosqichli maslahat
+```
+
+Manba: [`exercises/05_scripting/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/05_scripting)
+:::
+
+Quyidagi qo'shimcha vazifalarni terminalda qo'l bilan bajaring:
+
 1. `args.sh` skripti yozing — barcha argumentlarni teskari tartibda chiqarsin.
 2. `agedif.sh` — foydalanuvchidan yoshini so'rab, "Bola/Yoshlar/Katta" deb tasnif qilsin.
 3. `count.sh` — joriy katalogdagi fayl va katalog sonini alohida-alohida chiqarsin.

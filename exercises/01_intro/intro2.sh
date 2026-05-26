@@ -9,9 +9,7 @@
 #
 # Maslahat: bu uchun bitta buyruq bor (whoami) yoki maxsus o'zgaruvchi ($USER).
 
-# I AM NOT DONE
-
-echo "TODO: foydalanuvchi nomi"
+echo $USER
 
 # === TEST META ===
 # @test:stdout-cmd: whoami

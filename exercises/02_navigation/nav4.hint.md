@@ -10,13 +10,3 @@ Misollar:
 
 ## 3-bosqich
 Diapazon ham mumkin: `{1..3}` xuddi `{1,2,3}` kabi ishlaydi.
-
-## ✅ Yechim
-```bash
-touch file{1,2,3}.txt
-```
-
-Yoki:
-```bash
-touch file{1..3}.txt
-```

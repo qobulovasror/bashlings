@@ -26,13 +26,3 @@ Diqqat:
 
 ## 3-bosqich
 `tugma` = "b" → "Ikkinchi" tarmog'iga tushadi.
-
-## ✅ Yechim
-```bash
-case "$tugma" in
-    a) echo "Birinchi" ;;
-    b) echo "Ikkinchi" ;;
-    c) echo "Uchinchi" ;;
-    *) echo "Noma'lum" ;;
-esac
-```

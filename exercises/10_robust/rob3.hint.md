@@ -15,9 +15,3 @@ Foydalanish:
 ./script.sh                # Level: info
 LOG_LEVEL=debug ./script.sh # Level: debug
 ```
-
-## ✅ Yechim
-```bash
-level="${LOG_LEVEL:-info}"
-echo "Level: $level"
-```

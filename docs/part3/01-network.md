@@ -15,7 +15,7 @@ description: "HTTP klient curl, ping, wget, dig, nc, ss — DevOps va SRE'ning k
 > - Real misol — **URL monitor** (sayt yiqilganini aniqlash)
 >
 > **⏱ Vaqt:** ~40 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 11_network` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 7 ta interaktiv mashq tayyor ([`exercises/11_network/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/11_network))
 
 ---
 
@@ -564,7 +564,20 @@ nohup ./monitor.sh &     # terminal yopilsa ham davom etsin
 
 ## 1.13. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 11_network` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **7 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan. Hammasi
+**offline-friendly** — haqiqiy internet talab qilmaydi:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run net1           # bitta mashqni tekshirish
+bashlings hint net1          # bosqichli maslahat
+```
+
+Manba: [`exercises/11_network/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/11_network)
+:::
+
+Quyidagi real-world mashqlarni internet bor joyda sinab ko'ring:
 
 1. **Status checker** — `https://httpbin.org/status/200`, `https://httpbin.org/status/404`, `https://httpbin.org/status/500` URL'lari uchun status code'larni chiqaring (har bittasi alohida qatorda).
 

@@ -7,9 +7,3 @@
 
 ## 2-bosqich
 `mv` katalog uchun `-r` flagi talab qilmaydi.
-
-## ✅ Yechim
-```bash
-mv eski.txt yangi.txt
-ls
-```

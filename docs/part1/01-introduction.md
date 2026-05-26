@@ -188,7 +188,19 @@ ls -l README<Tab> # → ls -l README.md
 
 ## 1.9. Mashqlar
 
-> Quyidagi vazifalarni terminalda bajaring va natijalarni ko'rib chiqing.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **5 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run intro1         # bitta mashqni tekshirish
+bashlings hint intro1        # bosqichli maslahat
+```
+
+Manba: [`exercises/01_intro/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/01_intro)
+:::
+
+Quyidagi qo'shimcha vazifalarni terminalda qo'l bilan bajaring:
 
 1. O'z home katalogingizning to'liq yo'lini chiqaring.
 2. Qaysi shell ishlatayotganingizni aniqlang.

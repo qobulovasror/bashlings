@@ -14,9 +14,3 @@ IFS=',' read -ra names <<< "$csv"
 `<<<` — here-string (bitta qatorli stdin).
 
 `IFS=','` faqat shu `read` uchun amal qiladi — global'ga ta'sir qilmaydi.
-
-## ✅ Yechim
-```bash
-IFS=',' read -ra names <<< "$csv"
-echo "${names[1]}"
-```

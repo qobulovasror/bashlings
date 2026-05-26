@@ -8,6 +8,3 @@ To'g'ri nom 4 ta harfdan iborat, `e` bilan boshlanadi va `o` bilan tugaydi: **e 
 
 ## 3-bosqich
 Bu — `echo` buyrug'i (matnni stdout'ga chiqaradi). Kitobning **1.5-bo'limi**da ko'rsatilgan.
-
-## ✅ Yechim
-`eko` so'zini `echo` ga o'zgartiring.

@@ -24,18 +24,3 @@ Yoki bitta qatorda (lekin o'qish qiyinroq):
 ```bash
 echo $(multiply "$(add 3 4)" 2)
 ```
-
-## ✅ Yechim
-```bash
-add() {
-    echo $(( $1 + $2 ))
-}
-
-multiply() {
-    echo $(( $1 * $2 ))
-}
-
-sum=$(add 3 4)
-result=$(multiply "$sum" 2)
-echo "$result"
-```

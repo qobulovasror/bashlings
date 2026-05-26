@@ -17,8 +17,3 @@ Yoki `-e` bilan:
 ```bash
 sed -e '2d' -e '4d' log.txt
 ```
-
-## ✅ Yechim
-```bash
-sed '2d;4d' log.txt
-```

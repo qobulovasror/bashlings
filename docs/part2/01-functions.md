@@ -13,7 +13,7 @@ description: "Bash funksiyalari: argumentlar, scope, return qiymatlari, kutubxon
 > - Real misol — kichik logging library
 >
 > **⏱ Vaqt:** ~25 daqiqa o'qish + mashqlar
-> **🧪 Mashqlar:** `bashlings watch 06_functions` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 6 ta interaktiv mashq tayyor ([`exercises/06_functions/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/06_functions))
 
 ---
 
@@ -604,7 +604,19 @@ log_error "Database javob bermayapti"
 
 ## 1.13. Mashqlar
 
-> 🧪 Kelajakda quyidagilar `bashlings watch 06_functions` orqali avto-tekshiriladi. Hozircha qo'l bilan tekshiring.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **6 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run func1          # bitta mashqni tekshirish
+bashlings hint func1         # bosqichli maslahat
+```
+
+Manba: [`exercises/06_functions/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/06_functions)
+:::
+
+Quyidagi kontseptual mashqlarni esa o'zingiz qo'l bilan sinab ko'ring:
 
 1. `is_even` funksiyasini yozing — son juftmi yoki toqmi (`return 0` / `return 1`).
 2. `repeat_word` funksiyasi — birinchi argumentdagi so'zni ikkinchi argumentdagi son marta chiqarsin.

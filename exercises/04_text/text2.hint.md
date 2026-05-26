@@ -18,13 +18,3 @@ Ikki flagni birlashtirib ishlatish mumkin:
 ```bash
 grep -ic "error" log.txt
 ```
-
-## ✅ Yechim
-```bash
-grep -ic "error" log.txt
-```
-
-Yoki:
-```bash
-grep -i -c "error" log.txt
-```

@@ -286,6 +286,20 @@ tree -L 3
 
 ## 2.13. Mashqlar
 
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **8 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run nav1           # bitta mashqni tekshirish
+bashlings hint nav1          # bosqichli maslahat
+```
+
+Manba: [`exercises/02_navigation/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/02_navigation)
+:::
+
+Quyidagi qo'shimcha vazifalarni terminalda qo'l bilan bajaring:
+
 1. Home katalogingizda `bash-mashq` nomli katalog yarating va ichida `notes`, `scripts`, `archive` ichki kataloglarini bir buyruq bilan yarating.
 2. `scripts/` ichida `hello.sh`, `backup.sh`, `cleanup.sh` fayllarini yarating.
 3. `hello.sh`ning nusxasini `hello.bak` qilib bir xil katalogga oling.

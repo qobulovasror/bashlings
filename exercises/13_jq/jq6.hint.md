@@ -27,13 +27,3 @@ echo '[{"p":1},{"p":2}]' | jq '[.[].p] | add'
 ```bash
 jq 'map(.price) | add'
 ```
-
-## ✅ Yechim
-```bash
-echo "$input" | jq '[.[].price] | add'
-```
-
-Yoki:
-```bash
-echo "$input" | jq 'map(.price) | add'
-```

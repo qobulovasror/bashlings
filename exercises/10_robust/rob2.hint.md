@@ -14,8 +14,3 @@ ls "$name"      # ls "Ali Vali" — bir argument
 
 ## 3-bosqich
 **Qoida:** har doim `"$var"` shaklida yozing. ShellCheck SC2086 aynan shu uchun.
-
-## ✅ Yechim
-```bash
-ls "$name"
-```

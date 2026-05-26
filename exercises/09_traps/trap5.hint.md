@@ -19,17 +19,3 @@ Bu pattern bir nechta trap ulagan paytda muhim:
 trap cleanup EXIT
 trap 'cleanup; exit 130' INT   # INT keyin EXIT — ikkalasi ham cleanup chaqiradi
 ```
-
-## ✅ Yechim
-```bash
-__done=0
-cleanup() {
-    [[ $__done -eq 1 ]] && return
-    __done=1
-    echo "tozalandi"
-}
-trap cleanup EXIT
-
-echo "main"
-cleanup
-```

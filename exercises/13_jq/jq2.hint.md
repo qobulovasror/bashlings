@@ -20,8 +20,3 @@ echo '[{"a":1},{"a":2}]' | jq '.[].a'
 
 ## 3-bosqich
 `-r` har doim, qo'shtirnoqlar olib tashlash uchun.
-
-## ✅ Yechim
-```bash
-echo "$input" | jq -r '.[].name'
-```

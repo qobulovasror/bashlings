@@ -267,6 +267,20 @@ cut -d':' -f1,7 /etc/passwd
 
 ## 4.10. Mashqlar
 
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **5 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run text1          # bitta mashqni tekshirish
+bashlings hint text1         # bosqichli maslahat
+```
+
+Manba: [`exercises/04_text/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/04_text)
+:::
+
+Quyidagi qo'shimcha vazifalarni terminalda qo'l bilan bajaring:
+
 1. `/etc/passwd` faylida nechta foydalanuvchi `/bin/bash` ishlatishini toping.
 2. Joriy katalogdagi eng katta 5 ta faylni hajmi bo'yicha tartiblang.
 3. `dmesg` natijasidan barcha `error` so'zli qatorlarni (case-insensitive) chiqaring va sanang.

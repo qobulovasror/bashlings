@@ -10,9 +10,3 @@ Sizga `>>` kerak — chunki "birinchi" qator saqlanishi kerak.
 
 ## 3-bosqich
 Qo'shgandan keyin `cat` orqali fayl mazmunini chiqaring.
-
-## ✅ Yechim
-```bash
-echo "ikkinchi" >> log.txt
-cat log.txt
-```

@@ -27,6 +27,14 @@ export default defineConfig({
     nav: [
       { text: 'Bosh sahifa', link: '/' },
       {
+        text: "Boshlash",
+        items: [
+          { text: "Kirish so'zi", link: '/foreword' },
+          { text: "O'rnatish", link: '/setup' },
+          { text: "Atamalar lug'ati", link: '/glossary' }
+        ]
+      },
+      {
         text: "Darslar",
         items: [
           { text: "1-qism: Linux & Bash Asoslari", link: '/part1/01-introduction' },
@@ -38,6 +46,39 @@ export default defineConfig({
     ],
 
     sidebar: {
+      '/foreword': [
+        {
+          text: "BOSHLASH",
+          collapsed: false,
+          items: [
+            { text: "Kirish so'zi", link: '/foreword' },
+            { text: "O'rnatish va sozlash", link: '/setup' },
+            { text: "Atamalar lug'ati", link: '/glossary' }
+          ]
+        }
+      ],
+      '/setup': [
+        {
+          text: "BOSHLASH",
+          collapsed: false,
+          items: [
+            { text: "Kirish so'zi", link: '/foreword' },
+            { text: "O'rnatish va sozlash", link: '/setup' },
+            { text: "Atamalar lug'ati", link: '/glossary' }
+          ]
+        }
+      ],
+      '/glossary': [
+        {
+          text: "BOSHLASH",
+          collapsed: false,
+          items: [
+            { text: "Kirish so'zi", link: '/foreword' },
+            { text: "O'rnatish va sozlash", link: '/setup' },
+            { text: "Atamalar lug'ati", link: '/glossary' }
+          ]
+        }
+      ],
       '/part1/': [
         {
           text: "1-QISM · Linux Buyruqlari va Bash Asoslari",

@@ -18,10 +18,3 @@ Bu mashqda eng qisqasi — **B variant**.
 
 ## 3-bosqich
 `do ... done` bloki ichida bajariladigan kod yoziladi.
-
-## ✅ Yechim
-```bash
-for i in {1..5}; do
-    echo "$i"
-done
-```

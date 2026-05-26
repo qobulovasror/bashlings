@@ -1,5 +1,8 @@
 pub mod hint;
 pub mod list;
 pub mod next;
+pub mod progress;
+pub mod reset;
 pub mod run;
+pub mod solution;
 pub mod watch;

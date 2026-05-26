@@ -2,33 +2,56 @@ use crate::info;
 use anyhow::Result;
 use owo_colors::OwoColorize;
 
-pub fn run() -> Result<()> {
-    let root = info::find_workspace_root()?;
-    let info = info::load(&root)?;
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum Filter {
+    All,
+    Pending,
+    Done,
+}
 
-    let total = info.exercises.len();
+pub fn run(filter: Filter) -> Result<()> {
+    let root = info::find_workspace_root()?;
+    let info_data = info::load(&root)?;
+
+    let total = info_data.exercises.len();
     let mut done = 0usize;
+    let mut shown = 0usize;
 
     println!();
     println!(
-        "  {}  ·  {} ta mashq",
+        "  {}  ·  {} ta mashq{}",
         "Bashlings".bold().green(),
-        total.to_string().bold()
+        total.to_string().bold(),
+        match filter {
+            Filter::All => "".into(),
+            Filter::Pending => "  (faqat hali tugatilmaganlari)".dimmed().to_string(),
+            Filter::Done => "  (faqat tugatilganlari)".dimmed().to_string(),
+        }
     );
     println!();
 
-    let name_width = info
+    let name_width = info_data
         .exercises
         .iter()
         .map(|e| e.name.len())
         .max()
         .unwrap_or(10);
 
-    for ex in &info.exercises {
+    for ex in &info_data.exercises {
         let is_done = ex.is_done(&root)?;
         if is_done {
             done += 1;
         }
+
+        let include = match filter {
+            Filter::All => true,
+            Filter::Pending => !is_done,
+            Filter::Done => is_done,
+        };
+        if !include {
+            continue;
+        }
+        shown += 1;
 
         let status = if is_done {
             "✓".green().to_string()
@@ -47,6 +70,18 @@ pub fn run() -> Result<()> {
         );
     }
 
+    if shown == 0 {
+        println!(
+            "  {}",
+            match filter {
+                Filter::Pending => "Hech qaysi mashq pending emas — hammasi tugatilgan! 🎉",
+                Filter::Done => "Hali bironta ham mashq tugatilmagan.",
+                Filter::All => "Mashqlar yo'q.",
+            }
+            .dimmed()
+        );
+    }
+
     let percent = if total == 0 {
         0.0
     } else {
@@ -62,8 +97,8 @@ pub fn run() -> Result<()> {
     );
     println!();
 
-    if done < total {
-        let next = info
+    if done < total && filter != Filter::Done {
+        let next = info_data
             .exercises
             .iter()
             .find(|e| !e.is_done(&root).unwrap_or(true));
@@ -75,7 +110,7 @@ pub fn run() -> Result<()> {
             );
             println!();
         }
-    } else {
+    } else if done == total {
         println!("  🎉 {}", "Hammasi tugadi!".bold().green());
         println!();
     }

@@ -11,9 +11,3 @@ Fayl mazmunini chiqarish uchun `cat <fayl>`.
 
 ## 3-bosqich
 Ikki buyruqni alohida qatorda yozsangiz bo'ladi yoki `&&` bilan zanjirlash mumkin.
-
-## ✅ Yechim
-```bash
-cp manba.txt nusxa.txt
-cat nusxa.txt
-```

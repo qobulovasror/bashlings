@@ -14,7 +14,7 @@ description: "crontab sintaksisi, at, systemd timers, flock idempotent skriptlar
 > - Real misol — **Nightly backup** notification bilan
 >
 > **⏱ Vaqt:** ~25 daqiqa
-> **🧪 Mashqlar:** `bashlings watch 14_cron` (kelajak sprint)
+> **🧪 Mashqlar:** `bashlings watch` — 7 ta interaktiv mashq tayyor ([`exercises/14_cron/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/14_cron))
 
 ---
 
@@ -605,7 +605,20 @@ HEALTHCHECK_URL=https://hc-ping.com/uuid-here
 
 ## 4.12. Mashqlar
 
-> 🧪 Kelajakda `bashlings watch 14_cron` paketida.
+::: tip 🧪 Bashlings — interaktiv mashqlar
+Bu bobning **7 ta** mashqi `bashlings` CLI orqali avto-tekshiruv bilan. Hammasi
+cron daemon talab qilmaydi — sintaksis va parsing bilan ishlash:
+
+```bash
+bashlings watch              # birinchi pending mashqdan boshlash
+bashlings run cron1          # bitta mashqni tekshirish
+bashlings hint cron1         # bosqichli maslahat
+```
+
+Manba: [`exercises/14_cron/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/14_cron)
+:::
+
+Quyidagi qo'shimcha kontseptual mashqlarni ham sinab ko'ring:
 
 1. **Cron syntax parser** — quyidagi cron qatorlarini "har soat 30-daqiqasi" yoki "ish kuni 9-17 har 30 daqiqa" deb tushuntirish bo'yicha quiz:
    - `30 * * * *`
