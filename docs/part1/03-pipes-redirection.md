@@ -5,6 +5,17 @@ description: "Standart oqimlar (stdin, stdout, stderr), >, >>, <, | va tee orqal
 
 # 3. I/O Redirection va Pipelines
 
+> Bu bobda nima o'rganasiz:
+> - **stdin / stdout / stderr** — uchta standart oqim
+> - **`>` va `>>`** — chiqishni faylga yo'naltirish (overwrite vs append)
+> - **`<` va `<<`** — fayldan o'qish, heredoc
+> - **`|`** (pipe) — buyruqlarni zanjirlash
+> - **`tee`** — ham faylga, ham ekranga
+> - `2>&1` va `/dev/null` — Unix daemons'ning klassik patterni
+>
+> **⏱ Vaqt:** ~30 daqiqa
+> **🧪 Mashqlar:** `bashlings watch` — 8 ta interaktiv mashq tayyor ([`exercises/03_pipes/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/03_pipes))
+
 Unix falsafasining eng kuchli g'oyasi:
 
 > "Bitta vazifani yaxshi bajaradigan kichik dasturlarni yozing va ularni bir-biri bilan **bog'lab**, murakkab vazifalarni hal qiling."

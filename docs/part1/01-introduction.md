@@ -5,6 +5,15 @@ description: "Linux dunyosiga birinchi qadam: terminal, shell, Bash va ularning 
 
 # 1. Shell, Terminal va Bash nima?
 
+> Bu bobda nima o'rganasiz:
+> - **Terminal**, **shell** va **bash** — uchta alohida tushuncha o'rtasidagi farq
+> - Birinchi terminal sessiyasini ochish va buyruq kiritish
+> - Prompt belgisining mazmuni
+> - Asosiy buyruqlar: `pwd`, `echo`, `whoami`, `date`
+>
+> **⏱ Vaqt:** ~15 daqiqa
+> **🧪 Mashqlar:** `bashlings watch` — 5 ta interaktiv mashq tayyor ([`exercises/01_intro/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/01_intro))
+
 Linux yoki macOS bilan ishlashni boshlaganingizda eshitadigan birinchi atamalar — **terminal**, **shell** va **bash**. Ko'pchilik ularni bir narsa deb o'ylaydi, lekin aslida bular **uchta alohida tushuncha**dir. Keling, har birini batafsil ko'rib chiqamiz.
 
 ## 1.1. Terminal nima?

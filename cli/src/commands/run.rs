@@ -141,9 +141,15 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
 
         println!();
         println!(
-            "  {} Maslahat: {}",
+            "  {} Maslahat:  {}",
             "💡".yellow(),
             format!("bashlings hint {name}").cyan().bold()
+        );
+        println!(
+            "  {} Yechim:    {} {}",
+            "🔒".dimmed(),
+            format!("bashlings solution {name}").dimmed(),
+            "— test pass bo'lgach ochiladi".dimmed()
         );
         println!();
         Ok(false)

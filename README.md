@@ -135,7 +135,18 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | 04 | Signallar va traps               | 5        |
 | 05 | Robust skriptlar                 | 5        |
 
-**Jami:** 10 bob, 60 mashq, ~5 500 qator markdown.
+### Part 3 — Real-world ko'nikmalar
+
+| #  | Bob                              | Mashqlar |
+|----|----------------------------------|----------|
+| 01 | Tarmoq buyruqlari (curl, ping)   | 7        |
+| 02 | SSH va remote management         | 7        |
+| 03 | JSON va YAML — jq                | 6        |
+| 04 | Cron va systemd timer'lar        | 7        |
+| 05 | Docker asoslari                  | 7        |
+| 06 | CI/CD — GitHub Actions           | 7        |
+
+**Jami:** 16 bob, 101 mashq, ~8 500+ qator markdown.
 
 ---
 
@@ -181,11 +192,11 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 
 Loyihaning batafsil holati [`STATUS.md`](./STATUS.md) faylida.
 
-| Pillar | Holat                                       |
-|--------|---------------------------------------------|
-| 📘 Kitob | 80% (Part 1+2 to'la, Part 3 yo'q hali)     |
-| 🧪 Mashqlar | 100% (60/60 Part 1+2)                    |
-| ⚡ CLI | 100% (4/4 MVP: list, run, watch, hint + next) |
+| Pillar | Holat                                                          |
+|--------|----------------------------------------------------------------|
+| 📘 Kitob | 95% (Part 1+2+3 to'la, Foreword+Setup+Glossary; Appendix qarz) |
+| 🧪 Mashqlar | 100% (101/101 — Part 1: 32, Part 2: 28, Part 3: 41)          |
+| ⚡ CLI | 100% (8 buyruq: list/run/watch/hint/solution/reset/progress/next) |
 
 ---
 

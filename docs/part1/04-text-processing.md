@@ -5,6 +5,16 @@ description: "cat, less, head, tail, grep, wc orqali matnli fayllarni o'qish, qi
 
 # 4. Matnlar bilan ishlash asoslari
 
+> Bu bobda nima o'rganasiz:
+> - **`cat`** / **`less`** — fayl mazmunini ko'rish
+> - **`head`** / **`tail`** — boshini yoki oxirini
+> - **`grep`** — matn ichida PATTERN topish (`-i`, `-r`, `-c`, `-v`)
+> - **`wc`** — qator/so'z/belgi sanash
+> - Bularni `|` orqali zanjirlash patternlari
+>
+> **⏱ Vaqt:** ~20 daqiqa
+> **🧪 Mashqlar:** `bashlings watch` — 5 ta interaktiv mashq tayyor ([`exercises/04_text/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/04_text))
+
 Unix dunyosida **hamma narsa matn**: konfiguratsiya fayllari, log'lar, kod, hatto tarmoq trafigi ham. Shuning uchun matnni samarali o'qish, qidirish va o'lchash — har bir muhandisning asosiy ko'nikmasi.
 
 Bu bobda eng ko'p ishlatiladigan **olti** buyruqni o'rganamiz: `cat`, `less`, `head`, `tail`, `grep`, `wc`.

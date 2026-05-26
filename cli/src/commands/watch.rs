@@ -147,12 +147,17 @@ fn print_footer() {
         "Faylni saqlang yoki tugma bosing:".dimmed()
     );
     println!(
-        "     {}  hint    {}  solution    {}  re-run    {}  progress    {}  quit",
+        "     {}  hint    {}  solution {}    {}  re-run    {}  progress    {}  quit",
         "h".bold().cyan(),
         "s".bold().cyan(),
+        "🔒".dimmed(),
         "r".bold().cyan(),
         "l".bold().cyan(),
         "q".bold().cyan()
+    );
+    println!(
+        "     {}",
+        "(🔒 = test pass'dan keyin ochiladi)".dimmed()
     );
 }
 

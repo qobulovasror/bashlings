@@ -11,13 +11,13 @@ hero:
   actions:
     - theme: brand
       text: "Boshlash →"
-      link: /part1/01-introduction
+      link: /foreword
+    - theme: alt
+      text: "O'rnatish"
+      link: /setup
     - theme: alt
       text: "GitHub"
       link: https://github.com/qobulovasror/bashlings
-    - theme: alt
-      text: "Advanced bo'lim"
-      link: /part2/01-functions
 
 features:
   - icon: 🐧
@@ -55,13 +55,40 @@ Ko'pchilik o'zbek dasturchilari uchun terminal va Bash hali ham "sirli" hudud bo
 
 ## Darslik tuzilishi
 
-Darslik **2 ta katta qism**dan iborat:
+Darslik **3 ta katta qism**dan iborat — jami **16 bob** va **101 interaktiv mashq**.
 
-### 📘 1-qism — Linux & Bash asoslari
+### 📘 1-qism — Linux & Bash asoslari (32 mashq)
 Boshlovchilar uchun mo'ljallangan. Terminaldan tortib, birinchi Bash skript yozishgacha bo'lgan yo'l.
 
-### 📗 2-qism — Advanced Bash Scripting
+[**→ 1-qismni boshlash**](/part1/01-introduction)
+
+### 📗 2-qism — Advanced Bash Scripting (28 mashq)
 Funksiyalar, massivlar, `sed`/`awk`, signallar va production-grade skriptlar.
+
+[**→ 2-qismga o'tish**](/part2/01-functions)
+
+### 📕 3-qism — Real-world ko'nikmalar (41 mashq)
+`curl`, SSH, `jq`, cron, Docker, GitHub Actions — DevOps yo'lidagi asosiy ko'nikmalar.
+
+[**→ 3-qismga o'tish**](/part3/01-network)
+
+---
+
+## Yo'l xaritasi
+
+::: tip Yangi foydalanuvchimisiz?
+**Tartib bo'yicha:**
+1. [**Kirish so'zi**](/foreword) — uchta ustun falsafasi, kim uchun mo'ljallangan
+2. [**O'rnatish**](/setup) — Bash 4+, Rust va `bashlings` CLI'ni 15 daqiqada sozlash
+3. [**1-qism, 1-bob**](/part1/01-introduction) — birinchi terminal qadami
+4. Har bobdan keyin: terminalda `bashlings watch`
+
+**Foydali sahifalar:**
+- [**Atamalar lug'ati**](/glossary) — uchragan har bir atama izohi
+- [**Manbalar**](/resources) — qo'shimcha o'qish va vositalar
+:::
+
+---
 
 ## Manbalar
 

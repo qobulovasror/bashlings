@@ -5,6 +5,17 @@ description: "Shebang, o'zgaruvchilar, if/else shartlari va looplar — Bash skr
 
 # 5. Birinchi Bash skript
 
+> Bu bobda nima o'rganasiz:
+> - **Shebang** (`#!/usr/bin/env bash`) va executable huquq
+> - **O'zgaruvchilar** (`name=value`, qo'shtirnoq qoidalari)
+> - **Argumentlar** (`$1`, `$@`, `$#`)
+> - **`if` / `else`** — shartli mantiq
+> - **`for`** loop
+> - Foydalanuvchidan input olish (`read`)
+>
+> **⏱ Vaqt:** ~40 daqiqa
+> **🧪 Mashqlar:** `bashlings watch` — 6 ta interaktiv mashq tayyor ([`exercises/05_scripting/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/05_scripting))
+
 Endi siz terminalda erkin harakatlanasiz, buyruqlarni bog'lashni bilasiz. Vaqti keldi — buyruqlarni **fayl ichida saqlab**, bir nechta marta, hatto avtomatik bajarish uchun **skript** yozaylik.
 
 ## 5.1. Birinchi skript: Hello World

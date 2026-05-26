@@ -5,6 +5,16 @@ description: "ls, cd, pwd, mkdir, rm, cp, mv buyruqlari bilan fayl tizimida prof
 
 # 2. Fayl tizimi bo'ylab navigatsiya
 
+> Bu bobda nima o'rganasiz:
+> - **`pwd`** / **`ls`** / **`cd`** — qayerdaman, nima bor, qayerga o'tay?
+> - **`mkdir`** / **`touch`** — katalog va fayl yaratish
+> - **`cp`** / **`mv`** / **`rm`** — nusxalash, ko'chirish, o'chirish
+> - **Absolute vs relative** yo'l farqi (`/etc/hosts` vs `../config`)
+> - Yashirin fayllar (`.` bilan boshlanadi) va glob naqshlar
+>
+> **⏱ Vaqt:** ~25 daqiqa
+> **🧪 Mashqlar:** `bashlings watch` — 8 ta interaktiv mashq tayyor ([`exercises/02_navigation/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/02_navigation))
+
 Linux/Unix fayl tizimi — bu **bitta katta daraxt**. Uning ildizi `/` belgisi bilan ifodalanadi. Hamma narsa shu ildiz ostida joylashadi: foydalanuvchi fayllari, dasturlar, qurilmalar, hatto tizim sozlamalari ham.
 
 ```text
