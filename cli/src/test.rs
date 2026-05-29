@@ -190,3 +190,170 @@ pub fn run_full(path: &Path) -> Result<TestReport> {
         exit_code,
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // ─── parse_assertions ──────────────────────────────────────────────
+
+    #[test]
+    fn parses_stdout_directive() {
+        let src = "echo hi\n# @test:stdout: hello\n";
+        let out = parse_assertions(src).unwrap();
+        assert_eq!(out.len(), 1);
+        match &out[0] {
+            Assertion::Stdout(s) => assert_eq!(s, "hello"),
+            _ => panic!("expected Stdout"),
+        }
+    }
+
+    #[test]
+    fn parses_stdout_cmd_directive() {
+        let src = "# @test:stdout-cmd: printf 'a\\nb\\n'\n";
+        let out = parse_assertions(src).unwrap();
+        match &out[0] {
+            Assertion::StdoutCmd(c) => assert_eq!(c, "printf 'a\\nb\\n'"),
+            _ => panic!("expected StdoutCmd"),
+        }
+    }
+
+    #[test]
+    fn parses_exit_directive() {
+        let src = "# @test:exit: 1\n";
+        let out = parse_assertions(src).unwrap();
+        match &out[0] {
+            Assertion::Exit(code) => assert_eq!(*code, 1),
+            _ => panic!("expected Exit"),
+        }
+    }
+
+    #[test]
+    fn parses_multiple_directives() {
+        let src = "echo x\n# @test:stdout: x\n# @test:exit: 0\n";
+        let out = parse_assertions(src).unwrap();
+        assert_eq!(out.len(), 2);
+    }
+
+    #[test]
+    fn ignores_non_directive_comments() {
+        let src = "# Just a comment\n# Another comment\n";
+        let out = parse_assertions(src).unwrap();
+        assert!(out.is_empty());
+    }
+
+    #[test]
+    fn directive_value_with_colon_is_preserved() {
+        // The bug-prone case: directive value contains ':' (e.g., "name: foo")
+        let src = "# @test:stdout: name: Ali\n";
+        let out = parse_assertions(src).unwrap();
+        match &out[0] {
+            Assertion::Stdout(s) => assert_eq!(s, "name: Ali"),
+            _ => panic!("expected Stdout"),
+        }
+    }
+
+    #[test]
+    fn unknown_directive_does_not_fail() {
+        // Unknown directives produce a warning to stderr but don't error.
+        let src = "# @test:foo: bar\n";
+        let out = parse_assertions(src).unwrap();
+        assert!(out.is_empty());
+    }
+
+    #[test]
+    fn malformed_directive_returns_error() {
+        // Missing the second colon.
+        let src = "# @test:stdout-no-colon\n";
+        let result = parse_assertions(src);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn invalid_exit_code_returns_error() {
+        let src = "# @test:exit: notanumber\n";
+        let result = parse_assertions(src);
+        assert!(result.is_err());
+    }
+
+    // ─── normalize ─────────────────────────────────────────────────────
+
+    #[test]
+    fn normalize_strips_trailing_newlines() {
+        assert_eq!(normalize("hello\n"), "hello");
+        assert_eq!(normalize("hello\n\n\n"), "hello");
+        assert_eq!(normalize("hello\r\n"), "hello");
+    }
+
+    #[test]
+    fn normalize_preserves_internal_whitespace() {
+        assert_eq!(normalize("a  b\n"), "a  b");
+        assert_eq!(normalize("a\nb\n"), "a\nb");
+    }
+
+    // ─── evaluate ──────────────────────────────────────────────────────
+
+    #[test]
+    fn evaluate_stdout_match_passes() {
+        let assertions = vec![Assertion::Stdout("hi".into())];
+        let results = evaluate(&assertions, "hi\n", 0).unwrap();
+        assert!(results[0].passed);
+    }
+
+    #[test]
+    fn evaluate_stdout_mismatch_fails() {
+        let assertions = vec![Assertion::Stdout("hi".into())];
+        let results = evaluate(&assertions, "ho\n", 0).unwrap();
+        assert!(!results[0].passed);
+        assert_eq!(results[0].actual, "ho");
+    }
+
+    #[test]
+    fn evaluate_exit_match() {
+        let assertions = vec![Assertion::Exit(0)];
+        let results = evaluate(&assertions, "", 0).unwrap();
+        assert!(results[0].passed);
+
+        let results = evaluate(&assertions, "", 1).unwrap();
+        assert!(!results[0].passed);
+    }
+
+    // ─── TestReport aggregate ──────────────────────────────────────────
+
+    #[test]
+    fn all_passed_requires_nonempty() {
+        let report = TestReport {
+            results: vec![],
+            stdout: String::new(),
+            stderr: String::new(),
+            exit_code: 0,
+        };
+        assert!(!report.all_passed());
+    }
+
+    #[test]
+    fn passed_count_is_accurate() {
+        let report = TestReport {
+            results: vec![
+                AssertionResult {
+                    assertion: Assertion::Exit(0),
+                    passed: true,
+                    expected: "0".into(),
+                    actual: "0".into(),
+                },
+                AssertionResult {
+                    assertion: Assertion::Exit(0),
+                    passed: false,
+                    expected: "0".into(),
+                    actual: "1".into(),
+                },
+            ],
+            stdout: String::new(),
+            stderr: String::new(),
+            exit_code: 0,
+        };
+        assert_eq!(report.passed_count(), 1);
+        assert_eq!(report.total(), 2);
+        assert!(!report.all_passed());
+    }
+}

@@ -70,9 +70,8 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
                 format_value(&r.expected).red()
             );
             println!(
-                "  {}  {:<12} actual:    {}",
-                " ",
-                " ",
+                "     {:<12} actual:    {}",
+                "",
                 format_value(&r.actual).red()
             );
         }

@@ -45,8 +45,7 @@ pub fn run(name: &str) -> Result<bool> {
 
     let rel = hint_path.strip_prefix(&root).unwrap_or(&hint_path);
     println!(
-        "  {} {}",
-        "📄".to_string(),
+        "  📄 {}",
         rel.display().to_string().dimmed()
     );
     println!();

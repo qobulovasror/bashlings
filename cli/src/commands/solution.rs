@@ -100,8 +100,7 @@ pub fn run(name: &str) -> Result<bool> {
         .unwrap_or(&solution_path);
     println!();
     println!(
-        "  {} {}",
-        "📄".to_string(),
+        "  📄 {}",
         rel.display().to_string().dimmed()
     );
     println!();

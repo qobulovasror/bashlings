@@ -95,7 +95,7 @@ pub fn run() -> Result<bool> {
             }
             Action::Quit => {
                 println!();
-                println!("  {} {}", "👋".to_string(), "Chiqildi.".dimmed());
+                println!("  👋 {}", "Chiqildi.".dimmed());
                 println!();
                 return Ok(true);
             }
@@ -132,8 +132,7 @@ fn print_header(done: usize, total: usize, advanced: bool) {
     if advanced && done > 0 {
         println!();
         println!(
-            "  {} {}",
-            "🎯".to_string(),
+            "  🎯 {}",
             "Yangi mashqqa o'tdik!".bold().yellow()
         );
     }
@@ -142,8 +141,7 @@ fn print_header(done: usize, total: usize, advanced: bool) {
 fn print_footer() {
     println!();
     println!(
-        "  {} {}",
-        "👀".to_string(),
+        "  👀 {}",
         "Faylni saqlang yoki tugma bosing:".dimmed()
     );
     println!(
@@ -169,7 +167,7 @@ fn clear_screen() {
 
 fn celebrate(total: usize) {
     println!();
-    println!("  {} {}", "🎉".to_string(), "Hammasi tugadi!".bold().green());
+    println!("  🎉 {}", "Hammasi tugadi!".bold().green());
     println!();
     println!(
         "  Siz {} ta mashqning hammasini muvaffaqiyatli yechib chiqdingiz.",
