@@ -12,11 +12,13 @@
 //!
 //! Anything else passes through verbatim.
 
-use crate::info;
+use crate::{info, state};
 use anyhow::{anyhow, Context, Result};
-use owo_colors::OwoColorize;
+use crate::style::Style;
 
-pub fn run(name: &str) -> Result<bool> {
+/// Progressive hint: each invocation reveals the *next* `## ` step. Pass
+/// `show_all` to dump everything, or `reset` to forget the revealed level.
+pub fn run(name: &str, show_all: bool, reset: bool) -> Result<bool> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
 
@@ -38,19 +40,101 @@ pub fn run(name: &str) -> Result<bool> {
         ));
     }
 
+    if reset {
+        state::set_hint_level(&root, name, 0)?;
+        println!();
+        println!(
+            "  {} {} — maslahat bosqichlari qayta tiklandi.",
+            "♻".cyan(),
+            name.bold()
+        );
+        println!();
+        return Ok(true);
+    }
+
     let content = std::fs::read_to_string(&hint_path)
         .with_context(|| format!("'{}' faylini o'qib bo'lmadi", hint_path.display()))?;
 
-    render(&content);
+    let total = split_sections(&content).1.len();
 
-    let rel = hint_path.strip_prefix(&root).unwrap_or(&hint_path);
-    println!(
-        "  📄 {}",
-        rel.display().to_string().dimmed()
-    );
-    println!();
+    // No `## ` steps — fall back to rendering the whole file.
+    if total == 0 {
+        render(&content);
+        print_path_footer(&root, &hint_path);
+        return Ok(true);
+    }
+
+    let level = if show_all {
+        total
+    } else {
+        let next = (state::hint_level(&root, name) + 1).min(total);
+        state::set_hint_level(&root, name, next)?;
+        next
+    };
+
+    let (shown, _) = hint_up_to_level(&content, level);
+    render(&shown);
+
+    if level < total {
+        println!(
+            "  {} bosqich {}/{} — keyingisi:  {}",
+            "▸".cyan(),
+            level,
+            total,
+            format!("bashlings hint {name}").cyan().bold()
+        );
+    } else {
+        println!(
+            "  {} bosqich {}/{} — barcha maslahatlar ko'rsatildi.",
+            "✓".green(),
+            level,
+            total
+        );
+    }
+    print_path_footer(&root, &hint_path);
 
     Ok(true)
+}
+
+fn print_path_footer(root: &std::path::Path, hint_path: &std::path::Path) {
+    let rel = hint_path.strip_prefix(root).unwrap_or(hint_path);
+    println!("  📄 {}", rel.display().to_string().dimmed());
+    println!();
+}
+
+/// Split hint markdown into a preamble (everything before the first `## ` line)
+/// and a list of `## ` sections, each including its own header line.
+fn split_sections(md: &str) -> (String, Vec<String>) {
+    let mut preamble: Vec<&str> = Vec::new();
+    let mut sections: Vec<Vec<&str>> = Vec::new();
+    for line in md.lines() {
+        if line.trim_start().starts_with("## ") {
+            sections.push(vec![line]);
+        } else if let Some(last) = sections.last_mut() {
+            last.push(line);
+        } else {
+            preamble.push(line);
+        }
+    }
+    (
+        preamble.join("\n"),
+        sections.into_iter().map(|s| s.join("\n")).collect(),
+    )
+}
+
+/// Build the markdown to display: preamble + first `level` sections.
+/// Returns `(markdown, total_sections)`.
+fn hint_up_to_level(md: &str, level: usize) -> (String, usize) {
+    let (preamble, sections) = split_sections(md);
+    let total = sections.len();
+    let mut parts: Vec<String> = Vec::new();
+    if !preamble.trim().is_empty() {
+        parts.push(preamble);
+    }
+    for s in sections.into_iter().take(level) {
+        parts.push(s);
+    }
+    (parts.join("\n"), total)
 }
 
 fn render(md: &str) {
@@ -177,4 +261,41 @@ fn render_inline(line: &str) -> String {
     }
 
     out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const SAMPLE: &str = "# Sarlavha\nkirish\n\n## 1-bosqich\nbir\n\n## 2-bosqich\nikki\n\n## 3-bosqich\nuch\n";
+
+    #[test]
+    fn split_counts_sections() {
+        let (preamble, sections) = split_sections(SAMPLE);
+        assert!(preamble.contains("Sarlavha"));
+        assert_eq!(sections.len(), 3);
+        assert!(sections[0].contains("1-bosqich"));
+    }
+
+    #[test]
+    fn level_one_shows_only_first_step() {
+        let (out, total) = hint_up_to_level(SAMPLE, 1);
+        assert_eq!(total, 3);
+        assert!(out.contains("1-bosqich"));
+        assert!(!out.contains("2-bosqich"));
+        assert!(out.contains("Sarlavha")); // preamble always shown
+    }
+
+    #[test]
+    fn full_level_shows_all_steps() {
+        let (out, _) = hint_up_to_level(SAMPLE, 3);
+        assert!(out.contains("1-bosqich"));
+        assert!(out.contains("3-bosqich"));
+    }
+
+    #[test]
+    fn no_sections_yields_zero_total() {
+        let (_, sections) = split_sections("# Faqat sarlavha\nmatn\n");
+        assert_eq!(sections.len(), 0);
+    }
 }

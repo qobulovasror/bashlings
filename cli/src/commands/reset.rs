@@ -1,12 +1,14 @@
-//! `bashlings reset <name>` — restore the `# I AM NOT DONE` marker so the
-//! exercise reverts to its "not yet solved" state.
+//! `bashlings reset <name>` — restore an exercise to its original state.
 //!
-//! Note: this does NOT restore the original broken code. To fully restore an
-//! exercise file, use `git checkout exercises/<path>`.
+//! Preferred path: `git checkout` the committed (pristine) file, which brings
+//! back BOTH the original broken code AND the `# I AM NOT DONE` marker.
+//! Fallback (no git / untracked file): re-insert the marker only.
 
-use crate::info;
+use crate::{info, state};
 use anyhow::{anyhow, Result};
-use owo_colors::OwoColorize;
+use crate::style::Style;
+use std::path::Path;
+use std::process::{Command, Stdio};
 
 pub fn run(name: &str) -> Result<bool> {
     let root = info::find_workspace_root()?;
@@ -19,30 +21,59 @@ pub fn run(name: &str) -> Result<bool> {
     })?;
 
     let path = ex.full_path(&root);
-    let inserted = info::restore_done_marker(&path)?;
 
-    if inserted {
+    // Forget any revealed hint steps — a clean reset starts the hints over too.
+    let _ = state::set_hint_level(&root, name, 0);
+
+    println!();
+
+    let rel = format!("exercises/{}", ex.path);
+    if git_restore(&root, &rel) {
+        println!(
+            "  {} {} — {} (asl kod + marker tiklandi).",
+            "♻".cyan(),
+            name.bold(),
+            "git checkout".dimmed()
+        );
         println!();
+        return Ok(true);
+    }
+
+    // Fallback: git unavailable or file untracked — restore only the marker.
+    let inserted = info::restore_done_marker(&path)?;
+    if inserted {
         println!(
             "  {} {} — {} marker qaytarildi.",
             "♻".cyan(),
             name.bold(),
             "`# I AM NOT DONE`".dimmed()
         );
-        println!(
-            "  {} Original kodni tiklash uchun: {}",
-            "💡".yellow(),
-            format!("git checkout exercises/{}", ex.path).cyan()
-        );
     } else {
-        println!();
         println!(
             "  {} {} — marker allaqachon o'rnatilgan.",
             "ℹ".cyan(),
             name.bold()
         );
     }
+    println!(
+        "  {} Asl kodni to'liq tiklab bo'lmadi (git yo'q yoki fayl kuzatuvda emas).",
+        "⚠".yellow()
+    );
     println!();
 
     Ok(true)
+}
+
+/// Run `git -C <root> checkout -- <rel>`. Returns `true` on success.
+/// Any failure (not a repo, untracked file, git missing) yields `false`.
+fn git_restore(root: &Path, rel: &str) -> bool {
+    Command::new("git")
+        .arg("-C")
+        .arg(root)
+        .args(["checkout", "--", rel])
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .map(|s| s.success())
+        .unwrap_or(false)
 }

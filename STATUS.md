@@ -95,20 +95,20 @@ bash-doc/
 
 ## 2. CLI — joriy holat
 
-### 2.1. Buyruqlar (8/8 tayyor)
+### 2.1. Buyruqlar (10/10 tayyor)
 
 | Buyruq                       | Vazifasi                                              | Holat |
 |------------------------------|-------------------------------------------------------|-------|
-| `bashlings list`             | Hamma mashqlar + status (progress bilan)              | 🟢    |
-| `bashlings list --pending`   | Faqat tugatilmaganlari                                 | 🟢    |
-| `bashlings list --done`      | Faqat tugatilganlari                                   | 🟢    |
-| `bashlings run <name>`       | Bitta mashqni tekshirish + pass'da marker avto-o'chadi | 🟢    |
+| `bashlings list`             | Hamma mashqlar + status (`--pending/--done/--json`)   | 🟢    |
+| `bashlings run [name]`       | Mashqni tekshirish (nomsiz — keyingi pending)          | 🟢    |
+| `bashlings verify`           | Hammasini tartibda, birinchi xatoda to'xtash          | 🟢    |
 | `bashlings watch`            | Interaktiv rejim — fayl saqlash + hotkeys             | 🟢    |
-| `bashlings hint <name>`      | 3-bosqichli maslahat (yechim YO'Q)                     | 🟢    |
+| `bashlings hint <name>`      | Progressiv maslahat (`--all/--reset`)                  | 🟢    |
 | `bashlings solution <name>`  | Yechim — **faqat test pass'dan keyin**                | 🟢    |
-| `bashlings reset <name>`     | Marker'ni qaytarish (boshlang'ich holatga)             | 🟢    |
-| `bashlings progress`         | Compact statistika                                    | 🟢    |
-| `bashlings next`             | Birinchi pending mashq nomi (CI uchun)                 | 🟢    |
+| `bashlings reset <name>`     | Asl holatga qaytarish (git checkout — kod + marker)    | 🟢    |
+| `bashlings progress`         | Compact statistika (`--json` ham)                      | 🟢    |
+| `bashlings next`             | Birinchi pending mashq nomi (`--json` ham)             | 🟢    |
+| `bashlings completions <sh>` | Shell completion (bash/zsh/fish/...)                   | 🟢    |
 
 ### 2.2. Watch rejimi hotkeys
 
@@ -124,13 +124,19 @@ bash-doc/
 
 | Rejim         | Holat | Izoh                                            |
 |---------------|-------|-------------------------------------------------|
-| `stdout`      | 🟢    | Literal matn taqqoslash                          |
-| `stdout-cmd`  | 🟢    | `bash -c` natijasi bilan taqqoslash              |
-| `exit`        | 🟢    | Exit code taqqoslash                             |
-| `stderr`      | 🔴    | info.toml'da yo'q, runner'da yo'q                 |
-| `regex`       | 🔴    | info.toml'da belgilash mumkin, runner ignore qiladi |
-| `file`        | 🔴    | xuddi shunday                                    |
-| `shellcheck`  | 🔴    | xuddi shunday                                    |
+| `stdout`           | 🟢    | Literal matn taqqoslash                     |
+| `stdout-cmd`       | 🟢    | `bash -c` natijasi bilan taqqoslash         |
+| `stdout-contains`  | 🟢    | Kichik satr mavjudligini tekshirish         |
+| `stdout-regex`     | 🟢    | Regular expression mosligi                  |
+| `stderr`           | 🟢    | stderr literal taqqoslash                   |
+| `exit`             | 🟢    | Exit code taqqoslash                        |
+| `file-exists`      | 🟢    | Fayl/katalog mavjudligini tekshirish        |
+| `shellcheck`       | 🔴    | Hali runner'da yo'q (CI'da alohida bor)     |
+
+**Runner mustahkamligi:** har skript 10s timeout bilan (cheksiz tsikl CLI'ni
+osmaydi), `stdin=/dev/null` (`read` bloklanmaydi), workspace root cwd'da
+(deterministik). `watch` raw-mode RAII guard bilan (xato bo'lsa ham terminal
+tiklanadi). bash 4'dan past versiyada ogohlantirish chiqadi.
 
 ### 2.4. Distribution
 
@@ -149,14 +155,14 @@ bash-doc/
 | Element                                | Holat       |
 |----------------------------------------|-------------|
 | `cargo build --release`                | 🟢 0 warning |
-| `cargo test`                           | 🔴 Hech qaysi unit test yo'q |
-| Solutions test pipeline (har solution o'tishini tasdiqlash) | 🔴 Yo'q |
-| `shellcheck exercises/`                | 🔴 Yo'q (manual)|
-| `docs:build` (VitePress)               | 🟢 Lokalda ishlaydi |
-| **GitHub Actions CI**                  | 🔴 `.github/` katalogi mavjud emas |
-| `CONTRIBUTING.md`                      | 🔴 Yo'q     |
-| `CHANGELOG.md`                         | 🔴 Yo'q     |
-| `LICENSE` fayl                         | 🔴 Yo'q (README'da MIT deyilgan, fayl yo'q) |
+| `cargo test`                           | 🟢 50 ta test (42 unit + 8 integratsion `tests/cli.rs`) |
+| Solutions test pipeline (har solution o'tishini tasdiqlash) | 🟢 `scripts/test-solutions.sh` (101/101) |
+| `shellcheck exercises/`                | 🟢 CI'da (exercises info-only, .solutions strict) |
+| `docs:build` (VitePress)               | 🟢 Lokalda + CI'da ishlaydi |
+| **GitHub Actions CI**                  | 🟢 `.github/workflows/ci.yml` (cli + solutions + shellcheck + docs) |
+| `CONTRIBUTING.md`                      | 🟢 Mavjud   |
+| `CHANGELOG.md`                         | 🟢 Mavjud   |
+| `LICENSE` fayl                         | 🟢 Mavjud (MIT) |
 
 ---
 
@@ -203,8 +209,8 @@ bash-doc/
 
 ### Eng katta qolgan bo'shliqlar (ROI tartibida)
 
-1. 🔴 **GitHub Actions CI** — regression himoyasi yo'q
-2. 🔴 **Cargo unit testlar** — marker logic uchun
+1. 🟢 **GitHub Actions CI** — bajarildi (`.github/workflows/ci.yml`)
+2. 🟢 **Cargo unit testlar** — bajarildi (31 ta test)
 3. 🔴 **Part 1 top callouts** — uchlik bashlash nuqtasini birinchi taasurot uchun
 4. 🔴 **1 ta Capstone bob** — kursni "tugatilgan" his qildiradi
 5. 🔴 **Distribution** — Crates.io / Homebrew tap

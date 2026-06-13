@@ -1,6 +1,7 @@
 use crate::info;
+use crate::style::Style;
 use anyhow::Result;
-use owo_colors::OwoColorize;
+use serde::Serialize;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Filter {
@@ -9,9 +10,53 @@ pub enum Filter {
     Done,
 }
 
-pub fn run(filter: Filter) -> Result<()> {
+#[derive(Serialize)]
+struct JsonExercise<'a> {
+    name: &'a str,
+    chapter: &'a str,
+    done: bool,
+}
+
+#[derive(Serialize)]
+struct JsonList<'a> {
+    total: usize,
+    done: usize,
+    exercises: Vec<JsonExercise<'a>>,
+}
+
+pub fn run(filter: Filter, json: bool) -> Result<()> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
+
+    if json {
+        let mut done = 0usize;
+        let mut exercises = Vec::new();
+        for ex in &info_data.exercises {
+            let is_done = ex.is_done(&root)?;
+            if is_done {
+                done += 1;
+            }
+            let include = match filter {
+                Filter::All => true,
+                Filter::Pending => !is_done,
+                Filter::Done => is_done,
+            };
+            if include {
+                exercises.push(JsonExercise {
+                    name: &ex.name,
+                    chapter: ex.chapter.as_deref().unwrap_or(""),
+                    done: is_done,
+                });
+            }
+        }
+        let out = JsonList {
+            total: info_data.exercises.len(),
+            done,
+            exercises,
+        };
+        println!("{}", serde_json::to_string_pretty(&out)?);
+        return Ok(());
+    }
 
     let total = info_data.exercises.len();
     let mut done = 0usize;

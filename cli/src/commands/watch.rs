@@ -15,7 +15,7 @@ use anyhow::{Context, Result};
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyModifiers};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use notify::{Event as NotifyEvent, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use owo_colors::OwoColorize;
+use crate::style::Style;
 use std::io::Write;
 use std::sync::mpsc;
 use std::time::{Duration, Instant};
@@ -28,7 +28,26 @@ enum Action {
     Quit,
 }
 
+/// RAII guard: enables terminal raw mode on creation and ALWAYS restores
+/// cooked mode on drop — including early `?` returns and panics. Without this,
+/// an error inside the keypress loop would leave the terminal broken.
+struct RawMode;
+
+impl RawMode {
+    fn enable() -> Result<Self> {
+        enable_raw_mode().context("terminal raw mode'ga o'tkaza olmadik")?;
+        Ok(RawMode)
+    }
+}
+
+impl Drop for RawMode {
+    fn drop(&mut self) {
+        let _ = disable_raw_mode();
+    }
+}
+
 pub fn run() -> Result<bool> {
+    crate::test::warn_if_old_bash();
     let root = info::find_workspace_root()?;
     let watch_dir = root.join("exercises");
 
@@ -101,7 +120,8 @@ pub fn run() -> Result<bool> {
             }
             Action::Hint => {
                 clear_screen();
-                let _ = commands::hint::run(&name);
+                // Each `h` press reveals the next progressive hint step.
+                let _ = commands::hint::run(&name, false, false);
                 pause_until_keypress()?;
             }
             Action::Solution => {
@@ -111,7 +131,7 @@ pub fn run() -> Result<bool> {
             }
             Action::List => {
                 clear_screen();
-                let _ = commands::progress::run();
+                let _ = commands::progress::run(false);
                 pause_until_keypress()?;
             }
         }
@@ -203,10 +223,9 @@ fn wait_for_action(
     file_rx: &mpsc::Receiver<notify::Result<NotifyEvent>>,
     last_event: &mut Instant,
 ) -> Result<Action> {
-    enable_raw_mode().context("terminal raw mode'ga o'tkaza olmadik")?;
-    let result = wait_for_action_inner(file_rx, last_event);
-    let _ = disable_raw_mode();
-    result
+    let _raw = RawMode::enable()?;
+    wait_for_action_inner(file_rx, last_event)
+    // `_raw` dropped here — cooked mode restored on every path, errors included.
 }
 
 fn wait_for_action_inner(
@@ -280,7 +299,7 @@ fn pause_until_keypress() -> Result<()> {
         "Davom etish uchun istalgan tugmani bosing...".dimmed()
     );
     let _ = std::io::stdout().flush();
-    enable_raw_mode()?;
+    let _raw = RawMode::enable()?;
     loop {
         if event::poll(Duration::from_millis(500))? {
             if let Event::Key(_) = event::read()? {
@@ -288,6 +307,6 @@ fn pause_until_keypress() -> Result<()> {
             }
         }
     }
-    let _ = disable_raw_mode();
     Ok(())
+    // `_raw` dropped here — raw mode restored even if `poll`/`read` errored.
 }

@@ -3,7 +3,9 @@
 # Har mashq quyidagi maydonlarga ega:
 #   name     — noyob qisqa nom (bashlings run <name> orqali chaqiriladi)
 #   path     — exercises/ ga nisbatan yo'l
-#   mode     — test rejimi: "stdout" | "stdout-cmd" | "exit" | "regex" | "file"
+#   mode     — informatsion teg (faqat hujjat uchun). Haqiqiy tekshiruv
+#              mashq fayli ichidagi `# @test:...` direktivalaridan olinadi.
+#              Qo'llab-quvvatlanadiganlar: "stdout" | "stdout-cmd" | "exit".
 #   hint     — maslahat fayli yo'li
 #   chapter  — kitobdagi bog'langan bob
 

@@ -1,11 +1,26 @@
 //! `bashlings progress` — compact overall + per-chapter progress overview.
 
 use crate::info;
+use crate::style::Style;
 use anyhow::Result;
-use owo_colors::OwoColorize;
+use serde::Serialize;
 use std::collections::BTreeMap;
 
-pub fn run() -> Result<bool> {
+#[derive(Serialize)]
+struct JsonChapter {
+    chapter: String,
+    done: usize,
+    total: usize,
+}
+
+#[derive(Serialize)]
+struct JsonProgress {
+    total: usize,
+    done: usize,
+    chapters: Vec<JsonChapter>,
+}
+
+pub fn run(json: bool) -> Result<bool> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
 
@@ -24,6 +39,23 @@ pub fn run() -> Result<bool> {
         if is_done {
             entry.0 += 1;
         }
+    }
+
+    if json {
+        let out = JsonProgress {
+            total,
+            done,
+            chapters: by_chapter
+                .iter()
+                .map(|(chapter, (cdone, ctotal))| JsonChapter {
+                    chapter: chapter.clone(),
+                    done: *cdone,
+                    total: *ctotal,
+                })
+                .collect(),
+        };
+        println!("{}", serde_json::to_string_pretty(&out)?);
+        return Ok(true);
     }
 
     println!();
