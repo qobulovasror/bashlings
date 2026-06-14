@@ -143,10 +143,20 @@ tiklanadi). bash 4'dan past versiyada ogohlantirish chiqadi.
 | Kanal           | Holat                                       |
 |-----------------|---------------------------------------------|
 | `cargo install --path .` (lokal) | 🟢 Ishlaydi                |
-| `cargo install bashlings` (crates.io) | 🔴 Yet publish'lanmagan |
-| Homebrew formula (lokal)          | 🟢 `cli/Formula/bashlings.rb` |
-| Homebrew tap (jonli) | 🔴 Tap repo yo'q                       |
-| Bir buyruqli install script        | 🔴 Yo'q                   |
+| GitHub Releases (tayyor binarylar) | 🟡 Workflow tayyor (`release.yml`) — `v*` tag push kerak |
+| Bir qatorli install skript        | 🟢 `scripts/install.sh` (Releases'ga tayanadi) |
+| `cargo install bashlings` (crates.io) | 🟡 Paket tayyor (`--dry-run` ✓) + CI step — token kerak |
+| Homebrew formula (binar)          | 🟢 `cli/Formula/bashlings.rb` + `scripts/update-formula.sh` |
+| Homebrew tap (jonli) | 🟡 Formula tayyor — `homebrew-bashlings` repo kerak |
+
+**Release oqimi:** `v0.1.0` tag push → `release.yml` 5 platforma uchun binar +
+sha256 yuklaydi → install skript va Homebrew formula shularni iste'mol qiladi.
+crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
+
+**Qolgan qo'lda qadamlar (tashqi hisob/token kerak):**
+1. `git tag v0.1.0 && git push origin v0.1.0` — Releases'ni ishga tushiradi
+2. crates.io: token → `CARGO_REGISTRY_TOKEN` secret (yoki `cargo publish`)
+3. Homebrew: `homebrew-bashlings` repo yaratish → `scripts/update-formula.sh v0.1.0` → formulani commit
 
 ---
 

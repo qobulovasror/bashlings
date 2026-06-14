@@ -18,11 +18,24 @@
 
 ### 1. CLI ni o'rnatish
 
-**Cargo orqali** (Rust kerak):
+**Bir qatorli install skript** (tayyor binar — Rust shart emas):
 
 ```bash
-cd cli
-cargo install --path .
+curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts/install.sh | sh
+```
+
+> Linux/macOS (x86_64 + arm64). Windows uchun [Releases](https://github.com/qobulovasror/bashlings/releases) sahifasidan `.tar.gz` ni qo'lda yuklab oling.
+
+**Homebrew:**
+
+```bash
+brew install qobulovasror/bashlings/bashlings
+```
+
+**Cargo orqali** (crates.io — Rust kerak):
+
+```bash
+cargo install bashlings
 ```
 
 **Manbadan build qilish:**
@@ -31,12 +44,6 @@ cargo install --path .
 cd cli
 cargo build --release
 cp target/release/bashlings ~/.local/bin/   # PATH ichida bo'lsin
-```
-
-**Homebrew (yaqin kelajakda):**
-
-```bash
-brew install qobulovasror/bashlings/bashlings
 ```
 
 ### 2. Mashqlarni ishga tushirish
