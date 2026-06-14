@@ -194,6 +194,12 @@ export default defineConfig({
               { text: 'Glossary', link: '/en/glossary' }
             ]
           },
+          {
+            text: 'Lessons',
+            items: [
+              { text: 'Part 1: Linux & Bash Basics', link: '/en/part1/01-introduction' }
+            ]
+          },
           { text: 'Resources', link: '/en/resources' }
         ],
         sidebar: {
@@ -229,8 +235,21 @@ export default defineConfig({
                 { text: 'Glossary', link: '/en/glossary' }
               ]
             }
+          ],
+          '/en/part1/': [
+            {
+              text: 'PART 1 · Linux Commands & Bash Basics',
+              collapsed: false,
+              items: [
+                { text: '1. What are the shell, terminal, and Bash?', link: '/en/part1/01-introduction' },
+                { text: '2. Filesystem and navigation', link: '/en/part1/02-navigation' },
+                { text: '3. I/O redirection and pipelines', link: '/en/part1/03-pipes-redirection' },
+                { text: '4. Working with text', link: '/en/part1/04-text-processing' },
+                { text: '5. Your first Bash script', link: '/en/part1/05-basic-scripting' }
+              ]
+            }
           ]
-          // NOTE: Part 1–3 sidebars added as those pages are translated (steps 4.2–4.4).
+          // NOTE: Part 2–3 sidebars added as those pages are translated (steps 4.3–4.4).
         },
         outline: { level: [2, 3], label: 'On this page' },
         docFooter: { prev: 'Previous', next: 'Next' },
