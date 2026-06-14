@@ -197,7 +197,8 @@ export default defineConfig({
           {
             text: 'Lessons',
             items: [
-              { text: 'Part 1: Linux & Bash Basics', link: '/en/part1/01-introduction' }
+              { text: 'Part 1: Linux & Bash Basics', link: '/en/part1/01-introduction' },
+              { text: 'Part 2: Advanced Scripting', link: '/en/part2/01-functions' }
             ]
           },
           { text: 'Resources', link: '/en/resources' }
@@ -248,8 +249,21 @@ export default defineConfig({
                 { text: '5. Your first Bash script', link: '/en/part1/05-basic-scripting' }
               ]
             }
+          ],
+          '/en/part2/': [
+            {
+              text: 'PART 2 · Advanced Bash Scripting',
+              collapsed: false,
+              items: [
+                { text: '1. Functions and modularity', link: '/en/part2/01-functions' },
+                { text: '2. Arrays and associative arrays', link: '/en/part2/02-arrays' },
+                { text: '3. sed, awk, and grep mastery', link: '/en/part2/03-sed-awk' },
+                { text: '4. Signals and traps', link: '/en/part2/04-traps-signals' },
+                { text: '5. Robust scripts (set -euo pipefail)', link: '/en/part2/05-robust-scripting' }
+              ]
+            }
           ]
-          // NOTE: Part 2–3 sidebars added as those pages are translated (steps 4.3–4.4).
+          // NOTE: Part 3 sidebar added when those pages are translated (step 4.4).
         },
         outline: { level: [2, 3], label: 'On this page' },
         docFooter: { prev: 'Previous', next: 'Next' },
