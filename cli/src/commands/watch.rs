@@ -206,7 +206,7 @@ fn progress_bar(done: usize, total: usize) -> String {
     };
     let filled = filled.min(WIDTH);
     let empty = WIDTH - filled;
-    let pct = if total == 0 { 0 } else { (done * 100) / total };
+    let pct = (done * 100).checked_div(total).unwrap_or(0);
 
     format!(
         "[{}{}]  {}%",
