@@ -1,18 +1,36 @@
 use crate::{info, test};
 use anyhow::{anyhow, Result};
-use owo_colors::OwoColorize;
+use crate::style::Style;
 use std::path::Path;
 
-/// CLI entry: look up `name`, then delegate to [`run_exercise`].
-pub fn run(name: &str) -> Result<bool> {
+/// CLI entry. With a `name`, run that exercise; without one, run the first
+/// pending exercise (the learner's current spot).
+pub fn run(name: Option<&str>) -> Result<bool> {
+    test::warn_if_old_bash();
     let root = info::find_workspace_root()?;
     let info = info::load(&root)?;
 
-    let ex = info.find(name).ok_or_else(|| {
-        anyhow!(
-            "'{name}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring."
-        )
-    })?;
+    let ex = match name {
+        Some(n) => info.find(n).ok_or_else(|| {
+            anyhow!("'{n}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring.")
+        })?,
+        None => match info
+            .exercises
+            .iter()
+            .find(|e| !e.is_done(&root).unwrap_or(false))
+        {
+            Some(e) => e,
+            None => {
+                println!();
+                println!(
+                    "  🎉 {}",
+                    "Hammasi tugadi! Tekshirish uchun pending mashq qolmadi.".green()
+                );
+                println!();
+                return Ok(true);
+            }
+        },
+    };
 
     run_exercise(&root, ex)
 }
@@ -40,15 +58,36 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
     println!("  {} {}", "Fayl:".dimmed(), rel_path.dimmed());
     println!();
 
-    let report = test::run_full(&path)?;
+    let report = test::run_full(&path, root)?;
+
+    if report.timed_out {
+        println!(
+            "  {}  {}",
+            "⏱".red(),
+            format!(
+                "Skript {}s ichida tugamadi — to'xtatildi (cheksiz tsikl?).",
+                test::SCRIPT_TIMEOUT_SECS
+            )
+            .red()
+        );
+        println!();
+    }
 
     if report.results.is_empty() {
         println!(
-            "  {}  Test direktivasi yo'q (`# @test:...` qatorlari topilmadi).",
-            "⚠".yellow()
+            "  {}  {}",
+            "⚠".yellow(),
+            "Test direktivasi yo'q (`# @test:...` qatorlari topilmadi) — tekshirib bo'lmadi."
+                .yellow()
+        );
+        println!(
+            "     {}",
+            "Mashq fayli oxiriga `# @test:...` qatori bo'lishi kerak.".dimmed()
         );
         println!();
-        return Ok(true);
+        // Hech narsa tekshirilmadi — buni muvaffaqiyat deb hisoblay olmaymiz,
+        // aks holda CI/`test-solutions.sh` soxta "pass" beradi.
+        return Ok(false);
     }
 
     // Print each assertion result

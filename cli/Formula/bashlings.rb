@@ -1,42 +1,51 @@
-# Homebrew formula for bashlings
+# Homebrew formula for bashlings (binary install — rust toolchain shart emas).
 #
-# Foydalanish (release qilingach):
+# O'rnatish (tap qilingach):
 #   brew install qobulovasror/bashlings/bashlings
 #
-# Yoki tap'siz:
-#   brew install --build-from-source ./Formula/bashlings.rb
+# Bu fayl `homebrew-bashlings` tap repo'siga qo'yiladi. Har release'dan keyin
+# `url`/`sha256` qiymatlari yangilanishi kerak — buni avtomatlashtirish uchun:
+#   scripts/update-formula.sh v0.1.0
 #
-# Eslatma: hozir loyiha v0.1.0 da. Real release qilinmagan,
-# `url` va `sha256` maydonlari rasmiy tag chiqarilgach to'ldiriladi.
+# `version` cli/Cargo.toml dagi versiyaga mos bo'lishi kerak.
 
 class Bashlings < Formula
   desc "Rustlings-style interactive Bash exercises (Uzbek)"
   homepage "https://github.com/qobulovasror/bashlings"
+  version "0.1.0"
   license "MIT"
 
-  # === Release qilingach to'ldiriladi ===
-  # url "https://github.com/qobulovasror/bashlings/archive/refs/tags/v0.1.0.tar.gz"
-  # sha256 "PLACEHOLDER_SHA256"
-  # version "0.1.0"
-  # ====================================
-
-  # Hozircha: HEAD installation (yangi commit'lar bo'yicha quriladi)
-  head "https://github.com/qobulovasror/bashlings.git", branch: "main"
-
-  depends_on "rust" => :build
-
-  def install
-    cd "cli" do
-      system "cargo", "install", *std_cargo_args
+  on_macos do
+    on_arm do
+      url "https://github.com/qobulovasror/bashlings/releases/download/v0.1.0/bashlings-aarch64-apple-darwin.tar.gz"
+      sha256 "REPLACE_WITH_SHA256_aarch64-apple-darwin"
+    end
+    on_intel do
+      url "https://github.com/qobulovasror/bashlings/releases/download/v0.1.0/bashlings-x86_64-apple-darwin.tar.gz"
+      sha256 "REPLACE_WITH_SHA256_x86_64-apple-darwin"
     end
   end
 
+  on_linux do
+    on_arm do
+      url "https://github.com/qobulovasror/bashlings/releases/download/v0.1.0/bashlings-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "REPLACE_WITH_SHA256_aarch64-unknown-linux-gnu"
+    end
+    on_intel do
+      url "https://github.com/qobulovasror/bashlings/releases/download/v0.1.0/bashlings-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "REPLACE_WITH_SHA256_x86_64-unknown-linux-gnu"
+    end
+  end
+
+  def install
+    bin.install "bashlings"
+  end
+
   test do
-    # Versiya chiqishi `bashlings 0.x.y` formatida bo'lishi kerak
+    # Versiya chiqishi `bashlings 0.x.y` formatida bo'lishi kerak.
     assert_match "bashlings", shell_output("#{bin}/bashlings --version")
 
-    # `bashlings list` ni exercises/info.toml yo'qligida ishlashga harakat —
-    # 'workspace topilmadi' xato xabarini ko'rishimiz kerak.
+    # Workspace'dan tashqarida 'workspace topilmadi' xatosi kutiladi (exit 2).
     output = shell_output("#{bin}/bashlings list 2>&1", 2)
     assert_match "workspace topilmadi", output
   end

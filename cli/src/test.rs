@@ -2,8 +2,15 @@
 //! and evaluates each assertion.
 
 use anyhow::{anyhow, Context, Result};
+use std::io::Read;
 use std::path::Path;
-use std::process::Command;
+use std::process::{Command, Stdio};
+use std::time::{Duration, Instant};
+
+/// Hard wall-clock limit (seconds) for a single exercise script. Protects
+/// against infinite loops (`while true; do :; done`) hanging the CLI forever.
+pub const SCRIPT_TIMEOUT_SECS: u64 = 10;
+const SCRIPT_TIMEOUT: Duration = Duration::from_secs(SCRIPT_TIMEOUT_SECS);
 
 /// A single test assertion declared at the bottom of an exercise file.
 #[derive(Debug, Clone)]
@@ -12,8 +19,16 @@ pub enum Assertion {
     Stdout(String),
     /// Script's stdout must equal the stdout of running this command via `bash -c`.
     StdoutCmd(String),
+    /// Script's stdout must contain this substring.
+    StdoutContains(String),
+    /// Script's stdout must match this regular expression.
+    StdoutRegex(String),
+    /// Script's stderr must equal this literal string (after trailing-newline trim).
+    Stderr(String),
     /// Script's exit code must equal this number.
     Exit(i32),
+    /// The given path must exist on disk after the script runs.
+    FileExists(String),
 }
 
 impl Assertion {
@@ -21,7 +36,11 @@ impl Assertion {
         match self {
             Assertion::Stdout(_) => "stdout",
             Assertion::StdoutCmd(_) => "stdout-cmd",
+            Assertion::StdoutContains(_) => "stdout-contains",
+            Assertion::StdoutRegex(_) => "stdout-regex",
+            Assertion::Stderr(_) => "stderr",
             Assertion::Exit(_) => "exit",
+            Assertion::FileExists(_) => "file-exists",
         }
     }
 
@@ -29,7 +48,11 @@ impl Assertion {
         match self {
             Assertion::Stdout(v) => format!("{v:?}"),
             Assertion::StdoutCmd(c) => format!("`{c}`"),
+            Assertion::StdoutContains(v) => format!("⊇ {v:?}"),
+            Assertion::StdoutRegex(p) => format!("/{p}/"),
+            Assertion::Stderr(v) => format!("{v:?}"),
             Assertion::Exit(c) => c.to_string(),
+            Assertion::FileExists(p) => p.clone(),
         }
     }
 }
@@ -43,6 +66,15 @@ pub struct AssertionResult {
     pub actual: String,
 }
 
+/// Raw result of executing one script via bash.
+#[derive(Debug)]
+pub struct ScriptOutput {
+    pub stdout: String,
+    pub stderr: String,
+    pub exit_code: i32,
+    pub timed_out: bool,
+}
+
 /// Aggregate report for one exercise run.
 #[derive(Debug)]
 pub struct TestReport {
@@ -51,6 +83,7 @@ pub struct TestReport {
     pub stdout: String,
     pub stderr: String,
     pub exit_code: i32,
+    pub timed_out: bool,
 }
 
 impl TestReport {
@@ -70,9 +103,13 @@ impl TestReport {
 /// Parse `# @test:KIND: VALUE` directives from a script source.
 ///
 /// Recognised kinds:
-///   - `stdout`     — exact string match
-///   - `stdout-cmd` — run `bash -c <value>`, compare its stdout
-///   - `exit`       — exact exit-code match (integer)
+///   - `stdout`          — exact string match
+///   - `stdout-cmd`      — run `bash -c <value>`, compare its stdout
+///   - `stdout-contains` — stdout must contain the substring
+///   - `stdout-regex`    — stdout must match the regular expression
+///   - `stderr`          — exact stderr match
+///   - `exit`            — exact exit-code match (integer)
+///   - `file-exists`     — the given path must exist after the run
 ///
 /// Unknown directives produce a warning but don't fail parsing.
 pub fn parse_assertions(content: &str) -> Result<Vec<Assertion>> {
@@ -98,12 +135,22 @@ pub fn parse_assertions(content: &str) -> Result<Vec<Assertion>> {
         match kind {
             "stdout" => out.push(Assertion::Stdout(value.to_string())),
             "stdout-cmd" => out.push(Assertion::StdoutCmd(value.to_string())),
+            "stdout-contains" => out.push(Assertion::StdoutContains(value.to_string())),
+            "stdout-regex" => {
+                // Fail fast on an invalid pattern (author error, not learner error).
+                regex::Regex::new(value).with_context(|| {
+                    format!("{lineno}-qator: '@test:stdout-regex' noto'g'ri regex: '{value}'")
+                })?;
+                out.push(Assertion::StdoutRegex(value.to_string()));
+            }
+            "stderr" => out.push(Assertion::Stderr(value.to_string())),
             "exit" => {
                 let code: i32 = value.parse().with_context(|| {
                     format!("{lineno}-qator: '@test:exit' qiymati son emas: '{value}'")
                 })?;
                 out.push(Assertion::Exit(code));
             }
+            "file-exists" => out.push(Assertion::FileExists(value.to_string())),
             other => {
                 eprintln!("⚠  {lineno}-qator: noma'lum direktiva @test:{other} (e'tibordan chetda)");
             }
@@ -118,34 +165,115 @@ fn normalize(s: &str) -> String {
 }
 
 /// Execute the user's exercise script with `bash <path>`.
-pub fn run_script(path: &Path) -> Result<(String, String, i32)> {
-    let output = Command::new("bash")
+///
+/// Hardened runner:
+///   - runs in `cwd` (deterministic — independent of where `bashlings` was called)
+///   - stdin is `/dev/null` (a `read` in the script can't block on the terminal)
+///   - killed after [`SCRIPT_TIMEOUT`] (infinite loops can't hang the CLI)
+pub fn run_script(path: &Path, cwd: &Path) -> Result<ScriptOutput> {
+    let mut child = Command::new("bash")
         .arg(path)
-        .output()
+        .current_dir(cwd)
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
         .with_context(|| format!("'bash {}' ni ishga tushira olmadik", path.display()))?;
-    let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
-    let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
-    let exit_code = output.status.code().unwrap_or(-1);
-    Ok((stdout, stderr, exit_code))
+
+    // Drain stdout/stderr on separate threads so a chatty script can't fill the
+    // pipe buffer and deadlock while we poll for the timeout.
+    let mut out_pipe = child.stdout.take().expect("stdout piped");
+    let mut err_pipe = child.stderr.take().expect("stderr piped");
+    let out_thread = std::thread::spawn(move || {
+        let mut buf = Vec::new();
+        let _ = out_pipe.read_to_end(&mut buf);
+        buf
+    });
+    let err_thread = std::thread::spawn(move || {
+        let mut buf = Vec::new();
+        let _ = err_pipe.read_to_end(&mut buf);
+        buf
+    });
+
+    let start = Instant::now();
+    let mut timed_out = false;
+    let status = loop {
+        match child.try_wait().context("skript holatini tekshirib bo'lmadi")? {
+            Some(status) => break status,
+            None => {
+                if start.elapsed() >= SCRIPT_TIMEOUT {
+                    let _ = child.kill();
+                    timed_out = true;
+                    break child.wait().context("to'xtatilgan skriptni kutib bo'lmadi")?;
+                }
+                std::thread::sleep(Duration::from_millis(20));
+            }
+        }
+    };
+
+    let stdout = String::from_utf8_lossy(&out_thread.join().unwrap_or_default()).into_owned();
+    let stderr = String::from_utf8_lossy(&err_thread.join().unwrap_or_default()).into_owned();
+    let exit_code = if timed_out {
+        124 // GNU `timeout` konventsiyasi
+    } else {
+        status.code().unwrap_or(-1)
+    };
+
+    Ok(ScriptOutput {
+        stdout,
+        stderr,
+        exit_code,
+        timed_out,
+    })
 }
 
-/// Run a one-liner via `bash -c` and return its stdout.
-fn run_expected_cmd(cmd: &str) -> Result<String> {
+/// Run a one-liner via `bash -c` (in `cwd`) and return its stdout.
+fn run_expected_cmd(cmd: &str, cwd: &Path) -> Result<String> {
     let output = Command::new("bash")
         .arg("-c")
         .arg(cmd)
+        .current_dir(cwd)
+        .stdin(Stdio::null())
         .output()
         .with_context(|| format!("expected komandasini bajara olmadik: 'bash -c {cmd}'"))?;
     Ok(String::from_utf8_lossy(&output.stdout).into_owned())
 }
 
-/// Evaluate each assertion against the recorded run.
+/// Detect bash major version (e.g. 5 from `5.3.9`). `None` if bash is missing
+/// or the version can't be parsed.
+pub fn bash_major_version() -> Option<u32> {
+    let output = Command::new("bash")
+        .arg("-c")
+        .arg("echo \"${BASH_VERSINFO[0]}\"")
+        .output()
+        .ok()?;
+    String::from_utf8_lossy(&output.stdout).trim().parse().ok()
+}
+
+/// Print a one-line warning to stderr when the active bash is older than 4
+/// (macOS ships 3.2, which lacks `declare -A`, `mapfile`, etc.).
+pub fn warn_if_old_bash() {
+    if let Some(major) = bash_major_version() {
+        if major < 4 {
+            eprintln!(
+                "⚠  bash {major}.x aniqlandi — ba'zi mashqlar bash 4+ talab qiladi \
+                 (declare -A, mapfile). Yangilash: `brew install bash`."
+            );
+        }
+    }
+}
+
+/// Evaluate each assertion against the recorded run. `base` is the directory
+/// used for `stdout-cmd` execution and for resolving relative `file-exists` paths.
 pub fn evaluate(
     assertions: &[Assertion],
     actual_stdout: &str,
+    actual_stderr: &str,
     actual_exit: i32,
+    base: &Path,
 ) -> Result<Vec<AssertionResult>> {
     let normalized_stdout = normalize(actual_stdout);
+    let normalized_stderr = normalize(actual_stderr);
     let mut results = Vec::with_capacity(assertions.len());
 
     for a in assertions {
@@ -156,14 +284,48 @@ pub fn evaluate(
                 (exp == act, exp, act)
             }
             Assertion::StdoutCmd(cmd) => {
-                let expected_raw = run_expected_cmd(cmd)?;
+                let expected_raw = run_expected_cmd(cmd, base)?;
                 let exp = normalize(&expected_raw);
                 let act = normalized_stdout.clone();
+                (exp == act, exp, act)
+            }
+            Assertion::StdoutContains(sub) => {
+                let passed = normalized_stdout.contains(sub.as_str());
+                (
+                    passed,
+                    format!("contains {sub:?}"),
+                    normalized_stdout.clone(),
+                )
+            }
+            Assertion::StdoutRegex(pat) => {
+                // Pattern is validated at parse time, so this won't normally fail.
+                let re = regex::Regex::new(pat)
+                    .with_context(|| format!("noto'g'ri regex: '{pat}'"))?;
+                let passed = re.is_match(&normalized_stdout);
+                (passed, format!("/{pat}/"), normalized_stdout.clone())
+            }
+            Assertion::Stderr(expected) => {
+                let exp = expected.clone();
+                let act = normalized_stderr.clone();
                 (exp == act, exp, act)
             }
             Assertion::Exit(code) => {
                 let passed = *code == actual_exit;
                 (passed, code.to_string(), actual_exit.to_string())
+            }
+            Assertion::FileExists(p) => {
+                // Relative paths resolve against the run's base directory.
+                let candidate = if Path::new(p).is_absolute() {
+                    Path::new(p).to_path_buf()
+                } else {
+                    base.join(p)
+                };
+                let exists = candidate.exists();
+                (
+                    exists,
+                    format!("mavjud: {p}"),
+                    if exists { "mavjud" } else { "yo'q" }.to_string(),
+                )
             }
         };
         results.push(AssertionResult {
@@ -176,18 +338,19 @@ pub fn evaluate(
     Ok(results)
 }
 
-/// Convenience: parse, run, evaluate — and return everything.
-pub fn run_full(path: &Path) -> Result<TestReport> {
+/// Convenience: parse, run (in `cwd`), evaluate — and return everything.
+pub fn run_full(path: &Path, cwd: &Path) -> Result<TestReport> {
     let content = std::fs::read_to_string(path)
         .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
     let assertions = parse_assertions(&content)?;
-    let (stdout, stderr, exit_code) = run_script(path)?;
-    let results = evaluate(&assertions, &stdout, exit_code)?;
+    let run = run_script(path, cwd)?;
+    let results = evaluate(&assertions, &run.stdout, &run.stderr, run.exit_code, cwd)?;
     Ok(TestReport {
         results,
-        stdout,
-        stderr,
-        exit_code,
+        stdout: run.stdout,
+        stderr: run.stderr,
+        exit_code: run.exit_code,
+        timed_out: run.timed_out,
     })
 }
 
@@ -296,14 +459,14 @@ mod tests {
     #[test]
     fn evaluate_stdout_match_passes() {
         let assertions = vec![Assertion::Stdout("hi".into())];
-        let results = evaluate(&assertions, "hi\n", 0).unwrap();
+        let results = evaluate(&assertions, "hi\n", "", 0, Path::new(".")).unwrap();
         assert!(results[0].passed);
     }
 
     #[test]
     fn evaluate_stdout_mismatch_fails() {
         let assertions = vec![Assertion::Stdout("hi".into())];
-        let results = evaluate(&assertions, "ho\n", 0).unwrap();
+        let results = evaluate(&assertions, "ho\n", "", 0, Path::new(".")).unwrap();
         assert!(!results[0].passed);
         assert_eq!(results[0].actual, "ho");
     }
@@ -311,11 +474,60 @@ mod tests {
     #[test]
     fn evaluate_exit_match() {
         let assertions = vec![Assertion::Exit(0)];
-        let results = evaluate(&assertions, "", 0).unwrap();
+        let results = evaluate(&assertions, "", "", 0, Path::new(".")).unwrap();
         assert!(results[0].passed);
 
-        let results = evaluate(&assertions, "", 1).unwrap();
+        let results = evaluate(&assertions, "", "", 1, Path::new(".")).unwrap();
         assert!(!results[0].passed);
+    }
+
+    #[test]
+    fn evaluate_stdout_contains() {
+        let assertions = vec![Assertion::StdoutContains("ll".into())];
+        assert!(evaluate(&assertions, "hello\n", "", 0, Path::new(".")).unwrap()[0].passed);
+        assert!(!evaluate(&assertions, "hi\n", "", 0, Path::new(".")).unwrap()[0].passed);
+    }
+
+    #[test]
+    fn evaluate_stdout_regex() {
+        let assertions = vec![Assertion::StdoutRegex(r"^\d{4}-\d{2}-\d{2}$".into())];
+        assert!(evaluate(&assertions, "2026-06-13\n", "", 0, Path::new(".")).unwrap()[0].passed);
+        assert!(!evaluate(&assertions, "13/06/2026\n", "", 0, Path::new(".")).unwrap()[0].passed);
+    }
+
+    #[test]
+    fn evaluate_stderr_match() {
+        let assertions = vec![Assertion::Stderr("boom".into())];
+        assert!(evaluate(&assertions, "", "boom\n", 1, Path::new(".")).unwrap()[0].passed);
+        assert!(!evaluate(&assertions, "", "other\n", 1, Path::new(".")).unwrap()[0].passed);
+    }
+
+    #[test]
+    fn evaluate_file_exists() {
+        let present = vec![Assertion::FileExists("Cargo.toml".into())];
+        assert!(evaluate(&present, "", "", 0, Path::new(".")).unwrap()[0].passed);
+        let absent = vec![Assertion::FileExists("no-such-file-xyz".into())];
+        assert!(!evaluate(&absent, "", "", 0, Path::new(".")).unwrap()[0].passed);
+    }
+
+    // ─── parse new directives ──────────────────────────────────────────
+
+    #[test]
+    fn parses_new_directives() {
+        let src = "# @test:stdout-contains: foo\n# @test:stdout-regex: ^a.+\n\
+                   # @test:stderr: err\n# @test:file-exists: /tmp/x\n";
+        let out = parse_assertions(src).unwrap();
+        assert_eq!(out.len(), 4);
+        assert!(matches!(out[0], Assertion::StdoutContains(_)));
+        assert!(matches!(out[1], Assertion::StdoutRegex(_)));
+        assert!(matches!(out[2], Assertion::Stderr(_)));
+        assert!(matches!(out[3], Assertion::FileExists(_)));
+    }
+
+    #[test]
+    fn invalid_regex_returns_error() {
+        let src = "# @test:stdout-regex: (unclosed\n";
+        assert!(parse_assertions(src).is_err());
     }
 
     // ─── TestReport aggregate ──────────────────────────────────────────
@@ -327,6 +539,7 @@ mod tests {
             stdout: String::new(),
             stderr: String::new(),
             exit_code: 0,
+            timed_out: false,
         };
         assert!(!report.all_passed());
     }
@@ -351,6 +564,7 @@ mod tests {
             stdout: String::new(),
             stderr: String::new(),
             exit_code: 0,
+            timed_out: false,
         };
         assert_eq!(report.passed_count(), 1);
         assert_eq!(report.total(), 2);

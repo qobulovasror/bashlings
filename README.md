@@ -8,8 +8,8 @@
 
 | Pillar          | Mavzu                              | Texnologiya       |
 |-----------------|------------------------------------|-------------------|
-| 📘 **Kitob**     | 10 ta bob, ~5 500 qator markdown   | VitePress         |
-| 🧪 **Mashqlar**   | 60 ta `# I AM NOT DONE` mashq      | Bash skript fayllar |
+| 📘 **Kitob**     | 16 ta bob, ~8 500 qator markdown   | VitePress         |
+| 🧪 **Mashqlar**   | 101 ta `# I AM NOT DONE` mashq     | Bash skript fayllar |
 | ⚡ **CLI**       | `bashlings` runner + watch         | Rust              |
 
 ---
@@ -18,11 +18,24 @@
 
 ### 1. CLI ni o'rnatish
 
-**Cargo orqali** (Rust kerak):
+**Bir qatorli install skript** (tayyor binar — Rust shart emas):
 
 ```bash
-cd cli
-cargo install --path .
+curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts/install.sh | sh
+```
+
+> Linux/macOS (x86_64 + arm64). Windows uchun [Releases](https://github.com/qobulovasror/bashlings/releases) sahifasidan `.tar.gz` ni qo'lda yuklab oling.
+
+**Homebrew:**
+
+```bash
+brew install qobulovasror/bashlings/bashlings
+```
+
+**Cargo orqali** (crates.io — Rust kerak):
+
+```bash
+cargo install bashlings
 ```
 
 **Manbadan build qilish:**
@@ -33,21 +46,17 @@ cargo build --release
 cp target/release/bashlings ~/.local/bin/   # PATH ichida bo'lsin
 ```
 
-**Homebrew (yaqin kelajakda):**
-
-```bash
-brew install qobulovasror/bashlings/bashlings
-```
-
 ### 2. Mashqlarni ishga tushirish
 
 Repo ildizidan:
 
 ```bash
-bashlings list           # 60 ta mashqning hammasi va statusi
+bashlings list           # 101 ta mashqning hammasi va statusi
 bashlings watch          # interaktiv rejim — saqlasangiz avto-tekshiruv
-bashlings run intro1     # bitta mashq
-bashlings hint intro1    # 3-bosqichli maslahat
+bashlings run            # keyingi pending mashqni tekshirish
+bashlings run intro1     # aniq bitta mashq
+bashlings verify         # hammasini tartibda — birinchi xatoda to'xtaydi
+bashlings hint intro1    # progressiv maslahat (har chaqiruvda keyingi bosqich)
 bashlings next           # birinchi pending mashq nomini chiqarish (CI uchun)
 ```
 
@@ -105,11 +114,15 @@ Mashq pass bo'lgandan keyin `bashlings solution <name>` orqali ochiladi
 
 Har `.sh` fayl oxirida `# @test:...` direktivalar:
 
-| Direktiva                       | Tekshiradi                                  |
-|---------------------------------|---------------------------------------------|
-| `# @test:stdout: <matn>`        | stdout aynan berilgan satrga teng           |
-| `# @test:stdout-cmd: <buyruq>`  | stdout buyruq natijasiga teng               |
-| `# @test:exit: <kod>`           | Skript exit code'i teng                     |
+| Direktiva                            | Tekshiradi                                  |
+|--------------------------------------|---------------------------------------------|
+| `# @test:stdout: <matn>`             | stdout aynan berilgan satrga teng           |
+| `# @test:stdout-cmd: <buyruq>`       | stdout buyruq natijasiga teng               |
+| `# @test:stdout-contains: <matn>`    | stdout berilgan kichik satrni o'z ichiga oladi |
+| `# @test:stdout-regex: <pattern>`    | stdout regular expression'ga mos keladi     |
+| `# @test:stderr: <matn>`             | stderr aynan berilgan satrga teng           |
+| `# @test:exit: <kod>`                | Skript exit code'i teng                     |
+| `# @test:file-exists: <yo'l>`        | Berilgan fayl/katalog skriptdan keyin mavjud |
 
 ---
 
@@ -157,13 +170,18 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | `bashlings list`             | Hamma mashqlar va statusi (progress bar bilan)        |
 | `bashlings list --pending`   | Faqat hali tugatilmagan mashqlar                       |
 | `bashlings list --done`      | Faqat tugatilgan mashqlar                              |
-| `bashlings run <name>`       | Bitta mashqni tekshirish + pass'da marker avto-o'chadi |
+| `bashlings list --json`      | Mashqlar ro'yxati JSON ko'rinishida (skript/IDE uchun) |
+| `bashlings run [name]`       | Mashqni tekshirish + pass'da marker avto-o'chadi (nomsiz — keyingi pending) |
+| `bashlings verify`           | Barcha mashqlarni tartibda tekshirish, birinchi xatoda to'xtash |
 | `bashlings watch`            | **Interaktiv rejim** — fayl saqlash + hotkeys (h/s/r/l/q) |
-| `bashlings hint <name>`      | 3-bosqichli maslahat (yechim YO'Q)                     |
+| `bashlings hint <name>`      | Progressiv maslahat — har chaqiruvda keyingi bosqich (yechim YO'Q) |
+| `bashlings hint <name> --all`   | Barcha maslahat bosqichlarini birato'la ko'rsatish  |
+| `bashlings hint <name> --reset` | Ochilgan maslahat bosqichlarini qayta tiklash       |
 | `bashlings solution <name>`  | Yechim — **faqat mashq pass bo'lgandan keyin ochiladi** |
-| `bashlings reset <name>`     | Mashqni boshlang'ich holatga qaytarish (marker'ni qaytaradi) |
-| `bashlings progress`         | Compact statistika — umumiy + qism bo'yicha           |
-| `bashlings next`             | Birinchi pending mashq nomini chiqarish (CI uchun)     |
+| `bashlings reset <name>`     | Mashqni asl holatga qaytarish (git checkout — asl kod + marker) |
+| `bashlings progress`         | Compact statistika — umumiy + qism bo'yicha (`--json` ham) |
+| `bashlings next`             | Birinchi pending mashq nomini chiqarish (`--json` ham) |
+| `bashlings completions <shell>` | Shell completion skripti (bash/zsh/fish/...)       |
 | `bashlings --help`           | Yordam                                                 |
 | `bashlings --version`        | Versiyani ko'rsatish                                   |
 
@@ -176,6 +194,20 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | `r` / `Enter` | Joriy mashqni qayta tekshirish                |
 | `l` / `p` | Progress overview                                |
 | `q` / `Esc` / `Ctrl+C` | Chiqish                              |
+
+### Shell completion o'rnatish
+
+```bash
+# bash
+bashlings completions bash > ~/.local/share/bash-completion/completions/bashlings
+# zsh (fpath ichidagi katalogga)
+bashlings completions zsh > ~/.zfunc/_bashlings
+```
+
+### Ranglar
+
+Chiqish TTY bo'lmaganda (masalan `| grep`) ranglar avtomatik o'chadi.
+`NO_COLOR=1` — har doim o'chiradi; `CLICOLOR_FORCE=1` — quvurda ham yoqadi.
 
 ---
 

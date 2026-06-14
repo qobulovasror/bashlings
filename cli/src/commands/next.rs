@@ -15,7 +15,7 @@
 use crate::info;
 use anyhow::Result;
 
-pub fn run() -> Result<bool> {
+pub fn run(json: bool) -> Result<bool> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
 
@@ -26,11 +26,19 @@ pub fn run() -> Result<bool> {
 
     match pending {
         Some(ex) => {
-            println!("{}", ex.name);
+            if json {
+                println!("{{\"next\":{}}}", serde_json::to_string(&ex.name)?);
+            } else {
+                println!("{}", ex.name);
+            }
             Ok(true)
         }
         None => {
-            eprintln!("Hammasi tugagan");
+            if json {
+                println!("{{\"next\":null}}");
+            } else {
+                eprintln!("Hammasi tugagan");
+            }
             Ok(false)
         }
     }

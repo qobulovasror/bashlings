@@ -5,4 +5,5 @@ pub mod progress;
 pub mod reset;
 pub mod run;
 pub mod solution;
+pub mod verify;
 pub mod watch;

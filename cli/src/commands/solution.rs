@@ -7,7 +7,7 @@
 
 use crate::{info, test};
 use anyhow::{anyhow, Result};
-use owo_colors::OwoColorize;
+use crate::style::Style;
 
 pub fn run(name: &str) -> Result<bool> {
     let root = info::find_workspace_root()?;
@@ -30,7 +30,7 @@ pub fn run(name: &str) -> Result<bool> {
     }
 
     // Gate: the user's current code must pass all tests right now.
-    let report = test::run_full(&exercise_path)?;
+    let report = test::run_full(&exercise_path, &root)?;
     if !report.all_passed() {
         println!();
         println!(

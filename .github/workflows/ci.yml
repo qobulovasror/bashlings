@@ -41,7 +41,7 @@ jobs:
         run: cargo test --manifest-path cli/Cargo.toml
 
       - name: cargo clippy (deny warnings)
-        run: cargo clippy --manifest-path cli/Cargo.toml --release -- -D warnings
+        run: cargo clippy --manifest-path cli/Cargo.toml --release --all-targets -- -D warnings
 
   solutions:
     name: 101 solutions pass
