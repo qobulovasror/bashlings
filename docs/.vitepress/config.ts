@@ -4,10 +4,6 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
 
-  // Faza 4: inglizcha tarjima bosqichma-bosqich qo'shilmoqda. Hamma /en/ sahifalari
-  // tayyor bo'lgach, bu qator olib tashlanadi (qat'iy dead-link tekshiruvi uchun).
-  ignoreDeadLinks: true,
-
   head: [
     ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
@@ -198,7 +194,8 @@ export default defineConfig({
             text: 'Lessons',
             items: [
               { text: 'Part 1: Linux & Bash Basics', link: '/en/part1/01-introduction' },
-              { text: 'Part 2: Advanced Scripting', link: '/en/part2/01-functions' }
+              { text: 'Part 2: Advanced Scripting', link: '/en/part2/01-functions' },
+              { text: 'Part 3: Real-world skills', link: '/en/part3/01-network' }
             ]
           },
           { text: 'Resources', link: '/en/resources' }
@@ -262,8 +259,21 @@ export default defineConfig({
                 { text: '5. Robust scripts (set -euo pipefail)', link: '/en/part2/05-robust-scripting' }
               ]
             }
+          ],
+          '/en/part3/': [
+            {
+              text: 'PART 3 · Real-world skills',
+              collapsed: false,
+              items: [
+                { text: '1. Networking commands (curl, ping, wget)', link: '/en/part3/01-network' },
+                { text: '2. SSH and remote management', link: '/en/part3/02-ssh' },
+                { text: '3. JSON and YAML — jq, yq', link: '/en/part3/03-jq' },
+                { text: '4. Cron and scheduling tasks', link: '/en/part3/04-cron' },
+                { text: '5. Integration with Docker', link: '/en/part3/05-docker' },
+                { text: '6. CI/CD — GitHub Actions', link: '/en/part3/06-cicd' }
+              ]
+            }
           ]
-          // NOTE: Part 3 sidebar added when those pages are translated (step 4.4).
         },
         outline: { level: [2, 3], label: 'On this page' },
         docFooter: { prev: 'Previous', next: 'Next' },

@@ -214,8 +214,11 @@ export BASHLINGS_LANG=en             # sessiya uchun
 ```
 
 Hint fayllari ham locale'ga qarab tanlanadi: `<mashq>.hint.en.md` mavjud bo'lsa
-inglizchasi, bo'lmasa o'zbekchasiga (`.hint.md`) qaytadi. (Hozircha intro1–5
-inglizcha; qolganlari asta-sekin qo'shiladi.)
+inglizchasi, bo'lmasa o'zbekchasiga (`.hint.md`) qaytadi. Barcha 101 hint va 101
+mashq tavsifi ikki tilli.
+
+**Kitob** ham ikki tilda: o'zbekcha (default) va inglizcha (`/en/` — saytdagi til
+almashtirgich orqali). Barcha 21 bob tarjima qilingan.
 
 ### Ranglar
 

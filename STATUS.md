@@ -139,9 +139,10 @@ osmaydi), `stdin=/dev/null` (`read` bloklanmaydi), workspace root cwd'da
 tiklanadi). bash 4'dan past versiyada ogohlantirish chiqadi.
 
 **Til (i18n):** default o'zbekcha; inglizcha `--lang en` yoki `BASHLINGS_LANG=en`.
-Barcha CLI runtime satrlari uz/en (`tr!` makrosi, `i18n.rs`). Hint fayllari
-locale'ga qarab (`*.hint.en.md` → fallback `*.hint.md`); hozircha intro1–5 en.
-🟡 Qolgan hint/mashq tavsiflari va kitob (docs) hali tarjima qilinmagan.
+- 🟢 CLI: barcha runtime satrlari uz/en (`tr!` makrosi, `i18n.rs`).
+- 🟢 Hintlar: 101/101 ikki tilli (`*.hint.en.md`, locale lookup + fallback).
+- 🟢 Mashq tavsiflari: 101/101 ikki tilli izoh (UZ + EN bir faylda).
+- 🟢 Kitob (docs): 21/21 sahifa inglizcha (VitePress `locales`, `/en/`).
 
 ### 2.4. Distribution
 
