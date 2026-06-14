@@ -1,106 +1,85 @@
 # bashlings
 
-Interaktiv Bash mashqlar runner (rustlings uslubida, uzbek tilida).
+Rustlings-style interactive **Bash** exercises — a runner, file watcher, and
+hint renderer. Fix small broken scripts, run `bashlings run` (or `watch`), and
+progress from beginner to advanced.
 
-## O'rnatish
+The interface is bilingual: **Uzbek by default**, English via `--lang en` or
+`BASHLINGS_LANG=en`.
 
-### Cargo orqali (eng oson)
+> `bashlings` is the CLI for the [Bash UZ](https://github.com/qobulovasror/bashlings)
+> learning ecosystem (a VitePress book + 101 exercises). The binary loads
+> exercises from a cloned repo, so install the CLI **and** clone the repo.
 
-Rust o'rnatilgan bo'lsa:
-
-```bash
-cd cli
-cargo install --path .
-```
-
-Binary `~/.cargo/bin/bashlings` ga o'rnatildi. PATH'da bo'lsa, darhol ishlatishingiz mumkin.
-
-### Manbadan build
+## Install
 
 ```bash
-cd cli
-cargo build --release
-# Binary: ./target/release/bashlings
+# crates.io
+cargo install bashlings
+
+# from source
+cargo build --release --manifest-path cli/Cargo.toml
+
+# prebuilt binary (Linux/macOS) — see GitHub Releases
+curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts/install.sh | sh
 ```
 
-Stripped + LTO bilan ~1 MB.
+Then clone the repo and run from inside it (the CLI walks up to find
+`exercises/info.toml`):
 
-### Homebrew (kelajakda)
-
-Release qilingach:
 ```bash
-brew install qobulovasror/bashlings/bashlings
+git clone https://github.com/qobulovasror/bashlings
+cd bashlings
+bashlings watch
 ```
 
-Hozir formula `Formula/bashlings.rb` da — release tag chiqarilgach to'ldiriladi.
+## Commands
 
-## Buyruqlar
+| Command                          | Description                                                  |
+|----------------------------------|--------------------------------------------------------------|
+| `bashlings list`                 | All exercises and their status (`--pending`/`--done`/`--json`) |
+| `bashlings run [name]`           | Check an exercise; no name → the next pending one            |
+| `bashlings verify`               | Run all in order, stop at the first failure                 |
+| `bashlings watch`                | Auto-recheck on save + hotkeys (`h`/`s`/`r`/`l`/`q`)         |
+| `bashlings hint <name>`          | Progressive hint, one step per call (`--all`/`--reset`)     |
+| `bashlings solution <name>`      | Reveal the solution — **only after tests pass**            |
+| `bashlings reset <name>`         | Restore an exercise to its original state (`git checkout`)  |
+| `bashlings progress`             | Overall + per-chapter progress (`--json`)                  |
+| `bashlings next`                 | Print the next pending exercise name (`--json`)            |
+| `bashlings completions <shell>`  | Shell completions (bash/zsh/fish/…)                        |
+| `bashlings --lang <uz\|en>`      | Interface language (also `BASHLINGS_LANG`)                 |
 
-| Buyruq                  | Vazifasi                                              |
-|-------------------------|-------------------------------------------------------|
-| `bashlings list`        | Hamma mashqlar va statusi (progress bar bilan)        |
-| `bashlings run <name>`  | Bitta mashqni tekshirish + diff                       |
-| `bashlings watch`       | **Avto-tekshiruv** — fayl saqlanganda darhol ishlaydi |
-| `bashlings hint <name>` | Markdown hint terminalda chiroyli render               |
-| `bashlings next`        | Birinchi pending mashq nomi (skriptlar uchun)         |
-| `bashlings --help`      | Yordam                                                 |
-| `bashlings --version`   | Versiya                                                |
+## Exercise test format
 
-## Arxitektura
+Each exercise script ends with `# @test:...` directives:
 
-```
-cli/src/
-├── main.rs              # clap CLI definitsiyasi + dispatch
-├── info.rs              # info.toml parser
-├── test.rs              # @test:... direktivalar + assertion evaluator
-└── commands/
-    ├── mod.rs
-    ├── list.rs          # `bashlings list`
-    ├── run.rs           # `bashlings run`
-    ├── watch.rs         # `bashlings watch`
-    ├── hint.rs          # `bashlings hint`
-    └── next.rs          # `bashlings next`
-```
+| Directive                          | Checks                                       |
+|------------------------------------|----------------------------------------------|
+| `# @test:stdout: <text>`           | stdout equals the literal text               |
+| `# @test:stdout-cmd: <command>`    | stdout equals the command's stdout           |
+| `# @test:stdout-contains: <text>`  | stdout contains the substring                |
+| `# @test:stdout-regex: <pattern>`  | stdout matches the regular expression        |
+| `# @test:stderr: <text>`           | stderr equals the literal text               |
+| `# @test:exit: <code>`             | exit code equals the number                  |
+| `# @test:file-exists: <path>`      | the path exists after the run                |
 
-CLI ildiz katalogini avtomatik topadi: yuqoriga ko'tarila boradi va `exercises/info.toml` mavjud bo'lgan birinchi katalogni tanlaydi.
+The runner is hardened: each script runs with a **10s timeout** (infinite loops
+can't hang the CLI), `stdin` is `/dev/null`, and the working directory is the
+workspace root (deterministic).
 
-## Dependency'lar
+## Exit codes
 
-| Crate         | Maqsad                                  |
-|---------------|------------------------------------------|
-| `clap`        | CLI argument parsing                     |
-| `serde + toml`| `info.toml` deserializing                |
-| `anyhow`      | Xato wrap                                |
-| `owo-colors`  | Terminal rang                            |
-| `notify`      | Filesystem events (watch rejimi uchun)   |
-| `libc` (Unix) | SIGPIPE default'ga qaytarish             |
+| Code | Meaning                                                  |
+|------|----------------------------------------------------------|
+| 0    | Success / a pending exercise exists (`next`)             |
+| 1    | Tests failed / nothing pending (`next`)                  |
+| 2    | Unrecoverable error (workspace not found, parse error…)  |
 
-## Exit kodlar
+## Colors
 
-| Kod | Mazmuni                                             |
-|-----|------------------------------------------------------|
-| 0   | Muvaffaqiyat / `next` da pending mashq topildi       |
-| 1   | Tests fail bo'ldi / `next` da hech narsa pending emas |
-| 2   | Anyhow xato (workspace topilmadi, parse xatosi, ...) |
+ANSI colors are auto-disabled when stdout is not a TTY (e.g. `| grep`).
+`NO_COLOR=1` forces them off; `CLICOLOR_FORCE=1` forces them on in pipes.
 
-## MVP statusi
-
-| Buyruq           | Status      |
-|------------------|-------------|
-| `bashlings list` | ✅ Tayyor   |
-| `bashlings run`  | ✅ Tayyor   |
-| `bashlings watch`| ✅ Tayyor   |
-| `bashlings hint` | ✅ Tayyor   |
-| `bashlings next` | ✅ Tayyor   |
-
-## Kelajakdagi rejalashtirilgan xususiyatlar
-
-- [ ] `--no-color` flag (owo-colors `if_supports_color` ga migratsiya bilan)
-- [ ] Keyboard shortcuts `watch` ichida (`q`, `n`, `h`, `l`)
-- [ ] Progress state'ni saqlash (`~/.bashlings/state.json`)
-- [ ] `bashlings reset <name>` — mashqni boshlang'ich holatga qaytarish
-- [ ] `bashlings init` — bo'sh skelet workspace yaratish
-
-## Litsenziya
+## License
 
 MIT
