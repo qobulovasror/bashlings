@@ -10,6 +10,18 @@
 # `-p` flagini qo'shing — qayta yaratish bezararsiz bo'lsin.
 #
 # Kutilgan: "tayyor"
+#
+# --- English ---
+# TASK: Idempotent mkdir
+# LEVEL: ★★★☆☆
+# TOPIC: part2/05-robust-scripting · idempotent + mkdir -p
+#
+# The script tries to create the /tmp/bashlings-rob4 directory twice.
+# Under `set -e` — the second `mkdir` stops the script (error).
+#
+# Add the `-p` flag — so recreating it is harmless.
+#
+# Expected: "tayyor"
 
 # I AM NOT DONE
 

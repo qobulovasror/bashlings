@@ -9,6 +9,17 @@
 #
 # Maslahat: `mkdir` bir vaqtda bir nechta argumentni qabul qiladi.
 #           `-p` flagi yo'l elementlarini ham yaratadi.
+#
+# --- English ---
+# TASK: Create several directories
+# LEVEL: ★★☆☆☆
+# TOPIC: part1/02-navigation · mkdir -p
+#
+# Create the following 3 directories: docs, src, tests
+# Then list them with `ls`.
+#
+# Hint: `mkdir` accepts several arguments at once.
+#           the `-p` flag also creates the path components.
 
 # I AM NOT DONE
 

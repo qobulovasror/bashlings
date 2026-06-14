@@ -10,6 +10,18 @@
 # `$name` ni qo'shtirnoq ichiga oling: `"$name"` — bash bir argument deb biladi.
 #
 # Kutilgan: "Ali Vali.txt"
+#
+# --- English ---
+# TASK: Quoting a variable
+# LEVEL: ★★★☆☆
+# TOPIC: part2/05-robust-scripting · "$var"
+#
+# The file name contains a SPACE. Without quotes, `ls $name` is read as two
+# arguments and fails.
+#
+# Wrap `$name` in double quotes: `"$name"` — bash treats it as one argument.
+#
+# Expected: "Ali Vali.txt"
 
 # I AM NOT DONE
 

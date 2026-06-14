@@ -12,6 +12,20 @@
 # Maslahat:
 #   - SSH default port 22; standart bo'lmagan portni `-p N` bilan beriladi
 #   - Format: ssh -p <port> <user>@<host>
+#
+# --- English ---
+# TASK: SSH connection command
+# LEVEL: ★☆☆☆☆
+# TOPIC: part3/02-ssh · ssh -p user@host
+#
+# From the USER, HOST and PORT variables below, print the full ssh
+# command:
+#
+#     ssh -p 2222 deploy@example.com
+#
+# Hint:
+#   - The default SSH port is 22; a non-standard port is given with `-p N`
+#   - Format: ssh -p <port> <user>@<host>
 
 # I AM NOT DONE
 

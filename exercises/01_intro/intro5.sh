@@ -14,6 +14,22 @@
 #   $USER, $HOME, $PWD
 #
 # O'zgaruvchilarni qo'shtirnoq ichida ishlating: "...$USER..."
+#
+# --- English ---
+# TASK: System information
+# LEVEL: ★★☆☆☆
+# TOPIC: part1/01-introduction · variables + echo composition
+#
+# Print the following 3 lines in exactly this order:
+#
+#     Foydalanuvchi: <username>
+#     Home: <home directory>
+#     Joriy: <pwd>
+#
+# Each line should be a separate `echo`. Use the special variables:
+#   $USER, $HOME, $PWD
+#
+# Use the variables inside double quotes: "...$USER..."
 
 # I AM NOT DONE
 

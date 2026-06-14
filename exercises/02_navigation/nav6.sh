@@ -9,6 +9,17 @@
 # Keyin nusxa.txt ichidagi matnni `cat` orqali chiqaring.
 #
 # Maslahat: `cp <manba> <maqsad>`
+#
+# --- English ---
+# TASK: Make a copy
+# LEVEL: ★★☆☆☆
+# TOPIC: part1/02-navigation · cp
+#
+# manba.txt contains the text "salom dunyo".
+# Copy the file under the name nusxa.txt.
+# Then print the text inside nusxa.txt with `cat`.
+#
+# Hint: `cp <source> <destination>`
 
 # I AM NOT DONE
 

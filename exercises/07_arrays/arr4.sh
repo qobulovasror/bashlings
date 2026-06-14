@@ -13,6 +13,21 @@
 #   - `"${!arr[@]}"` — indekslar ro'yxati (0, 1, 2, ...)
 #   - Pozitsiya = indeks + 1 (chunki 0'dan boshlanadi)
 #   - Element: `${arr[$i]}`
+#
+# --- English ---
+# TASK: Iterating with indexes
+# LEVEL: ★★★☆☆
+# TOPIC: part2/02-arrays · "${!arr[@]}"
+#
+# The `nums` array has 3 numbers. For each element print it and its POSITION (starting from 1):
+#     Element 1: 10
+#     Element 2: 20
+#     Element 3: 30
+#
+# Hint:
+#   - `"${!arr[@]}"` — the list of indexes (0, 1, 2, ...)
+#   - Position = index + 1 (because it starts from 0)
+#   - Element: `${arr[$i]}`
 
 # I AM NOT DONE
 

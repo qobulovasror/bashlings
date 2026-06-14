@@ -15,6 +15,23 @@
 #   - `return N` — faqat 0..255 exit code (qiymat emas!)
 #   - Haqiqiy qiymat: `echo $((...))` + `result=$(square 5)` (command substitution)
 #   - Arifmetika: `$((a * b))`
+#
+# --- English ---
+# TASK: A function that returns a value
+# LEVEL: ★★★☆☆
+# TOPIC: part2/01-functions · echo + command substitution
+#
+# Write a `square` function. It accepts an argument and
+# returns its square via `echo`.
+#
+# In the main code, call the function with 5, store the result, and
+# print it in the following format:
+#     5 ning kvadrati: 25
+#
+# Hint:
+#   - `return N` — only a 0..255 exit code (not a value!)
+#   - The real value: `echo $((...))` + `result=$(square 5)` (command substitution)
+#   - Arithmetic: `$((a * b))`
 
 # I AM NOT DONE
 

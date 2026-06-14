@@ -15,6 +15,23 @@
 #   - `{fullName: (.firstName + " " + .lastName)}` — yangi object
 #   - String concatenation: `.a + " " + .b`
 #   - `-c` — pretty-print emas, bir qator
+#
+# --- English ---
+# TASK: Create an object
+# LEVEL: ★★★★☆
+# TOPIC: part3/03-jq · {a: .b} + -c (compact)
+#
+# From firstName and lastName, create a new object — with a fullName field:
+#
+# Input:    {"firstName":"Ali","lastName":"Karim"}
+# Expected: {"fullName":"Ali Karim"}
+#
+# NOTE: the result must be COMPACT (one line). The `-c` flag is needed.
+#
+# Hint:
+#   - `{fullName: (.firstName + " " + .lastName)}` — a new object
+#   - String concatenation: `.a + " " + .b`
+#   - `-c` — not pretty-print, one line
 
 # I AM NOT DONE
 

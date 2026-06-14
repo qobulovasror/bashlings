@@ -13,6 +13,21 @@
 #   - `.[] | select(.age >= 18)` — filtering
 #   - `[ ... | select(...) ] | length` — sanash uchun array'ga o'rab, keyin length
 #   - Yoki: `map(select(...)) | length`
+#
+# --- English ---
+# TASK: Filter + count
+# LEVEL: ★★★★☆
+# TOPIC: part3/03-jq · select() + length
+#
+# From a list of people, print the NUMBER of ADULTS (age >= 18).
+#
+# Input: 5 people — aged 15, 20, 17, 30, 22
+# Expected: 3   (20, 30, 22 — adults)
+#
+# Hint:
+#   - `.[] | select(.age >= 18)` — filtering
+#   - `[ ... | select(...) ] | length` — wrap in an array to count, then length
+#   - Or: `map(select(...)) | length`
 
 # I AM NOT DONE
 

@@ -10,6 +10,18 @@
 # Maslahat:
 #   - `grep -c <pattern> <fayl>`   — pattern qancha qatorda uchragani (faqat son)
 #   - Yoki: `grep <pattern> <fayl> | wc -l` — lekin macOS'da wc'da leading whitespace bor
+#
+# --- English ---
+# TASK: Count the number of matches
+# LEVEL: ★★★☆☆
+# TOPIC: part1/03-pipes-redirection · grep -c
+#
+# The file log.txt contains several INFO and ERROR lines.
+# Print only the NUMBER of "ERROR" lines.
+#
+# Hint:
+#   - `grep -c <pattern> <fayl>`   — how many lines the pattern occurs on (just the number)
+#   - Or: `grep <pattern> <fayl> | wc -l` — but on macOS wc has leading whitespace
 
 # I AM NOT DONE
 

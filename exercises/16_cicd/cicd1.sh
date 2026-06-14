@@ -13,6 +13,21 @@
 # Eslatma: bu shu workflow har push'da ishga tushadi degani.
 #
 # Maslahat: heredoc `cat <<EOF ... EOF`.
+#
+# --- English ---
+# TASK: A minimal workflow header
+# LEVEL: ★☆☆☆☆
+# TOPIC: part3/06-cicd · name + on:
+#
+# A GitHub Actions workflow always starts with `name:` and `on:`.
+# Print the following YAML to stdout:
+#
+#     name: CI
+#     on: push
+#
+# Note: this means the workflow runs on every push.
+#
+# Hint: a heredoc `cat <<EOF ... EOF`.
 
 # I AM NOT DONE
 

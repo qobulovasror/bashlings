@@ -10,6 +10,18 @@
 #
 # `*/N` operatori — "har N qiymatda". Demak `*/15` minute maydonida —
 # 0, 15, 30, 45.
+#
+# --- English ---
+# TASK: Cron — every 15 minutes
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/04-cron · step (*/N)
+#
+# The cron expression that runs every 15 minutes (00, 15, 30, 45):
+#
+#     */15 * * * *
+#
+# The `*/N` operator — "every N values". So `*/15` in the minute field —
+# 0, 15, 30, 45.
 
 # I AM NOT DONE
 

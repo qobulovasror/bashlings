@@ -17,6 +17,25 @@
 #   - `grep "Accepted publickey"` — faqat muvaffaqiyatli kirishlar
 #   - `awk '{print $9}'` — "for USER from IP" — USER 9-ustun
 #   - `sort -u` — alifbo bo'yicha tartiblash + takrorni olib tashlash
+#
+# --- English ---
+# TASK: Find logged-in users from the SSH auth.log
+# LEVEL: ★★★★☆
+# TOPIC: part3/02-ssh · log parsing (awk)
+#
+# Below is a mock log in the form of `/var/log/auth.log`.
+# Print only the USER names from the successful "Accepted publickey"
+# logins — each on its own line, without duplicates.
+#
+# Expected (in alphabetical order):
+#     ali
+#     deploy
+#     root
+#
+# Hint:
+#   - `grep "Accepted publickey"` — only the successful logins
+#   - `awk '{print $9}'` — "for USER from IP" — USER is the 9th column
+#   - `sort -u` — sort alphabetically + remove duplicates
 
 # I AM NOT DONE
 

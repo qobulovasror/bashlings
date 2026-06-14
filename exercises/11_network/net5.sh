@@ -14,6 +14,21 @@
 # Maslahat:
 #   - `grep -c PATTERN` — moslar SONINI qaytaradi
 #   - `succeeded` so'zi faqat OPEN portlar qatorida bor
+#
+# --- English ---
+# TASK: Counting port scan results
+# LEVEL: ★★★☆☆
+# TOPIC: part3/01-network · nc -zv output parsing
+#
+# Below is mock `nc -zv` output. Print the number of OPEN ("succeeded") ports.
+#
+# There are 5 attempts — 3 succeeded, 2 failed.
+# Expected:
+#     3
+#
+# Hint:
+#   - `grep -c PATTERN` — returns the NUMBER of matches
+#   - the word `succeeded` appears only on OPEN port lines
 
 # I AM NOT DONE
 

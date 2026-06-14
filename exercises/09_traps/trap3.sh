@@ -14,6 +14,22 @@
 #     ish boshlandi
 #     Exit: 7
 # Skript exit code: 7
+#
+# --- English ---
+# TASK: Exit code in cleanup
+# LEVEL: ★★★★☆
+# TOPIC: part2/04-traps-signals · $? inside trap
+#
+# The `cleanup()` function:
+#   - on its very first line, save `$?` into the `rc` variable
+#   - print it in the format "Exit: N" (N — the value of rc)
+#
+# Main code: prints "ish boshlandi" and does `exit 7`.
+#
+# Expected:
+#     ish boshlandi
+#     Exit: 7
+# Script exit code: 7
 
 # I AM NOT DONE
 

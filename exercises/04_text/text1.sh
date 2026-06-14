@@ -8,6 +8,16 @@
 # Faqat DASTLABKI 3 ta qatorni chiqaring.
 #
 # Maslahat: `head -n <son> <fayl>`
+#
+# --- English ---
+# TASK: View the beginning of a file
+# LEVEL: ★★☆☆☆
+# TOPIC: part1/04-text-processing · head
+#
+# log.txt has 10 lines (numbers 1 to 10).
+# Print only the FIRST 3 lines.
+#
+# Hint: `head -n <number> <file>`
 
 # I AM NOT DONE
 

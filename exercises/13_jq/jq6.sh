@@ -13,6 +13,21 @@
 #   - `[.[] | .price]` — narxlar massivi
 #   - `add` — array elementlari yig'indisi
 #   - Yoki: `map(.price) | add`
+#
+# --- English ---
+# TASK: Sum
+# LEVEL: ★★★★☆
+# TOPIC: part3/03-jq · add
+#
+# From an array of products, print the SUM of their prices.
+#
+# Input:    [{"price":10},{"price":20},{"price":30},{"price":15}]
+# Expected: 75   (10+20+30+15)
+#
+# Hint:
+#   - `[.[] | .price]` — an array of prices
+#   - `add` — the sum of array elements
+#   - Or: `map(.price) | add`
 
 # I AM NOT DONE
 

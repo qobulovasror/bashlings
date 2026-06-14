@@ -17,6 +17,25 @@
 #   - `declare -A user` — e'lon qilish
 #   - `user[key]="value"` — element o'rnatish
 #   - `${user[key]}` — qiymat olish
+#
+# --- English ---
+# TASK: Associative array (dictionary)
+# LEVEL: ★★★★☆
+# TOPIC: part2/02-arrays · declare -A
+#
+# Create and fill a `user` associative array:
+#   user[name]="Ali"
+#   user[city]="Toshkent"
+#
+# Then print "Ali Toshkent" (separated by a space).
+#
+# ⚠ macOS stock bash 3.2 — `declare -A` does not work.
+# Run `brew install bash` and `#!/usr/bin/env bash` will find the newer one from PATH.
+#
+# Hint:
+#   - `declare -A user` — declare it
+#   - `user[key]="value"` — set an element
+#   - `${user[key]}` — get a value
 
 # I AM NOT DONE
 

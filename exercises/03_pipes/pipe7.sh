@@ -10,6 +10,18 @@
 #   echo "matn" | tee fayl.txt
 #
 # tee'ning ismi suvni T-shaped truba orqali ikki tomonga ajratishdan kelib chiqqan 🚰
+#
+# --- English ---
+# TASK: Write to both sides
+# LEVEL: ★★★☆☆
+# TOPIC: part1/03-pipes-redirection · tee
+#
+# Write the text "salom" BOTH to the screen (stdout) AND to the file out.txt.
+#
+# Hint: `tee` is made exactly for this task.
+#   echo "text" | tee fayl.txt
+#
+# The name tee comes from splitting water into two directions through a T-shaped pipe 🚰
 
 # I AM NOT DONE
 

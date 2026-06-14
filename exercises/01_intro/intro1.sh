@@ -8,6 +8,16 @@
 # Hozir `eko` xato — bash bu nomdagi buyruqni bilmaydi.
 #
 # Tuzating va quyidagi `# I AM NOT DONE` qatorini o'chiring.
+#
+# --- English ---
+# TASK: Hello, Bash!
+# LEVEL: ★☆☆☆☆
+# TOPIC: part1/01-introduction · the echo command
+#
+# The script must print "Salom, Bash!".
+# Right now `eko` is wrong — bash does not know that command.
+#
+# Fix it and remove the `# I AM NOT DONE` line below.
 
 # I AM NOT DONE
 

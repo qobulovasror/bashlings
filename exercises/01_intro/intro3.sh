@@ -8,6 +8,16 @@
 # Masalan: /Users/mac  yoki  /home/ali
 #
 # Maslahat: home katalog yo'li maxsus environment variable'da saqlanadi.
+#
+# --- English ---
+# TASK: Home directory path
+# LEVEL: ★☆☆☆☆
+# TOPIC: part1/01-introduction · environment variables
+#
+# Print the full path of your home directory.
+# For example: /Users/mac  or  /home/ali
+#
+# Hint: the home directory path is stored in a special environment variable.
 
 # I AM NOT DONE
 

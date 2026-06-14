@@ -15,6 +15,23 @@
 # Maslahat:
 #   - `head -1` — faqat birinchi qator
 #   - `awk '{print $2}'` — bo'sh joy bilan ajratilgan 2-ustun
+#
+# --- English ---
+# TASK: Extracting the HTTP status code
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/01-network · response parsing
+#
+# The FIRST line of the mock HTTP response below has HTTP/2 and the status code:
+#     HTTP/2 200
+#     content-type: text/html
+#     cache-control: max-age=3600
+#
+# Print only the status code number:
+#     200
+#
+# Hint:
+#   - `head -1` — only the first line
+#   - `awk '{print $2}'` — the 2nd column separated by whitespace
 
 # I AM NOT DONE
 

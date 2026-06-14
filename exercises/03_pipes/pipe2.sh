@@ -9,6 +9,17 @@
 # Keyin to'liq mazmunini chiqaring.
 #
 # Maslahat: > qayta yozadi, >> qo'shib boradi.
+#
+# --- English ---
+# TASK: Append to a file
+# LEVEL: ★★☆☆☆
+# TOPIC: part1/03-pipes-redirection · >> append
+#
+# log.txt already stores the line "birinchi".
+# APPEND the line "ikkinchi" to the file (without losing the old contents).
+# Then print the full contents.
+#
+# Hint: > overwrites, >> appends.
 
 # I AM NOT DONE
 

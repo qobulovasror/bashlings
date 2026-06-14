@@ -7,6 +7,15 @@
 # Hozir qaysi katalogdasiz? Joriy katalogning to'liq yo'lini chiqaring.
 #
 # Maslahat: bitta buyruq bor, 3 ta harfdan iborat.
+#
+# --- English ---
+# TASK: Current directory
+# LEVEL: ★☆☆☆☆
+# TOPIC: part1/02-navigation · pwd
+#
+# Which directory are you in right now? Print the full path of the current directory.
+#
+# Hint: there is a single command, made of 3 letters.
 
 # I AM NOT DONE
 

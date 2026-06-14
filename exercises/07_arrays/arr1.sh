@@ -12,6 +12,20 @@
 #   - `"${arr[@]}"` — hamma elementlar (alohida argumentlar)
 #   - `$fruits` — XATO: faqat birinchi elementni qaytaradi
 #   - Har doim qo'shtirnoq ichida `"${arr[@]}"` yozing
+#
+# --- English ---
+# TASK: Declare an array and print it
+# LEVEL: ★★☆☆☆
+# TOPIC: part2/02-arrays · "${arr[@]}"
+#
+# The `fruits` array has 3 fruits.
+# Print all elements with a single echo, separated by spaces:
+#     olma anor uzum
+#
+# Hint:
+#   - `"${arr[@]}"` — all elements (as separate arguments)
+#   - `$fruits` — WRONG: returns only the first element
+#   - Always write `"${arr[@]}"` inside double quotes
 
 # I AM NOT DONE
 

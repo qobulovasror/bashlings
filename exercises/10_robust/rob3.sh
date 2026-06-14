@@ -13,6 +13,21 @@
 #     Level: info
 #
 # Maslahat: `${VAR:-default}` — agar VAR bo'sh bo'lsa, default qaytaradi.
+#
+# --- English ---
+# TASK: Environment variable + default
+# LEVEL: ★★★☆☆
+# TOPIC: part2/05-robust-scripting · ${VAR:-default}
+#
+# The script works with the LOG_LEVEL environment variable.
+# If it is not provided — treat it as "info".
+#
+# The test runner does not set LOG_LEVEL, so the default must work.
+#
+# Expected:
+#     Level: info
+#
+# Hint: `${VAR:-default}` — if VAR is empty, it returns default.
 
 # I AM NOT DONE
 

@@ -18,6 +18,26 @@
 # Diqqat: `./dist/` oxiridagi `/` — RSYNC uchun MUHIM:
 #   ./dist  → "dist" papkasini O'zini ham nusxalash
 #   ./dist/ → "dist" ICHIDAGI fayllarni nusxalash
+#
+# --- English ---
+# TASK: rsync synchronization command
+# LEVEL: ★★★☆☆
+# TOPIC: part3/02-ssh · rsync -avz --delete
+#
+# Print the MOST commonly used rsync combination to sync the local
+# `./dist/` directory to the server:
+#
+#     rsync -avz --delete ./dist/ deploy@server.io:/var/www/app/
+#
+# Flags:
+#   -a       → archive mode (recursive + permissions + timestamps)
+#   -v       → verbose
+#   -z       → compress over the channel (for fast networks)
+#   --delete → also delete files from TARGET that are gone from the source (true sync)
+#
+# Note: the trailing `/` in `./dist/` is IMPORTANT for RSYNC:
+#   ./dist  → copy the "dist" directory itself too
+#   ./dist/ → copy the files INSIDE "dist"
 
 # I AM NOT DONE
 

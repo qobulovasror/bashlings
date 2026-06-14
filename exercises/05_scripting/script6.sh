@@ -16,6 +16,24 @@
 #             ...
 #         done
 #   - Hisoblagichni oshirish: `((i++))` yoki `i=$((i + 1))`
+#
+# --- English ---
+# TASK: a counter with a while loop
+# LEVEL: ★★★★☆
+# TOPIC: part1/05-basic-scripting · while + counter
+#
+# Start the counter at `i=1`. Loop while the condition `i <= 3` holds.
+# On each step print:
+#     Qadam 1
+#     Qadam 2
+#     Qadam 3
+#
+# Hint:
+#   - while syntax:
+#         while [[ condition ]]; do
+#             ...
+#         done
+#   - Increment the counter: `((i++))` or `i=$((i + 1))`
 
 # I AM NOT DONE
 

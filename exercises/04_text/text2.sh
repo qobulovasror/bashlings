@@ -12,6 +12,20 @@
 #   - `grep -i` — case-insensitive (registrga e'tibor bermaydi)
 #   - `grep -c` — moslashlar sonini chiqaradi
 #   - Ikki flagni birlashtirib ishlatish mumkin: `grep -ic` yoki `grep -i -c`
+#
+# --- English ---
+# TASK: Case-insensitive search
+# LEVEL: ★★★☆☆
+# TOPIC: part1/04-text-processing · grep -i, grep -c
+#
+# log.txt contains the word "error" in different cases:
+#     [ERROR], [error], [Error]  — all three
+# Find these in ANY CASE and print the COUNT.
+#
+# Hint:
+#   - `grep -i` — case-insensitive (ignores letter case)
+#   - `grep -c` — prints the number of matches
+#   - You can combine the two flags: `grep -ic` or `grep -i -c`
 
 # I AM NOT DONE
 

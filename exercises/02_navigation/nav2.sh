@@ -8,6 +8,16 @@
 #
 # Maslahat: `cd ~` — home uchun qisqartma.
 # Ikki buyruqni `&&` bilan zanjirlash mumkin.
+#
+# --- English ---
+# TASK: Go to the home directory
+# LEVEL: ★☆☆☆☆
+# TOPIC: part1/02-navigation · cd ~
+#
+# First go to the home directory, then print the path with `pwd`.
+#
+# Hint: `cd ~` — a shortcut for home.
+# You can chain two commands with `&&`.
 
 # I AM NOT DONE
 

@@ -19,6 +19,27 @@
 #   - `return $(( ... ))` — qoldiqni return qilish
 #   - 0 = juft = return 0 = if true
 #   - 1 = toq = return 1 = if false
+#
+# --- English ---
+# TASK: Boolean function — return
+# LEVEL: ★★★★☆
+# TOPIC: part2/01-functions · return as boolean
+#
+# Write an `is_even` function — it accepts one number.
+# If the number is EVEN — `return 0` (success)
+# If it is ODD — `return 1`
+#
+# The main code is already written — it checks each number with `if is_even`.
+#
+# Expected result:
+#     4 juft
+#     7 toq
+#
+# Hint:
+#   - `$(( $1 % 2 ))` — the remainder (0 or 1)
+#   - `return $(( ... ))` — return the remainder
+#   - 0 = even = return 0 = if true
+#   - 1 = odd = return 1 = if false
 
 # I AM NOT DONE
 
