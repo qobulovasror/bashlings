@@ -16,6 +16,10 @@
 
 ## Tezkor boshlash
 
+> 📺 **Jonli demo:** o'rnatish va ishlatishning terminal yozuvi
+> [setup sahifasida](https://github.com/qobulovasror/bashlings#) (kitobning
+> "O'rnatish" bo'limida asciinema player).
+
 ### 1. CLI ni o'rnatish
 
 **Bir qatorli install skript** (tayyor binar — Rust shart emas):

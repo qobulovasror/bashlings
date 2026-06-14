@@ -8,6 +8,15 @@ description: "Install Bash 4+, the bashlings CLI and helper tools (jq, rust) —
 On this page we'll prepare a working environment **from 0**. All in
 ~15 minutes.
 
+## Quick tour (terminal recording)
+
+Installing and using `bashlings` — check an exercise, fix it, and see your
+progress:
+
+<AsciinemaPlayer src="/casts/bashlings.en.cast" :cols="100" :rows="30" />
+
+---
+
 ## Required tools
 
 | Tool       | Requirement | Reason                                      |

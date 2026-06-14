@@ -8,6 +8,15 @@ description: "Bash 4+, bashlings CLI va yordamchi vositalarni (jq, rust) o'rnati
 Bu sahifada **0 dan boshlab** ishchi muhitni tayyorlaymiz. Hammasi
 ~15 daqiqada.
 
+## Tezkor ko'rsatma (terminal yozuvi)
+
+`bashlings` ni o'rnatish va ishlatish — mashqni tekshirish, tuzatish va
+progressni ko'rish:
+
+<AsciinemaPlayer src="/casts/bashlings.cast" :cols="100" :rows="30" />
+
+---
+
 ## Kerakli vositalar
 
 | Vosita     | Talab | Sabab                                       |
