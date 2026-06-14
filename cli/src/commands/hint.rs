@@ -12,9 +12,10 @@
 //!
 //! Anything else passes through verbatim.
 
-use crate::{info, state};
-use anyhow::{anyhow, Context, Result};
 use crate::style::Style;
+use crate::{i18n, info, state, tr};
+use anyhow::{anyhow, Context, Result};
+use std::path::{Path, PathBuf};
 
 /// Progressive hint: each invocation reveals the *next* `## ` step. Pass
 /// `show_all` to dump everything, or `reset` to forget the revealed level.
@@ -23,30 +24,41 @@ pub fn run(name: &str, show_all: bool, reset: bool) -> Result<bool> {
     let info_data = info::load(&root)?;
 
     let ex = info_data.find(name).ok_or_else(|| {
-        anyhow!(
-            "'{name}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring."
-        )
+        anyhow!(tr!(
+            "'{}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring.",
+            "exercise '{}' not found. Run `bashlings list` to see them.",
+            name
+        ))
     })?;
 
     let hint_rel = ex.hint.as_deref().ok_or_else(|| {
-        anyhow!("'{name}' uchun maslahat e'lon qilinmagan (info.toml da 'hint' yo'q).")
+        anyhow!(tr!(
+            "'{}' uchun maslahat e'lon qilinmagan (info.toml da 'hint' yo'q).",
+            "no hint declared for '{}' (missing 'hint' in info.toml).",
+            name
+        ))
     })?;
 
-    let hint_path = root.join("exercises").join(hint_rel);
+    // Faza 2: prefer a locale-suffixed hint (e.g. intro1.hint.en.md), fall
+    // back to the default (Uzbek) file.
+    let base = root.join("exercises").join(hint_rel);
+    let hint_path = localized_hint_path(&base, i18n::current());
     if !hint_path.is_file() {
-        return Err(anyhow!(
+        return Err(anyhow!(tr!(
             "maslahat fayli mavjud emas: {}",
+            "hint file does not exist: {}",
             hint_path.display()
-        ));
+        )));
     }
 
     if reset {
         state::set_hint_level(&root, name, 0)?;
         println!();
         println!(
-            "  {} {} — maslahat bosqichlari qayta tiklandi.",
+            "  {} {} — {}",
             "♻".cyan(),
-            name.bold()
+            name.bold(),
+            tr!("maslahat bosqichlari qayta tiklandi.", "hint steps reset.")
         );
         println!();
         return Ok(true);
@@ -77,18 +89,22 @@ pub fn run(name: &str, show_all: bool, reset: bool) -> Result<bool> {
 
     if level < total {
         println!(
-            "  {} bosqich {}/{} — keyingisi:  {}",
+            "  {} {} {}/{} — {}  {}",
             "▸".cyan(),
+            tr!("bosqich", "step"),
             level,
             total,
+            tr!("keyingisi:", "next:"),
             format!("bashlings hint {name}").cyan().bold()
         );
     } else {
         println!(
-            "  {} bosqich {}/{} — barcha maslahatlar ko'rsatildi.",
+            "  {} {} {}/{} — {}",
             "✓".green(),
+            tr!("bosqich", "step"),
             level,
-            total
+            total,
+            tr!("barcha maslahatlar ko'rsatildi.", "all hints shown.")
         );
     }
     print_path_footer(&root, &hint_path);
@@ -96,10 +112,26 @@ pub fn run(name: &str, show_all: bool, reset: bool) -> Result<bool> {
     Ok(true)
 }
 
-fn print_path_footer(root: &std::path::Path, hint_path: &std::path::Path) {
+fn print_path_footer(root: &Path, hint_path: &Path) {
     let rel = hint_path.strip_prefix(root).unwrap_or(hint_path);
     println!("  📄 {}", rel.display().to_string().dimmed());
     println!();
+}
+
+/// For English, prefer `<stem>.<lang>.md` (e.g. `intro1.hint.en.md`) when it
+/// exists; otherwise use the default file. Uzbek always uses the base file.
+fn localized_hint_path(base: &Path, lang: i18n::Lang) -> PathBuf {
+    if lang == i18n::Lang::Uz {
+        return base.to_path_buf();
+    }
+    // base ends with ".md" → insert ".<code>" before it.
+    if let Some(stem) = base.to_str().and_then(|s| s.strip_suffix(".md")) {
+        let candidate = PathBuf::from(format!("{stem}.{}.md", lang.code()));
+        if candidate.is_file() {
+            return candidate;
+        }
+    }
+    base.to_path_buf()
 }
 
 /// Split hint markdown into a preamble (everything before the first `## ` line)

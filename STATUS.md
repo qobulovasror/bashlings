@@ -138,6 +138,11 @@ osmaydi), `stdin=/dev/null` (`read` bloklanmaydi), workspace root cwd'da
 (deterministik). `watch` raw-mode RAII guard bilan (xato bo'lsa ham terminal
 tiklanadi). bash 4'dan past versiyada ogohlantirish chiqadi.
 
+**Til (i18n):** default o'zbekcha; inglizcha `--lang en` yoki `BASHLINGS_LANG=en`.
+Barcha CLI runtime satrlari uz/en (`tr!` makrosi, `i18n.rs`). Hint fayllari
+locale'ga qarab (`*.hint.en.md` → fallback `*.hint.md`); hozircha intro1–5 en.
+🟡 Qolgan hint/mashq tavsiflari va kitob (docs) hali tarjima qilinmagan.
+
 ### 2.4. Distribution
 
 | Kanal           | Holat                                       |

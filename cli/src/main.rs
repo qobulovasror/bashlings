@@ -1,4 +1,5 @@
 mod commands;
+mod i18n;
 mod info;
 mod state;
 mod style;
@@ -14,83 +15,88 @@ use std::process::ExitCode;
 #[command(
     name = "bashlings",
     version,
-    about = "Interaktiv Bash mashqlar runner'i (uzbek)",
+    about = "Interaktiv Bash mashqlar runner'i · Interactive Bash exercises (uz/en)",
     long_about = "Bashlings — rustlings uslubidagi Bash o'rganish CLI'i.\n\
-                  Mashqlar 'exercises/' katalogida, har biri '# I AM NOT DONE' markerli."
+                  Til: default o'zbekcha; inglizcha uchun --lang en yoki BASHLINGS_LANG=en.\n\
+                  Language: Uzbek by default; English via --lang en or BASHLINGS_LANG=en."
 )]
 struct Cli {
+    /// Interfeys tili · Interface language: uz | en  [env: BASHLINGS_LANG]
+    #[arg(long, global = true, value_name = "uz|en")]
+    lang: Option<String>,
+
     #[command(subcommand)]
     command: Commands,
 }
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Barcha mashqlarni va ularning holatini ko'rsatish
+    /// Mashqlar va holati · List all exercises and their status
     List {
-        /// Faqat hali tugatilmagan mashqlarni ko'rsatish
+        /// Faqat tugatilmaganlari · Only pending
         #[arg(long)]
         pending: bool,
-        /// Faqat tugatilgan mashqlarni ko'rsatish
+        /// Faqat tugatilganlari · Only done
         #[arg(long, conflicts_with = "pending")]
         done: bool,
-        /// Natijani JSON ko'rinishida chiqarish
+        /// JSON chiqish · JSON output
         #[arg(long)]
         json: bool,
     },
 
-    /// Bitta mashqni tekshirish (nomsiz — birinchi pending mashq)
+    /// Mashqni tekshirish (nomsiz — keyingi pending) · Run an exercise
     Run {
-        /// Mashq nomi (masalan: intro1). Berilmasa — keyingi pending mashq.
+        /// Mashq nomi · Exercise name (e.g. intro1)
         name: Option<String>,
     },
 
-    /// Barcha mashqlarni tartibda tekshirish, birinchi xatoda to'xtash
+    /// Hammasini tartibda, birinchi xatoda to'xtash · Verify all, stop at first failure
     Verify,
 
-    /// Mashqlar saqlanganda avto-tekshirish (interaktiv hotkeys: h/s/r/q)
+    /// Saqlanganda avto-tekshirish · Auto-recheck on save (hotkeys: h/s/r/l/q)
     Watch,
 
-    /// Maslahat ko'rsatish — har chaqiruvda keyingi bosqich ochiladi
+    /// Progressiv maslahat · Progressive hint (next step each call)
     Hint {
-        /// Mashq nomi
+        /// Mashq nomi · Exercise name
         name: String,
-        /// Barcha bosqichlarni birato'la ko'rsatish
+        /// Barcha bosqichlar · Show all steps at once
         #[arg(long)]
         all: bool,
-        /// Ochilgan maslahat bosqichlarini qayta tiklash
+        /// Bosqichlarni qayta tiklash · Reset revealed steps
         #[arg(long, conflicts_with = "all")]
         reset: bool,
     },
 
-    /// Yechimni ko'rsatish (faqat mashq pass bo'lgandan keyin)
+    /// Yechim (faqat test pass'dan keyin) · Show solution (after tests pass)
     Solution {
-        /// Mashq nomi
+        /// Mashq nomi · Exercise name
         name: String,
     },
 
-    /// Mashqni boshlang'ich holatga qaytarish (`# I AM NOT DONE` ni qaytaradi)
+    /// Asl holatga qaytarish · Reset exercise to original state
     Reset {
-        /// Mashq nomi
+        /// Mashq nomi · Exercise name
         name: String,
     },
 
-    /// Compact progress overview — umumiy va qism bo'yicha
+    /// Umumiy + bob bo'yicha progress · Overall and per-chapter progress
     Progress {
-        /// Natijani JSON ko'rinishida chiqarish
+        /// JSON chiqish · JSON output
         #[arg(long)]
         json: bool,
     },
 
-    /// Birinchi pending mashq nomini chiqarish (CI/skript uchun)
+    /// Keyingi pending mashq nomi · Print the next pending exercise name
     Next {
-        /// Natijani JSON ko'rinishida chiqarish
+        /// JSON chiqish · JSON output
         #[arg(long)]
         json: bool,
     },
 
-    /// Shell completion skriptini chiqarish (bash/zsh/fish/...)
+    /// Shell completion skripti · Generate shell completions
     Completions {
-        /// Shell turi: bash | zsh | fish | powershell | elvish
+        /// Shell: bash | zsh | fish | powershell | elvish
         shell: Shell,
     },
 }
@@ -106,12 +112,13 @@ fn main() -> ExitCode {
     style::set_enabled(color_enabled());
 
     let cli = Cli::parse();
+    i18n::set(i18n::resolve(cli.lang.as_deref()));
 
     match dispatch(cli) {
         Ok(true) => ExitCode::SUCCESS,
         Ok(false) => ExitCode::from(1),
         Err(err) => {
-            eprintln!("Xato: {err:#}");
+            eprintln!("{}: {err:#}", tr!("Xato", "Error"));
             ExitCode::from(2)
         }
     }

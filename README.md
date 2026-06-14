@@ -204,6 +204,19 @@ bashlings completions bash > ~/.local/share/bash-completion/completions/bashling
 bashlings completions zsh > ~/.zfunc/_bashlings
 ```
 
+### Til / Language
+
+Interfeys default **o'zbekcha**. Inglizcha uchun:
+
+```bash
+bashlings run intro1 --lang en      # bitta buyruq uchun
+export BASHLINGS_LANG=en             # sessiya uchun
+```
+
+Hint fayllari ham locale'ga qarab tanlanadi: `<mashq>.hint.en.md` mavjud bo'lsa
+inglizchasi, bo'lmasa o'zbekchasiga (`.hint.md`) qaytadi. (Hozircha intro1–5
+inglizcha; qolganlari asta-sekin qo'shiladi.)
+
 ### Ranglar
 
 Chiqish TTY bo'lmaganda (masalan `| grep`) ranglar avtomatik o'chadi.

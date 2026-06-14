@@ -12,7 +12,7 @@
 //!   - 0 : a pending exercise exists, its name is on stdout
 //!   - 1 : everything is done (no output)
 
-use crate::info;
+use crate::{info, tr};
 use anyhow::Result;
 
 pub fn run(json: bool) -> Result<bool> {
@@ -37,7 +37,7 @@ pub fn run(json: bool) -> Result<bool> {
             if json {
                 println!("{{\"next\":null}}");
             } else {
-                eprintln!("Hammasi tugagan");
+                eprintln!("{}", tr!("Hammasi tugagan", "All done"));
             }
             Ok(false)
         }

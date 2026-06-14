@@ -87,3 +87,33 @@ fn completions_bash_generates_script() {
         .success()
         .stdout(contains("bashlings"));
 }
+
+#[test]
+fn default_language_is_uzbek() {
+    // intro1 ships broken, so `run` fails and prints the Uzbek hint label.
+    bashlings()
+        .args(["run", "intro1"])
+        .assert()
+        .code(1)
+        .stdout(contains("Maslahat"));
+}
+
+#[test]
+fn english_via_flag() {
+    bashlings()
+        .args(["run", "intro1", "--lang", "en"])
+        .assert()
+        .code(1)
+        .stdout(contains("Hint"))
+        .stdout(contains("failed"));
+}
+
+#[test]
+fn english_via_env() {
+    bashlings()
+        .env("BASHLINGS_LANG", "en")
+        .arg("list")
+        .assert()
+        .success()
+        .stdout(contains("exercises"));
+}

@@ -256,8 +256,14 @@ pub fn warn_if_old_bash() {
     if let Some(major) = bash_major_version() {
         if major < 4 {
             eprintln!(
-                "⚠  bash {major}.x aniqlandi — ba'zi mashqlar bash 4+ talab qiladi \
-                 (declare -A, mapfile). Yangilash: `brew install bash`."
+                "{}",
+                crate::tr!(
+                    "⚠  bash {}.x aniqlandi — ba'zi mashqlar bash 4+ talab qiladi \
+                     (declare -A, mapfile). Yangilash: `brew install bash`.",
+                    "⚠  bash {}.x detected — some exercises need bash 4+ \
+                     (declare -A, mapfile). Upgrade: `brew install bash`.",
+                    major
+                )
             );
         }
     }
