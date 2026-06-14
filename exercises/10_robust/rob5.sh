@@ -15,6 +15,23 @@
 # Maslahat:
 #   - `[[ -f "$lock" ]]` — fayl mavjudligini tekshirish
 #   - if/then/exit pattern
+#
+# --- English ---
+# TASK: Lock file pattern
+# LEVEL: ★★★★☆
+# TOPIC: part2/05-robust-scripting · lock file
+#
+# At the start of the script — another instance is already running (simulated):
+# PID 12345 is stored in the `/tmp/bashlings-rob5.lock` file.
+#
+# Your task: if the lock file exists, print "busy" and `exit 1`.
+# Otherwise — print "ish bajarilmoqda".
+#
+# Expected: stdout = "busy", exit = 1
+#
+# Hint:
+#   - `[[ -f "$lock" ]]` — check whether the file exists
+#   - if/then/exit pattern
 
 # I AM NOT DONE
 

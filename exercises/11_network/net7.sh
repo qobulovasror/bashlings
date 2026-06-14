@@ -19,6 +19,27 @@
 #   - Massiv ustidan loop: `for url in "${URLS[@]}"; do ...; done`
 #   - Funksiya chiqishini olish: `status=$(curl "$url")`
 #   - Format: `echo "$url=$status"`
+#
+# --- English ---
+# TASK: Health-check loop (with mock curl)
+# LEVEL: ★★★★☆
+# TOPIC: part3/01-network · URL monitor pattern
+#
+# We cannot test `curl` offline, so we wrapped it in a FUNCTION —
+# it returns a fixed status for each URL.
+#
+# Your task: loop over the URLS array and, for each URL, print it
+# in the "URL=STATUS" format.
+#
+# Expected:
+#     https://github.com=200
+#     https://example.com/notfound=404
+#     https://bad.invalid=500
+#
+# Hint:
+#   - Loop over the array: `for url in "${URLS[@]}"; do ...; done`
+#   - Capture the function output: `status=$(curl "$url")`
+#   - Format: `echo "$url=$status"`
 
 # I AM NOT DONE
 

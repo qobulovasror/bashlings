@@ -4,9 +4,9 @@
 //! back BOTH the original broken code AND the `# I AM NOT DONE` marker.
 //! Fallback (no git / untracked file): re-insert the marker only.
 
-use crate::{info, state};
-use anyhow::{anyhow, Result};
 use crate::style::Style;
+use crate::{info, state, tr};
+use anyhow::{anyhow, Result};
 use std::path::Path;
 use std::process::{Command, Stdio};
 
@@ -15,9 +15,11 @@ pub fn run(name: &str) -> Result<bool> {
     let info_data = info::load(&root)?;
 
     let ex = info_data.find(name).ok_or_else(|| {
-        anyhow!(
-            "'{name}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring."
-        )
+        anyhow!(tr!(
+            "'{}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring.",
+            "exercise '{}' not found. Run `bashlings list` to see them.",
+            name
+        ))
     })?;
 
     let path = ex.full_path(&root);
@@ -30,10 +32,11 @@ pub fn run(name: &str) -> Result<bool> {
     let rel = format!("exercises/{}", ex.path);
     if git_restore(&root, &rel) {
         println!(
-            "  {} {} — {} (asl kod + marker tiklandi).",
+            "  {} {} — {} ({})",
             "♻".cyan(),
             name.bold(),
-            "git checkout".dimmed()
+            "git checkout".dimmed(),
+            tr!("asl kod + marker tiklandi", "original code + marker restored")
         );
         println!();
         return Ok(true);
@@ -43,21 +46,27 @@ pub fn run(name: &str) -> Result<bool> {
     let inserted = info::restore_done_marker(&path)?;
     if inserted {
         println!(
-            "  {} {} — {} marker qaytarildi.",
+            "  {} {} — {} {}",
             "♻".cyan(),
             name.bold(),
-            "`# I AM NOT DONE`".dimmed()
+            "`# I AM NOT DONE`".dimmed(),
+            tr!("marker qaytarildi.", "marker restored.")
         );
     } else {
         println!(
-            "  {} {} — marker allaqachon o'rnatilgan.",
+            "  {} {} — {}",
             "ℹ".cyan(),
-            name.bold()
+            name.bold(),
+            tr!("marker allaqachon o'rnatilgan.", "marker already present.")
         );
     }
     println!(
-        "  {} Asl kodni to'liq tiklab bo'lmadi (git yo'q yoki fayl kuzatuvda emas).",
-        "⚠".yellow()
+        "  {} {}",
+        "⚠".yellow(),
+        tr!(
+            "Asl kodni to'liq tiklab bo'lmadi (git yo'q yoki fayl kuzatuvda emas).",
+            "Could not fully restore original code (no git or file untracked)."
+        )
     );
     println!();
 

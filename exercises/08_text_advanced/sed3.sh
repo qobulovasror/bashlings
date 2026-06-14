@@ -17,6 +17,25 @@
 #   - `-E` — extended regex (`(...)` guruh, `+`, `?`)
 #   - `\3`, `\2`, `\1` — orqaga reference
 #   - `/` ni `\` bilan escape qilish kerak (yoki ajratuvchini almashtirib `s|...|...|` ishlatish)
+#
+# --- English ---
+# TASK: Reformatting a date (backreference)
+# LEVEL: ★★★★☆
+# TOPIC: part2/03-sed-awk · sed -E + backreferences
+#
+# date.txt contains ISO dates (YYYY-MM-DD):
+#     2026-05-17
+#     2024-01-01
+#
+# Change the format to DD/MM/YYYY:
+#     17/05/2026
+#     01/01/2024
+#
+# Hint:
+#   - `sed -E 's/(YEAR)-(MONTH)-(DAY)/\3\/\2\/\1/'`
+#   - `-E` — extended regex (`(...)` group, `+`, `?`)
+#   - `\3`, `\2`, `\1` — backreferences
+#   - `/` must be escaped with `\` (or change the delimiter and use `s|...|...|`)
 
 # I AM NOT DONE
 

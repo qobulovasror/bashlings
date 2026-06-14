@@ -17,6 +17,25 @@
 #   - `sed -E 's|^https?://||'`  — protokolni olib tashlash
 #   - `sed -E 's|[:/].*$||'`     — port yoki yo'lni olib tashlash
 #   - Ikkala almashtirish bitta sed buyrug'ida (';' bilan) yoki ketma-ket pipe'da
+#
+# --- English ---
+# TASK: Extracting the hostname from URLs
+# LEVEL: ★★★☆☆
+# TOPIC: part3/01-network · URL parsing with sed
+#
+# From the URL list below, print only the HOSTNAMEs on separate lines.
+#
+# Expected:
+#     api.github.com
+#     example.org
+#     www.google.com
+#
+# Remove the protocol (http:// or https://) and the path/port that follows it.
+#
+# Hint:
+#   - `sed -E 's|^https?://||'`  — remove the protocol
+#   - `sed -E 's|[:/].*$||'`     — remove the port or path
+#   - Both substitutions in one sed command (with ';') or in consecutive pipes
 
 # I AM NOT DONE
 

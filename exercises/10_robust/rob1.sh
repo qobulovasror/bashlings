@@ -13,6 +13,21 @@
 # Kutilgan: stdout = "ish\nyashirildi", exit = 1
 #
 # Maslahat: skript boshida `set -o pipefail`
+#
+# --- English ---
+# TASK: pipefail
+# LEVEL: ★★★★☆
+# TOPIC: part2/05-robust-scripting · set -o pipefail
+#
+# In the pipeline below the `false` command fails (exit 1).
+# But by default Bash takes the exit code of the LAST command in the pipeline.
+# Because of that the error is hidden and the script returns exit 0.
+#
+# Add `set -o pipefail` — so any error inside the pipeline surfaces.
+#
+# Expected: stdout = "ish\nyashirildi", exit = 1
+#
+# Hint: at the top of the script, `set -o pipefail`
 
 # I AM NOT DONE
 

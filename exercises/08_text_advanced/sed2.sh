@@ -13,6 +13,21 @@
 # Maslahat:
 #   - `sed 'Nd'` — N-qatorni o'chirish
 #   - Bir nechta: `sed '2d;4d'` yoki `sed -e '2d' -e '4d'`
+#
+# --- English ---
+# TASK: Deleting lines with sed
+# LEVEL: ★★★☆☆
+# TOPIC: part2/03-sed-awk · the Nd command
+#
+# log.txt has 5 lines (qator-1..5).
+# Delete lines 2 and 4 and print the rest:
+#     qator-1
+#     qator-3
+#     qator-5
+#
+# Hint:
+#   - `sed 'Nd'` — delete line N
+#   - Multiple: `sed '2d;4d'` or `sed -e '2d' -e '4d'`
 
 # I AM NOT DONE
 

@@ -10,12 +10,12 @@
 //!   - `q` / Esc  — quit
 //!   - Ctrl+C     — quit
 
-use crate::{commands, info};
+use crate::style::Style;
+use crate::{commands, info, tr};
 use anyhow::{Context, Result};
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyModifiers};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 use notify::{Event as NotifyEvent, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
-use crate::style::Style;
 use std::io::Write;
 use std::sync::mpsc;
 use std::time::{Duration, Instant};
@@ -35,7 +35,8 @@ struct RawMode;
 
 impl RawMode {
     fn enable() -> Result<Self> {
-        enable_raw_mode().context("terminal raw mode'ga o'tkaza olmadik")?;
+        enable_raw_mode()
+            .context(tr!("terminal raw mode'ga o'tkaza olmadik", "could not switch terminal to raw mode"))?;
         Ok(RawMode)
     }
 }
@@ -55,11 +56,11 @@ pub fn run() -> Result<bool> {
     let mut watcher: RecommendedWatcher = notify::recommended_watcher(move |res| {
         let _ = tx.send(res);
     })
-    .context("notify watcher'ni yarata olmadik")?;
+    .context(tr!("notify watcher'ni yarata olmadik", "could not create the notify watcher"))?;
 
     watcher
         .watch(&watch_dir, RecursiveMode::Recursive)
-        .with_context(|| format!("'{}' ni kuzata olmadik", watch_dir.display()))?;
+        .with_context(|| tr!("'{}' ni kuzata olmadik", "could not watch '{}'", watch_dir.display()))?;
 
     let mut last_event = Instant::now() - Duration::from_secs(2);
     let mut last_name: Option<String> = None;
@@ -114,7 +115,7 @@ pub fn run() -> Result<bool> {
             }
             Action::Quit => {
                 println!();
-                println!("  👋 {}", "Chiqildi.".dimmed());
+                println!("  👋 {}", tr!("Chiqildi.", "Exited.").dimmed());
                 println!();
                 return Ok(true);
             }
@@ -143,7 +144,7 @@ fn print_header(done: usize, total: usize, advanced: bool) {
     println!(
         "  {}  {}",
         "Bashlings".bold().green(),
-        "watch rejimi".dimmed()
+        tr!("watch rejimi", "watch mode").dimmed()
     );
     println!();
 
@@ -153,7 +154,9 @@ fn print_header(done: usize, total: usize, advanced: bool) {
         println!();
         println!(
             "  🎯 {}",
-            "Yangi mashqqa o'tdik!".bold().yellow()
+            tr!("Yangi mashqqa o'tdik!", "Moved to a new exercise!")
+                .bold()
+                .yellow()
         );
     }
 }
@@ -162,7 +165,7 @@ fn print_footer() {
     println!();
     println!(
         "  👀 {}",
-        "Faylni saqlang yoki tugma bosing:".dimmed()
+        tr!("Faylni saqlang yoki tugma bosing:", "Save a file or press a key:").dimmed()
     );
     println!(
         "     {}  hint    {}  solution {}    {}  re-run    {}  progress    {}  quit",
@@ -175,7 +178,11 @@ fn print_footer() {
     );
     println!(
         "     {}",
-        "(🔒 = test pass'dan keyin ochiladi)".dimmed()
+        tr!(
+            "(🔒 = test pass'dan keyin ochiladi)",
+            "(🔒 = unlocks after tests pass)"
+        )
+        .dimmed()
     );
 }
 
@@ -187,11 +194,15 @@ fn clear_screen() {
 
 fn celebrate(total: usize) {
     println!();
-    println!("  🎉 {}", "Hammasi tugadi!".bold().green());
+    println!("  🎉 {}", tr!("Hammasi tugadi!", "All done!").bold().green());
     println!();
     println!(
-        "  Siz {} ta mashqning hammasini muvaffaqiyatli yechib chiqdingiz.",
-        total.to_string().bold()
+        "  {}",
+        tr!(
+            "Siz {} ta mashqning hammasini muvaffaqiyatli yechib chiqdingiz.",
+            "You solved all {} exercises. Great work!",
+            total.to_string().bold()
+        )
     );
     println!();
 }
@@ -296,7 +307,11 @@ fn pause_until_keypress() -> Result<()> {
     println!(
         "  {} {}",
         "↩".dimmed(),
-        "Davom etish uchun istalgan tugmani bosing...".dimmed()
+        tr!(
+            "Davom etish uchun istalgan tugmani bosing...",
+            "Press any key to continue..."
+        )
+        .dimmed()
     );
     let _ = std::io::stdout().flush();
     let _raw = RawMode::enable()?;

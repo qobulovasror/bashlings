@@ -14,6 +14,22 @@
 # Kutilgan:
 #     asosiy ish
 #     tmp o'chirildi
+#
+# --- English ---
+# TASK: Temp file cleanup pattern
+# LEVEL: ★★★★☆
+# TOPIC: part2/04-traps-signals · production cleanup
+#
+# A temporary file is created and removed on EXIT.
+# The `cleanup()` function:
+#   - should remove $tmpfile with `rm -f`
+#   - should print "tmp o'chirildi"
+#
+# The main code prints "asosiy ish".
+#
+# Expected:
+#     asosiy ish
+#     tmp o'chirildi
 
 # I AM NOT DONE
 

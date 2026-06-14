@@ -13,6 +13,21 @@
 #   - `awk '{count[$1]++} END {for (k in count) print k, count[k]}'`
 #   - awk associative array order non-deterministic — sort orqali tartiblang
 #   - Pipeline: `awk ... | sort`
+#
+# --- English ---
+# TASK: Counter pattern — log level statistics
+# LEVEL: ★★★★☆
+# TOPIC: part2/03-sed-awk · count[$1]++
+#
+# log.txt has log lines of different levels.
+# Count how many of each level there are and print them in ALPHABETICAL order:
+#     ERROR 3
+#     INFO 2
+#
+# Hint:
+#   - `awk '{count[$1]++} END {for (k in count) print k, count[k]}'`
+#   - awk associative array order is non-deterministic — sort it with sort
+#   - Pipeline: `awk ... | sort`
 
 # I AM NOT DONE
 

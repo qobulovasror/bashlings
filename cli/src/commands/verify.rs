@@ -3,9 +3,9 @@
 //! their `# I AM NOT DONE` marker is auto-removed (same as `run`). The first
 //! failing exercise is shown in full detail — that's where the learner is.
 
-use crate::{commands, info, test};
-use anyhow::Result;
 use crate::style::Style;
+use crate::{commands, info, test, tr};
+use anyhow::Result;
 
 pub fn run() -> Result<bool> {
     test::warn_if_old_bash();
@@ -37,9 +37,13 @@ pub fn run() -> Result<bool> {
             // Re-run through the full display path for the stuck exercise.
             commands::run::run_exercise(&root, ex)?;
             println!(
-                "  {} {} mashqida to'xtadi — tuzating va qayta urinib ko'ring.",
+                "  {} {}",
                 "⏸".yellow(),
-                ex.name.bold()
+                tr!(
+                    "{} mashqida to'xtadi — tuzating va qayta urinib ko'ring.",
+                    "stopped at {} — fix it and try again.",
+                    ex.name.bold()
+                )
             );
             println!();
             return Ok(false);
@@ -49,7 +53,12 @@ pub fn run() -> Result<bool> {
     println!();
     println!(
         "  🎉 {}",
-        "Barcha mashqlar muvaffaqiyatli o'tdi!".bold().green()
+        tr!(
+            "Barcha mashqlar muvaffaqiyatli o'tdi!",
+            "All exercises passed!"
+        )
+        .bold()
+        .green()
     );
     println!();
     Ok(true)

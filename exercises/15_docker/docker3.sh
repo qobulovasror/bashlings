@@ -13,6 +13,21 @@
 #   -v     → volume mount (lokal:konteyner)
 #   -w     → ish katalogi konteyner ichida
 #   -e K=V → environment variable
+#
+# --- English ---
+# TASK: docker run — volume + env + workdir
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/05-docker · -v, -w, -e, --rm
+#
+# A classic docker run combination for a dev workflow:
+#
+#     docker run --rm -v /data:/app -w /app -e ENV=dev node:20 npm test
+#
+# Flags:
+#   --rm   → remove the container once it exits (for temporary tests)
+#   -v     → volume mount (local:container)
+#   -w     → working directory inside the container
+#   -e K=V → environment variable
 
 # I AM NOT DONE
 

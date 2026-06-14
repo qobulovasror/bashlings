@@ -15,6 +15,23 @@
 #   - Har funksiya `echo` orqali natija qaytarsin
 #   - Asosiy kodda command substitution `$()` bilan chaqiring
 #   - Misol: `r=$(add 1 2)` keyin `r2=$(multiply "$r" 3)`
+#
+# --- English ---
+# TASK: Function composition
+# LEVEL: ★★★★☆
+# TOPIC: part2/01-functions · functions calling each other
+#
+# Write two functions:
+#   - `add a b`      — the sum
+#   - `multiply a b` — the product
+#
+# In the main code: take the sum of 3 and 4, then multiply by 2.
+# Result: (3 + 4) × 2 = 14
+#
+# Hint:
+#   - Each function should return its result via `echo`
+#   - In the main code, call them with command substitution `$()`
+#   - Example: `r=$(add 1 2)` then `r2=$(multiply "$r" 3)`
 
 # I AM NOT DONE
 

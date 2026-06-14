@@ -14,6 +14,22 @@
 # Maslahat:
 #   - `awk '{sum += $2} END {print sum}'`
 #   - END bloki barcha qatorlar o'qib bo'lingach ishlaydi
+#
+# --- English ---
+# TASK: Summing a column with awk
+# LEVEL: ★★★★☆
+# TOPIC: part2/03-sed-awk · sum + END block
+#
+# scores.txt:
+#     ali 80
+#     vali 75
+#     gulnora 90
+#
+# Print the SUM of the second column (the scores): 245
+#
+# Hint:
+#   - `awk '{sum += $2} END {print sum}'`
+#   - The END block runs after all lines have been read
 
 # I AM NOT DONE
 

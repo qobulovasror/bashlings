@@ -19,6 +19,27 @@
 #   - Heredoc: cat <<EOF ... EOF (interpolatsiya bo'ladi)
 #   - cat <<'EOF' (tirnoq bilan) — interpolatsiya YO'Q
 #   - Bizga interpolatsiya kerak → tirnoqsiz EOF
+#
+# --- English ---
+# TASK: ~/.ssh/config block
+# LEVEL: ★★★☆☆
+# TOPIC: part3/02-ssh · auto-generate the SSH config file
+#
+# From the variables, print the block to be added to ~/.ssh/config using a
+# HEREDOC (in exactly this format):
+#
+#     Host prod
+#         HostName 192.168.1.100
+#         User deploy
+#         Port 2222
+#         IdentityFile ~/.ssh/id_ed25519
+#
+# Note: indentation — each property line starts with 4 spaces.
+#
+# Hint:
+#   - Heredoc: cat <<EOF ... EOF (interpolation happens)
+#   - cat <<'EOF' (with quotes) — NO interpolation
+#   - We need interpolation → unquoted EOF
 
 # I AM NOT DONE
 

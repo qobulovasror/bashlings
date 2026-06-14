@@ -15,6 +15,23 @@
 # Maslahat:
 #   - Eslatma: -m (--max-time) butun so'rov uchun, --connect-timeout esa
 #     faqat ulanish bosqichi uchun. Skriptlar uchun -m ko'p ishlatiladi.
+#
+# --- English ---
+# TASK: curl with retry + timeout
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/01-network · --retry, -m
+#
+# The network can be unstable. For scripts we add these flags to curl:
+#   --retry 3   → retry 3 times
+#   -m 10       → max 10 seconds per attempt
+#   -fsSL       → the standard script flags
+#
+# Print exactly this combination for the URL below (flag order matters):
+#     curl --retry 3 -m 10 -fsSL https://api.example.com/data
+#
+# Hint:
+#   - Note: -m (--max-time) is for the whole request, while --connect-timeout
+#     is only for the connection phase. For scripts, -m is used more often.
 
 # I AM NOT DONE
 

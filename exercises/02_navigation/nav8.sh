@@ -8,6 +8,16 @@
 # tmp2.txt ni o'chiring. Qolgan ikkita faylni `ls` bilan ko'rsating.
 #
 # ⚠ Eslatma: `rm` o'chirilgan faylni qaytarib bo'lmaydi! Diqqat bilan ishlating.
+#
+# --- English ---
+# TASK: Delete a file
+# LEVEL: ★★★☆☆
+# TOPIC: part1/02-navigation · rm
+#
+# The directory has 3 files: tmp1.txt, tmp2.txt, tmp3.txt.
+# Delete tmp2.txt. Show the remaining two files with `ls`.
+#
+# ⚠ Note: a file deleted by `rm` cannot be recovered! Use it carefully.
 
 # I AM NOT DONE
 

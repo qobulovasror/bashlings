@@ -11,6 +11,19 @@
 #     new wine
 #     new tale
 #     new music
+#
+# --- English ---
+# TASK: sed substitution
+# LEVEL: ★★★☆☆
+# TOPIC: part2/03-sed-awk · s/old/new/
+#
+# Each line of input.txt contains the word "old".
+# Use `sed` to replace all of them with "new".
+#
+# Expected:
+#     new wine
+#     new tale
+#     new music
 
 # I AM NOT DONE
 

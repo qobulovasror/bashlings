@@ -15,6 +15,23 @@
 # Maslahat:
 #   - `tail -n +2` — header'ni o'tkazib yuborish (2-qatordan boshlab)
 #   - `awk '{print $1}'` — birinchi ustun (ID)
+#
+# --- English ---
+# TASK: Extracting IDs from docker ps output
+# LEVEL: ★★★☆☆
+# TOPIC: part3/05-docker · ps output parsing
+#
+# Below is mock `docker ps` output (a header + 3 containers).
+# Print only the CONTAINER IDs, each on its own line.
+#
+# Expected:
+#     a1b2c3d4e5f6
+#     b2c3d4e5f6a7
+#     c3d4e5f6a7b8
+#
+# Hint:
+#   - `tail -n +2` — skip the header (start from line 2)
+#   - `awk '{print $1}'` — the first column (ID)
 
 # I AM NOT DONE
 

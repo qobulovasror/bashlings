@@ -14,6 +14,22 @@
 #
 # Maslahat:
 #   - Format: `docker run -d -p $HOST_PORT:$CTR_PORT $IMAGE`
+#
+# --- English ---
+# TASK: The docker run command
+# LEVEL: ★☆☆☆☆
+# TOPIC: part3/05-docker · docker run -d -p
+#
+# Print the full `docker run` command from the variables:
+#
+#     docker run -d -p 8080:80 nginx:alpine
+#
+# Flags:
+#   -d           → detached (background)
+#   -p HOST:CTR  → port mapping
+#
+# Hint:
+#   - Format: `docker run -d -p $HOST_PORT:$CTR_PORT $IMAGE`
 
 # I AM NOT DONE
 

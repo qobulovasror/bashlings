@@ -1,7 +1,7 @@
 //! `bashlings progress` — compact overall + per-chapter progress overview.
 
-use crate::info;
 use crate::style::Style;
+use crate::{info, tr};
 use anyhow::Result;
 use serde::Serialize;
 use std::collections::BTreeMap;
@@ -60,8 +60,9 @@ pub fn run(json: bool) -> Result<bool> {
 
     println!();
     println!(
-        "  {}  ·  umumiy progress",
-        "Bashlings".bold().green()
+        "  {}  ·  {}",
+        "Bashlings".bold().green(),
+        tr!("umumiy progress", "overall progress")
     );
     println!();
 
@@ -97,14 +98,14 @@ pub fn run(json: bool) -> Result<bool> {
     println!();
 
     if done == total {
-        println!("  🎉 {}", "Hammasi tugadi!".bold().green());
+        println!("  🎉 {}", tr!("Hammasi tugadi!", "All done!").bold().green());
     } else {
         let next = info_data
             .exercises
             .iter()
             .find(|e| !e.is_done(&root).unwrap_or(true));
         if let Some(ex) = next {
-            println!("  Keyingi: {}", ex.name.cyan().bold());
+            println!("  {} {}", tr!("Keyingi:", "Next:"), ex.name.cyan().bold());
         }
     }
     println!();

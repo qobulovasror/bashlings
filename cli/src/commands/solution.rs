@@ -5,28 +5,31 @@
 //! directory, and they can only be inspected via this command once the
 //! corresponding exercise script produces the expected output.
 
-use crate::{info, test};
-use anyhow::{anyhow, Result};
 use crate::style::Style;
+use crate::{info, test, tr};
+use anyhow::{anyhow, Result};
 
 pub fn run(name: &str) -> Result<bool> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
 
     let ex = info_data.find(name).ok_or_else(|| {
-        anyhow!(
-            "'{name}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring."
-        )
+        anyhow!(tr!(
+            "'{}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring.",
+            "exercise '{}' not found. Run `bashlings list` to see them.",
+            name
+        ))
     })?;
 
     let exercise_path = ex.full_path(&root);
     let solution_path = ex.solution_path(&root);
 
     if !exercise_path.is_file() {
-        return Err(anyhow!(
+        return Err(anyhow!(tr!(
             "mashq fayli mavjud emas: {}",
+            "exercise file does not exist: {}",
             exercise_path.display()
-        ));
+        )));
     }
 
     // Gate: the user's current code must pass all tests right now.
@@ -36,24 +39,28 @@ pub fn run(name: &str) -> Result<bool> {
         println!(
             "  {} {} — {}",
             "🔒".yellow(),
-            "Yechim qulflangan".bold(),
-            "avval mashqni yeching".dimmed()
+            tr!("Yechim qulflangan", "Solution locked").bold(),
+            tr!("avval mashqni yeching", "solve the exercise first").dimmed()
         );
         println!();
         println!(
-            "  Joriy holat: {}/{} test o'tdi.",
+            "  {} {}/{} {}",
+            tr!("Joriy holat:", "Current:"),
             report.passed_count().to_string().yellow(),
-            report.total()
+            report.total(),
+            tr!("test o'tdi.", "tests passed.")
         );
         println!();
         println!(
-            "  {} Maslahat olish:  {}",
+            "  {} {}  {}",
             "💡".cyan(),
+            tr!("Maslahat olish:", "Get a hint:   "),
             format!("bashlings hint {name}").cyan().bold()
         );
         println!(
-            "  {} Qayta tekshirish: {}",
+            "  {} {} {}",
             "🔁".cyan(),
+            tr!("Qayta tekshirish:", "Re-check:     "),
             format!("bashlings run {name}").cyan().bold()
         );
         println!();
@@ -61,24 +68,27 @@ pub fn run(name: &str) -> Result<bool> {
     }
 
     if !solution_path.is_file() {
-        return Err(anyhow!(
+        return Err(anyhow!(tr!(
             "yechim fayli mavjud emas: {}",
+            "solution file does not exist: {}",
             solution_path.display()
-        ));
+        )));
     }
 
     let content = std::fs::read_to_string(&solution_path).map_err(|e| {
-        anyhow!(
-            "'{}' faylini o'qib bo'lmadi: {e}",
-            solution_path.display()
-        )
+        anyhow!(tr!(
+            "'{}' faylini o'qib bo'lmadi: {}",
+            "could not read '{}': {}",
+            solution_path.display(),
+            e
+        ))
     })?;
 
     println!();
     println!(
         "  {} {} — {}",
         "🔓".green(),
-        "Yechim".bold().green(),
+        tr!("Yechim", "Solution").bold().green(),
         name.bold()
     );
     println!();

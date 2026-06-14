@@ -14,6 +14,22 @@
 # Maslahat:
 #   - `${1:-default}` — agar $1 bo'sh yoki yo'q bo'lsa, "default" qaytaradi
 #   - Funksiya ichida `local name="${1:-Anonim}"`
+#
+# --- English ---
+# TASK: Default argument
+# LEVEL: ★★★☆☆
+# TOPIC: part2/01-functions · ${1:-default}
+#
+# The `greet` function should print "Anonim" when no argument is given.
+# When an argument is given — it should use that.
+#
+# Expected result (when called twice):
+#     Salom, Ali!
+#     Salom, Anonim!
+#
+# Hint:
+#   - `${1:-default}` — if $1 is empty or unset, returns "default"
+#   - Inside the function: `local name="${1:-Anonim}"`
 
 # I AM NOT DONE
 

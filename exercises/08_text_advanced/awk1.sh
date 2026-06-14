@@ -11,6 +11,19 @@
 # Faqat 3-ustun (shaharlar) ni chiqaring:
 #     toshkent
 #     samarqand
+#
+# --- English ---
+# TASK: Selecting fields with awk
+# LEVEL: ★★★☆☆
+# TOPIC: part2/03-sed-awk · $N field
+#
+# Each line of data.txt has 3 columns separated by spaces:
+#     ali 25 toshkent
+#     vali 30 samarqand
+#
+# Print only the 3rd column (the cities):
+#     toshkent
+#     samarqand
 
 # I AM NOT DONE
 

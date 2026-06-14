@@ -16,6 +16,24 @@
 #   - `> /dev/null` — stdout'ni yo'qot
 #   - `2>&1`        — stderr ham xuddi shu joyga
 #   - Tartib MUHIM: avval `> /dev/null`, keyin `2>&1`
+#
+# --- English ---
+# TASK: @daily shortcut + silent redirect
+# LEVEL: ★★★★☆
+# TOPIC: part3/04-cron · special strings (@)
+#
+# Cron has special strings:
+#   @reboot, @yearly, @monthly, @weekly, @daily, @hourly
+#
+# Print the following line (every day at midnight + discard the output
+# entirely):
+#
+#     @daily /opt/clean.sh > /dev/null 2>&1
+#
+# Hint:
+#   - `> /dev/null` — discard stdout
+#   - `2>&1`        — stderr to the same place too
+#   - Order MATTERS: first `> /dev/null`, then `2>&1`
 
 # I AM NOT DONE
 

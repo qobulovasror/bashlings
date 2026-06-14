@@ -19,6 +19,27 @@
 #   - `run:` — shell buyrug'i
 #
 # Maslahat: heredoc orqali, chekinishni AYNAN saqlang.
+#
+# --- English ---
+# TASK: A job and step block
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/06-cicd · jobs/runs-on/steps
+#
+# Print the `jobs:` block inside a workflow:
+#
+#     jobs:
+#       test:
+#         runs-on: ubuntu-latest
+#         steps:
+#           - name: Run tests
+#             run: npm test
+#
+# Attention:
+#   - YAML indentation: 2 spaces
+#   - `- name:` — a list element (dash + space)
+#   - `run:` — a shell command
+#
+# Hint: via a heredoc, keep the indentation EXACTLY.
 
 # I AM NOT DONE
 

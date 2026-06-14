@@ -12,6 +12,20 @@
 # Kutilgan: "tozalandi" FAQAT BIR MARTA chiqishi kerak:
 #     main
 #     tozalandi
+#
+# --- English ---
+# TASK: Idempotent cleanup
+# LEVEL: ★★★★☆
+# TOPIC: part2/04-traps-signals · double-call protection
+#
+# You must protect cleanup from being called twice — use a `__done` flag.
+#
+# The main code calls cleanup MANUALLY once. The EXIT trap could have called it
+# automatically again — but the flag stops that.
+#
+# Expected: "tozalandi" must be printed ONLY ONCE:
+#     main
+#     tozalandi
 
 # I AM NOT DONE
 

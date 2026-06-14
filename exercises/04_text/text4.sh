@@ -15,6 +15,23 @@
 #   - `cut -d <delimiter> -f <field_number> <fayl>`
 #   - `-d','` — vergul bilan ajratish
 #   - `-f1`   — 1-field
+#
+# --- English ---
+# TASK: Extract a CSV column
+# LEVEL: ★★★☆☆
+# TOPIC: part1/04-text-processing · cut -d -f
+#
+# users.csv contains 3 columns:
+#     ali,25,toshkent
+#     vali,30,samarqand
+#     gulnora,28,buxoro
+#
+# Print only the FIRST column (the names).
+#
+# Hint:
+#   - `cut -d <delimiter> -f <field_number> <file>`
+#   - `-d','` — split on comma
+#   - `-f1`   — the 1st field
 
 # I AM NOT DONE
 

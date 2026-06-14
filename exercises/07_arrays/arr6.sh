@@ -14,6 +14,22 @@
 #       <<< — here-string (bitta qator stdin)
 #   - `IFS=','` faqat shu read uchun amal qiladi (qulay!)
 #   - 2-element = `${names[1]}` (0'dan boshlanadi)
+#
+# --- English ---
+# TASK: Split a string into an array
+# LEVEL: ★★★★☆
+# TOPIC: part2/02-arrays · IFS + read -ra
+#
+# The `csv` variable holds 3 names separated by commas.
+# Split it into a `names` array and print the 2nd element (Vali).
+#
+# Hint:
+#   - `IFS=',' read -ra names <<< "$csv"`
+#       -r — do not escape backslashes
+#       -a — write the result into an array
+#       <<< — here-string (one line of stdin)
+#   - `IFS=','` applies only to this read (handy!)
+#   - 2nd element = `${names[1]}` (starts from 0)
 
 # I AM NOT DONE
 

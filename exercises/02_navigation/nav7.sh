@@ -8,6 +8,16 @@
 # Keyin `ls` orqali katalog tarkibini ko'rsating.
 #
 # Maslahat: `mv <eski-nom> <yangi-nom>` — bir buyruqda ham ko'chiradi, ham rename qiladi.
+#
+# --- English ---
+# TASK: Rename a file
+# LEVEL: ★★☆☆☆
+# TOPIC: part1/02-navigation · mv
+#
+# The directory has a file eski.txt. Change its name to yangi.txt.
+# Then show the directory contents with `ls`.
+#
+# Hint: `mv <old-name> <new-name>` — in one command it both moves and renames.
 
 # I AM NOT DONE
 

@@ -17,6 +17,25 @@
 #   -s → progress bar'ni o'chir
 #   -S → -s ga qaramay haqiqiy xato chiqsin (silent yo'q)
 #   -L → redirect'larni kuzat
+#
+# --- English ---
+# TASK: The standard curl flag combination
+# LEVEL: ★☆☆☆☆
+# TOPIC: part3/01-network · curl -fsSL
+#
+# For scripts, the MOST standard curl flag combination is `-fsSL`.
+# Print this command for the URL below as plain text:
+#
+#     curl -fsSL https://api.github.com
+#
+# Right now `eko` is wrong — bash does not know such a command.
+# Fix it and remove the `# I AM NOT DONE` line.
+#
+# Hint:
+#   -f → return an error on 4xx/5xx (don't return the server response as the body)
+#   -s → turn off the progress bar
+#   -S → still show a real error despite -s (not silent)
+#   -L → follow redirects
 
 # I AM NOT DONE
 

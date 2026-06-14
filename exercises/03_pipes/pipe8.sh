@@ -14,6 +14,22 @@
 #
 # Muqobil (lekin bu mashqda biz <<< ni o'rganamiz):
 #   echo "5+7" | bc
+#
+# --- English ---
+# TASK: Input with a here-string
+# LEVEL: ★★★☆☆
+# TOPIC: part1/03-pipes-redirection · <<<
+#
+# `bc` — this is a calculator that works through the command line.
+# Send it the expression "5+7" via a HERE-STRING (`<<<`).
+# The result (12) should be printed.
+#
+# Hint:
+#   - `<<<` — gives a single line of text to a command as stdin
+#   - Example: `cat <<< "salom"` → prints "salom"
+#
+# Alternative (but in this exercise we learn <<<):
+#   echo "5+7" | bc
 
 # I AM NOT DONE
 

@@ -13,6 +13,21 @@
 # Maslahat:
 #   - `jq '.name'`     — qo'shtirnoq bilan: "Ali"
 #   - `jq -r '.name'`  — raw (qo'shtirnoqsiz): Ali
+#
+# --- English ---
+# TASK: Field access
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/03-jq · .field + -r
+#
+# From the JSON below, print ONLY the name (`name`).
+# As plain text, without quotes.
+#
+# Expected:
+#     Ali
+#
+# Hint:
+#   - `jq '.name'`     — with quotes: "Ali"
+#   - `jq -r '.name'`  — raw (without quotes): Ali
 
 # I AM NOT DONE
 

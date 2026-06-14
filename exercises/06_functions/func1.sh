@@ -16,6 +16,24 @@
 #         }
 #   - $1 — birinchi argument
 #   - `echo "Salom, $1!"` — argumentni qo'shtirnoq ichida ishlatish
+#
+# --- English ---
+# TASK: Your first function
+# LEVEL: ★★☆☆☆
+# TOPIC: part2/01-functions · declaring + arguments
+#
+# Write a `greet` function. It takes one argument (a name) and
+# prints "Salom, ISM!".
+#
+# Call the function with the argument "Ali".
+#
+# Hint:
+#   - Function syntax:
+#         name() {
+#             # code
+#         }
+#   - $1 — the first argument
+#   - `echo "Salom, $1!"` — use the argument inside double quotes
 
 # I AM NOT DONE
 

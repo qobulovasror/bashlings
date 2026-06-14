@@ -1,6 +1,6 @@
-use crate::{info, test};
-use anyhow::{anyhow, Result};
 use crate::style::Style;
+use crate::{info, test, tr};
+use anyhow::{anyhow, Result};
 use std::path::Path;
 
 /// CLI entry. With a `name`, run that exercise; without one, run the first
@@ -12,7 +12,11 @@ pub fn run(name: Option<&str>) -> Result<bool> {
 
     let ex = match name {
         Some(n) => info.find(n).ok_or_else(|| {
-            anyhow!("'{n}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring.")
+            anyhow!(tr!(
+                "'{}' nomli mashq topilmadi. `bashlings list` orqali ro'yxatni ko'ring.",
+                "exercise '{}' not found. Run `bashlings list` to see them.",
+                n
+            ))
         })?,
         None => match info
             .exercises
@@ -24,7 +28,11 @@ pub fn run(name: Option<&str>) -> Result<bool> {
                 println!();
                 println!(
                     "  🎉 {}",
-                    "Hammasi tugadi! Tekshirish uchun pending mashq qolmadi.".green()
+                    tr!(
+                        "Hammasi tugadi! Tekshirish uchun pending mashq qolmadi.",
+                        "All done! No pending exercises left to run."
+                    )
+                    .green()
                 );
                 println!();
                 return Ok(true);
@@ -44,7 +52,9 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
     let path = ex.full_path(root);
 
     if !path.is_file() {
-        return Err(anyhow!("fayl mavjud emas: {}", path.display()));
+        return Err(anyhow!(
+            tr!("fayl mavjud emas: {}", "file does not exist: {}", path.display())
+        ));
     }
 
     let rel_path = path.strip_prefix(root).unwrap_or(&path).display().to_string();
@@ -52,10 +62,10 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
     println!();
     println!(
         "  {} {}",
-        "Running".dimmed(),
+        tr!("Running", "Running").dimmed(),
         name.bold().cyan()
     );
-    println!("  {} {}", "Fayl:".dimmed(), rel_path.dimmed());
+    println!("  {} {}", tr!("Fayl:", "File:").dimmed(), rel_path.dimmed());
     println!();
 
     let report = test::run_full(&path, root)?;
@@ -64,8 +74,9 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
         println!(
             "  {}  {}",
             "⏱".red(),
-            format!(
+            tr!(
                 "Skript {}s ichida tugamadi — to'xtatildi (cheksiz tsikl?).",
+                "Script didn't finish within {}s — killed (infinite loop?).",
                 test::SCRIPT_TIMEOUT_SECS
             )
             .red()
@@ -77,12 +88,19 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
         println!(
             "  {}  {}",
             "⚠".yellow(),
-            "Test direktivasi yo'q (`# @test:...` qatorlari topilmadi) — tekshirib bo'lmadi."
-                .yellow()
+            tr!(
+                "Test direktivasi yo'q (`# @test:...` qatorlari topilmadi) — tekshirib bo'lmadi.",
+                "No test directives (`# @test:...` lines not found) — nothing to check."
+            )
+            .yellow()
         );
         println!(
             "     {}",
-            "Mashq fayli oxiriga `# @test:...` qatori bo'lishi kerak.".dimmed()
+            tr!(
+                "Mashq fayli oxiriga `# @test:...` qatori bo'lishi kerak.",
+                "The exercise file should end with a `# @test:...` line."
+            )
+            .dimmed()
         );
         println!();
         // Hech narsa tekshirilmadi — buni muvaffaqiyat deb hisoblay olmaymiz,
@@ -126,7 +144,7 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
             "  {} {} — {} ({}/{})",
             "✅".green(),
             name.bold(),
-            "muvaffaqiyat".green().bold(),
+            tr!("muvaffaqiyat", "success").green().bold(),
             passed,
             total
         );
@@ -136,9 +154,10 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
         if removed {
             println!();
             println!(
-                "  {} {} marker avto-o'chirildi.",
+                "  {} {} {}",
                 "✨".cyan(),
-                "`# I AM NOT DONE`".dimmed()
+                "`# I AM NOT DONE`".dimmed(),
+                tr!("marker avto-o'chirildi.", "marker auto-removed.").dimmed()
             );
         }
         println!();
@@ -148,7 +167,7 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
             "  {} {} — {} ({}/{})",
             "❌".red(),
             name.bold(),
-            "xato".red().bold(),
+            tr!("xato", "failed").red().bold(),
             passed,
             total
         );
@@ -156,7 +175,10 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
         // If the script emitted stderr (e.g., "command not found"), show it.
         if !report.stderr.trim().is_empty() {
             println!();
-            println!("  {}", "Skript stderr chiqishi:".dimmed());
+            println!(
+                "  {}",
+                tr!("Skript stderr chiqishi:", "Script stderr output:").dimmed()
+            );
             for line in report.stderr.lines() {
                 println!("    {}", line.dimmed());
             }
@@ -171,23 +193,26 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
         {
             println!();
             println!(
-                "  {} skript exit kodi: {}",
+                "  {} {} {}",
                 "ℹ".cyan(),
+                tr!("skript exit kodi:", "script exit code:"),
                 report.exit_code.to_string().yellow()
             );
         }
 
         println!();
         println!(
-            "  {} Maslahat:  {}",
+            "  {} {}  {}",
             "💡".yellow(),
+            tr!("Maslahat:", "Hint:    "),
             format!("bashlings hint {name}").cyan().bold()
         );
         println!(
-            "  {} Yechim:    {} {}",
+            "  {} {}    {} {}",
             "🔒".dimmed(),
+            tr!("Yechim:", "Answer:"),
             format!("bashlings solution {name}").dimmed(),
-            "— test pass bo'lgach ochiladi".dimmed()
+            tr!("— test pass bo'lgach ochiladi", "— unlocks after tests pass").dimmed()
         );
         println!();
         Ok(false)

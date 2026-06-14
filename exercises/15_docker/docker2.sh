@@ -17,6 +17,25 @@
 # Maslahat:
 #   - `cat <<EOF ... EOF` — heredoc
 #   - O'zgaruvchi interpolatsiya kerak emas — literal ko'rsating
+#
+# --- English ---
+# TASK: A simple Dockerfile
+# LEVEL: ★★☆☆☆
+# TOPIC: part3/05-docker · Dockerfile basics
+#
+# Print the following Dockerfile (made of 4 directives) to stdout:
+#
+#     FROM python:3.11-alpine
+#     WORKDIR /app
+#     COPY app.py .
+#     CMD ["python", "app.py"]
+#
+# Note: this Dockerfile is just INNER CONTENT — we do not write it to a file,
+# we only print it via a heredoc.
+#
+# Hint:
+#   - `cat <<EOF ... EOF` — heredoc
+#   - No variable interpolation is needed — show it literally
 
 # I AM NOT DONE
 

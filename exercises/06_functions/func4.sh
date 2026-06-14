@@ -15,6 +15,23 @@
 #
 # Maslahat:
 #   - Funksiya ichida har yangi o'zgaruvchi uchun `local` ishlating
+#
+# --- English ---
+# TASK: local — scope isolation
+# LEVEL: ★★★☆☆
+# TOPIC: part2/01-functions · the local keyword
+#
+# The script below has a BUG: the `inner` function "leaks" the `name`
+# variable into the outer scope. Fix it by adding `local`.
+#
+# Expected result:
+#     Funksiya ichida: ichki
+#     Funksiya tashqarisida: tashqi
+#
+# (Right now the last line comes out as "Funksiya tashqarisida: ichki" — the BUG)
+#
+# Hint:
+#   - Use `local` for every new variable inside a function
 
 # I AM NOT DONE
 

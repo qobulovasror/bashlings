@@ -1,5 +1,5 @@
-use crate::info;
 use crate::style::Style;
+use crate::{info, tr};
 use anyhow::Result;
 use serde::Serialize;
 
@@ -64,13 +64,18 @@ pub fn run(filter: Filter, json: bool) -> Result<()> {
 
     println!();
     println!(
-        "  {}  ·  {} ta mashq{}",
+        "  {}  ·  {} {}{}",
         "Bashlings".bold().green(),
         total.to_string().bold(),
+        tr!("ta mashq", "exercises"),
         match filter {
             Filter::All => "".into(),
-            Filter::Pending => "  (faqat hali tugatilmaganlari)".dimmed().to_string(),
-            Filter::Done => "  (faqat tugatilganlari)".dimmed().to_string(),
+            Filter::Pending => format!("  {}", tr!("(faqat tugatilmaganlari)", "(pending only)"))
+                .dimmed()
+                .to_string(),
+            Filter::Done => format!("  {}", tr!("(faqat tugatilganlari)", "(done only)"))
+                .dimmed()
+                .to_string(),
         }
     );
     println!();
@@ -119,9 +124,15 @@ pub fn run(filter: Filter, json: bool) -> Result<()> {
         println!(
             "  {}",
             match filter {
-                Filter::Pending => "Hech qaysi mashq pending emas — hammasi tugatilgan! 🎉",
-                Filter::Done => "Hali bironta ham mashq tugatilmagan.",
-                Filter::All => "Mashqlar yo'q.",
+                Filter::Pending => tr!(
+                    "Hech qaysi mashq pending emas — hammasi tugatilgan! 🎉",
+                    "No pending exercises — all done! 🎉"
+                ),
+                Filter::Done => tr!(
+                    "Hali bironta ham mashq tugatilmagan.",
+                    "No exercises completed yet."
+                ),
+                Filter::All => tr!("Mashqlar yo'q.", "No exercises."),
             }
             .dimmed()
         );
@@ -135,7 +146,8 @@ pub fn run(filter: Filter, json: bool) -> Result<()> {
 
     println!();
     println!(
-        "  Progress: {} / {}  ({:.0}%)",
+        "  {} {} / {}  ({:.0}%)",
+        tr!("Progress:", "Progress:"),
         done.to_string().green().bold(),
         total,
         percent
@@ -148,15 +160,16 @@ pub fn run(filter: Filter, json: bool) -> Result<()> {
             .iter()
             .find(|e| !e.is_done(&root).unwrap_or(true));
         if let Some(ex) = next {
-            println!("  Keyingi: {}", ex.name.cyan().bold());
+            println!("  {} {}", tr!("Keyingi:", "Next:"), ex.name.cyan().bold());
             println!(
-                "  Fayl:    {}",
+                "  {}    {}",
+                tr!("Fayl:", "File:"),
                 ex.full_path(&root).display().to_string().dimmed()
             );
             println!();
         }
     } else if done == total {
-        println!("  🎉 {}", "Hammasi tugadi!".bold().green());
+        println!("  🎉 {}", tr!("Hammasi tugadi!", "All done!").bold().green());
         println!();
     }
 

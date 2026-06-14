@@ -17,6 +17,25 @@
 #         else
 #             ...
 #         fi
+#
+# --- English ---
+# TASK: if/else — classify age
+# LEVEL: ★★★☆☆
+# TOPIC: part1/05-basic-scripting · if/else
+#
+# The `yosh` variable equals 20.
+# If `yosh > 18`: print "kattalar".
+# Otherwise: print "yoshlar".
+#
+# Hint:
+#   - `[[ $yosh -gt 18 ]]` — bash numeric comparison
+#   - Operators: -gt (>), -lt (<), -ge (>=), -le (<=), -eq (==), -ne (!=)
+#   - Syntax:
+#         if [[ condition ]]; then
+#             ...
+#         else
+#             ...
+#         fi
 
 # I AM NOT DONE
 

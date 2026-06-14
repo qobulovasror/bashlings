@@ -13,6 +13,21 @@
 #   - Ikki buyruqni `|` bilan bog'lang
 #
 # Boshqacha aytganda: avval 1-7 oraliqni kesib, keyin oxirgi 3 tasini olamiz.
+#
+# --- English ---
+# TASK: Get the middle lines
+# LEVEL: ★★★★☆
+# TOPIC: part1/04-text-processing · head | tail pipeline
+#
+# big.txt has numbers 1 to 100 (one per line).
+# Print only lines 5, 6, 7.
+#
+# Hint:
+#   - `head -n 7` — the first 7 lines (1..7)
+#   - `tail -n 3` — the last 3 lines (5, 6, 7)
+#   - Connect the two commands with `|`
+#
+# In other words: first cut the 1-7 range, then take the last 3 of those.
 
 # I AM NOT DONE
 

@@ -9,6 +9,17 @@
 # Maslahat:
 #   - `echo "matn" > fayl.txt`  — faylga yozish (mavjud bo'lsa qayta yoziladi)
 #   - `cat fayl.txt`            — fayl mazmunini chiqarish
+#
+# --- English ---
+# TASK: Write to a file and read it
+# LEVEL: ★☆☆☆☆
+# TOPIC: part1/03-pipes-redirection · > redirect
+#
+# Write the word "salom" into the file hello.txt, then print it with `cat`.
+#
+# Hint:
+#   - `echo "text" > fayl.txt`  — write to a file (overwritten if it exists)
+#   - `cat fayl.txt`            — print the file contents
 
 # I AM NOT DONE
 
