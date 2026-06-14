@@ -35,7 +35,8 @@ struct RawMode;
 
 impl RawMode {
     fn enable() -> Result<Self> {
-        enable_raw_mode().context("terminal raw mode'ga o'tkaza olmadik")?;
+        enable_raw_mode()
+            .context(tr!("terminal raw mode'ga o'tkaza olmadik", "could not switch terminal to raw mode"))?;
         Ok(RawMode)
     }
 }
@@ -55,11 +56,11 @@ pub fn run() -> Result<bool> {
     let mut watcher: RecommendedWatcher = notify::recommended_watcher(move |res| {
         let _ = tx.send(res);
     })
-    .context("notify watcher'ni yarata olmadik")?;
+    .context(tr!("notify watcher'ni yarata olmadik", "could not create the notify watcher"))?;
 
     watcher
         .watch(&watch_dir, RecursiveMode::Recursive)
-        .with_context(|| format!("'{}' ni kuzata olmadik", watch_dir.display()))?;
+        .with_context(|| tr!("'{}' ni kuzata olmadik", "could not watch '{}'", watch_dir.display()))?;
 
     let mut last_event = Instant::now() - Duration::from_secs(2);
     let mut last_name: Option<String> = None;

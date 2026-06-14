@@ -97,8 +97,8 @@ On the first connection — **verify the fingerprint**. You should have the fing
 
 ```bash
 ssh -p 2222 ali@server.com         # custom port
-ssh -i ~/.ssh/prod_key ali@prod    # aniq kalit
-ssh -vvv ali@server.com            # debug muammoni topish uchun
+ssh -i ~/.ssh/prod_key ali@prod    # specific key
+ssh -vvv ali@server.com            # debug to find the problem
 ```
 
 ---
@@ -134,11 +134,11 @@ ssh-keygen -t ed25519 -C "ali@example.com"
 ### Key files
 
 ```bash
-~/.ssh/id_ed25519        # private key (SIR!)
-~/.ssh/id_ed25519.pub    # public key (boshqalar bilan ulashish mumkin)
-~/.ssh/known_hosts       # ko'rgan server fingerprintlari
-~/.ssh/authorized_keys   # SIZning serveringizga kim kira oladi
-~/.ssh/config            # ulanish sozlamalari (eng muhim!)
+~/.ssh/id_ed25519        # private key (SECRET!)
+~/.ssh/id_ed25519.pub    # public key (safe to share with others)
+~/.ssh/known_hosts       # fingerprints of servers you've seen
+~/.ssh/authorized_keys   # who can log in to YOUR server
+~/.ssh/config            # connection settings (the most important!)
 ```
 
 ### Should there be a passphrase?
@@ -161,9 +161,9 @@ You'd normally have to manually add the public key to the server's `authorized_k
 
 ```bash
 ssh-copy-id ali@server.com
-# Bir marta parol so'raydi (oxirgi marta!)
-# Endi key auth ishlaydi:
-ssh ali@server.com   # parol so'ralmaydi
+# Asks for the password once (the last time!)
+# Now key auth works:
+ssh ali@server.com   # no password prompt
 ```
 
 ### Manual variant (if `ssh-copy-id` is not available)
@@ -207,12 +207,12 @@ Everything automatically picks up the right settings.
 ### Full example — `~/.ssh/config`
 
 ```sshconfig
-# Default — barcha hostlar uchun
+# Default — for all hosts
 Host *
-    ServerAliveInterval 60        # 60s'da bir ping (idle keepalive)
-    ServerAliveCountMax 3         # 3 marta javob yo'q → uzilish
+    ServerAliveInterval 60        # one ping every 60s (idle keepalive)
+    ServerAliveCountMax 3         # 3 missed replies → disconnect
     AddKeysToAgent yes
-    UseKeychain yes               # macOS — Keychain integratsiya
+    UseKeychain yes               # macOS — Keychain integration
 
 # Production server
 Host prod
@@ -221,11 +221,11 @@ Host prod
     Port 22
     IdentityFile ~/.ssh/prod_ed25519
 
-# Staging — jump host orqali (bastion pattern)
+# Staging — through a jump host (bastion pattern)
 Host staging
     HostName 10.0.5.42            # internal IP
     User deploy
-    ProxyJump bastion             # avval bastion'ga, keyin staging'ga
+    ProxyJump bastion             # first to bastion, then to staging
 
 # Bastion (jump host)
 Host bastion
@@ -233,12 +233,12 @@ Host bastion
     User ali
     IdentityFile ~/.ssh/bastion_key
 
-# Wildcard — kompaniya hammasi *.internal
+# Wildcard — everything in the company *.internal
 Host *.internal
     User ali
     IdentityFile ~/.ssh/company_key
 
-# GitHub uchun maxsus kalit
+# A dedicated key for GitHub
 Host github.com
     User git
     IdentityFile ~/.ssh/github_ed25519
@@ -295,10 +295,10 @@ scp ali@server:/var/log/app.log ./
 # Remote → Remote
 scp ali@srv1:/data.txt ali@srv2:/backup/
 
-# Recursive (katalog)
+# Recursive (directory)
 scp -r dist/ ali@server:~/
 
-# Custom port — DIQQAT: katta `-P`, kichik `-p` boshqa narsa
+# Custom port — ATTENTION: capital `-P`, lowercase `-p` means something else
 scp -P 2222 file.txt ali@server:/tmp/
 ```
 
@@ -359,22 +359,22 @@ Writing these three together as "**`-avz`**" — the classic `rsync` combination
 ### Real examples
 
 ```bash
-# Production deploy — eski fayllarni ham o'chiradi
+# Production deploy — also deletes old files
 rsync -avz --delete \
   --exclude='node_modules' \
   --exclude='.git' \
   --exclude='*.log' \
   ./dist/ prod:/var/www/
 
-# Test ko'rish, lekin bajarmaslik
+# See a test, but don't execute it
 rsync -avzn --delete ./src/ prod:/opt/
-# (yangi va o'chiriladiganlarni ko'rsatadi)
+# (shows the new and to-be-deleted files)
 
-# Backup — eski fayllarni saqlash (--backup)
+# Backup — keep old files (--backup)
 rsync -avz --backup --backup-dir=/backups/$(date +%F) \
   ~/Documents/ backup-server:/backups/current/
 
-# Katta fayllar uchun resume + bandwidth limit
+# Resume + bandwidth limit for large files
 rsync -avz --partial --bwlimit=5000 \
   big.iso ali@server:/data/
 ```
@@ -399,7 +399,7 @@ ssh ali@server 'uptime'
 ```bash
 ssh ali@server 'cd /var/log && ls -la'
 
-# Yoki && bilan
+# Or with &&
 ssh ali@server 'cd /tmp && tar -czf backup.tar.gz data/ && ls -lh backup.tar.gz'
 ```
 
@@ -430,7 +430,7 @@ echo "Server load: $load"
 The `'` and `"` inside remote commands get confusing. Heredoc is the safest way. Or double-escape:
 ```bash
 ssh server "echo \"hi\""
-ssh server 'echo "hi"'   # afzal
+ssh server 'echo "hi"'   # preferred
 ```
 :::
 
@@ -441,7 +441,7 @@ ssh server 'echo "hi"'   # afzal
 ### Local forward (`-L`) — the most commonly used
 
 ```bash
-# Local 5432 portni server'dagi db.internal:5432'ga ulash
+# Connect local port 5432 to db.internal:5432 on the server
 ssh -L 5432:db.internal:5432 ali@jumphost
 ```
 
@@ -450,15 +450,15 @@ Now if you connect to `localhost:5432` — you're actually reaching `db.internal
 Usage:
 ```bash
 psql -h localhost -p 5432 -U postgres
-# Aslida internal DB'ga ulanyapsiz!
+# You're actually connecting to the internal DB!
 ```
 
 ### Background tunnel — `-fN`
 
 ```bash
 ssh -fN -L 5432:db.internal:5432 ali@jumphost
-# Background'ga ketadi, terminal'da turmaydi
-# To'xtatish uchun:
+# Goes to the background, doesn't stay in the terminal
+# To stop it:
 ps aux | grep 'ssh -fN' | grep -v grep
 kill <PID>
 ```
@@ -468,7 +468,7 @@ kill <PID>
 ### Remote forward (`-R`)
 
 ```bash
-# Server'dagi 8080 portni local 3000'ga uzatish
+# Forward port 8080 on the server to local 3000
 ssh -R 8080:localhost:3000 ali@server
 ```
 
@@ -478,8 +478,8 @@ Useful: a dev server running locally, exposed to your team through the server (o
 
 ```bash
 ssh -D 1080 ali@jumphost
-# Browser'ni SOCKS5 proxy localhost:1080'ga sozlash
-# Endi har trafik — jumphost orqali
+# Configure the browser to use SOCKS5 proxy localhost:1080
+# Now all traffic — through the jumphost
 ```
 
 Useful for getting into a corporate network without a VPN.
@@ -499,16 +499,16 @@ Useful for getting into a corporate network without a VPN.
 Entering the passphrase every time is tedious. `ssh-agent` keeps it in memory:
 
 ```bash
-# Agent ishga tushirish (sessiya boshida)
+# Start the agent (at the beginning of the session)
 eval "$(ssh-agent -s)"
 
-# Kalitni qo'shish (passphrase bir marta so'raladi)
+# Add a key (the passphrase is asked once)
 ssh-add ~/.ssh/id_ed25519
 
-# Yuklangan kalitlar ro'yxati
+# List of loaded keys
 ssh-add -l
 
-# Hammasini o'chirish
+# Remove all of them
 ssh-add -D
 ```
 
@@ -526,8 +526,8 @@ Keychain integration — stores the passphrase in the macOS Keychain. It persist
 
 ```bash
 ssh -A jumphost
-# Endi jumphost'da bo'lib turib boshqa serverga ulanganingizda
-# local kalitingiz ishlatiladi (jump'da saqlanmaydi)
+# Now when you're on the jumphost and connect to another server
+# your local key is used (it's not stored on the jump host)
 ```
 
 ::: danger The danger of agent forwarding
@@ -545,9 +545,9 @@ ssh -J jumphost destination
 ```bash
 #!/usr/bin/env bash
 #
-# deploy.sh — local'da build → server'ga rsync → restart → health check
+# deploy.sh — build locally → rsync to the server → restart → health check
 #
-# Foydalanish:
+# Usage:
 #   ./deploy.sh staging
 #   ./deploy.sh prod
 
@@ -556,7 +556,7 @@ IFS=$'\n\t'
 
 readonly ENV="${1:?Foydalanish: $0 <staging|prod>}"
 
-# Konfiguratsiya — har environment uchun
+# Configuration — for each environment
 case "$ENV" in
     staging)
         SSH_HOST="staging"
@@ -581,7 +581,7 @@ log "📦 Local build..."
 npm ci --silent
 npm run build
 
-# --- 2. Smoke test (build OK ekanligini tekshirish) ---
+# --- 2. Smoke test (check that the build is OK) ---
 [[ -f dist/index.html ]] || {
     log "❌ Build muvaffaqiyatsiz — dist/index.html yo'q"
     exit 1
@@ -620,7 +620,7 @@ exit 1
 Running it:
 ```bash
 chmod +x deploy.sh
-./deploy.sh staging   # avval staging'da sinash
+./deploy.sh staging   # test on staging first
 ./deploy.sh prod      # production
 ```
 
@@ -646,18 +646,18 @@ chmod +x deploy.sh
 On the server side (`/etc/ssh/sshd_config`):
 
 ```sshconfig
-PasswordAuthentication no            # faqat key auth
-PermitRootLogin prohibit-password    # root parol bilan kirmasin
+PasswordAuthentication no            # key auth only
+PermitRootLogin prohibit-password    # don't let root log in with a password
 PubkeyAuthentication yes
 MaxAuthTries 3
-ClientAliveInterval 300              # 5 daqiqa idle → uzilish
+ClientAliveInterval 300              # 5 minutes idle → disconnect
 ClientAliveCountMax 2
-AllowUsers ali deploy                # ruxsat berilganlar
+AllowUsers ali deploy                # the allowed users
 ```
 
 After configuring:
 ```bash
-sudo sshd -t                # config syntaxni tekshirish
+sudo sshd -t                # check the config syntax
 sudo systemctl restart sshd
 ```
 :::
@@ -714,9 +714,9 @@ This chapter's **7** exercises with auto-checking via the `bashlings` CLI. All a
 STRINGS):
 
 ```bash
-bashlings watch              # birinchi pending mashqdan boshlash
-bashlings run ssh1           # bitta mashqni tekshirish
-bashlings hint ssh1          # bosqichli maslahat
+bashlings watch              # start from the first pending exercise
+bashlings run ssh1           # check a single exercise
+bashlings hint ssh1          # step-by-step hint
 ```
 
 Source: [`exercises/12_ssh/`](https://github.com/qobulovasror/bashlings/tree/main/exercises/12_ssh)

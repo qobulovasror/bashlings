@@ -190,9 +190,9 @@ trap cleanup EXIT
 
 # Asosiy ish
 echo "ma'lumot" > "$tmpfile"
-# ... boshqa kod ...
+# ... other code ...
 
-# `cleanup` har holda chaqiriladi
+# `cleanup` is called no matter what
 ```
 
 Try it:

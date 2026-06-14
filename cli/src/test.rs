@@ -1,6 +1,7 @@
 //! Test runner: parses `# @test:...` directives, executes the script via bash,
 //! and evaluates each assertion.
 
+use crate::tr;
 use anyhow::{anyhow, Context, Result};
 use std::io::Read;
 use std::path::Path;
@@ -125,9 +126,11 @@ pub fn parse_assertions(content: &str) -> Result<Vec<Assertion>> {
             continue;
         };
         let Some((kind, value)) = rest.split_once(':') else {
-            return Err(anyhow!(
-                "{lineno}-qator: noto'g'ri '@test:' direktiva — '# @test:KIND: VALUE' kutilgan"
-            ));
+            return Err(anyhow!(tr!(
+                "{}-qator: noto'g'ri '@test:' direktiva — '# @test:KIND: VALUE' kutilgan",
+                "line {}: invalid '@test:' directive — expected '# @test:KIND: VALUE'",
+                lineno
+            )));
         };
         let kind = kind.trim();
         let value = value.trim();
@@ -139,20 +142,38 @@ pub fn parse_assertions(content: &str) -> Result<Vec<Assertion>> {
             "stdout-regex" => {
                 // Fail fast on an invalid pattern (author error, not learner error).
                 regex::Regex::new(value).with_context(|| {
-                    format!("{lineno}-qator: '@test:stdout-regex' noto'g'ri regex: '{value}'")
+                    tr!(
+                        "{}-qator: '@test:stdout-regex' noto'g'ri regex: '{}'",
+                        "line {}: '@test:stdout-regex' invalid regex: '{}'",
+                        lineno,
+                        value
+                    )
                 })?;
                 out.push(Assertion::StdoutRegex(value.to_string()));
             }
             "stderr" => out.push(Assertion::Stderr(value.to_string())),
             "exit" => {
                 let code: i32 = value.parse().with_context(|| {
-                    format!("{lineno}-qator: '@test:exit' qiymati son emas: '{value}'")
+                    tr!(
+                        "{}-qator: '@test:exit' qiymati son emas: '{}'",
+                        "line {}: '@test:exit' value is not a number: '{}'",
+                        lineno,
+                        value
+                    )
                 })?;
                 out.push(Assertion::Exit(code));
             }
             "file-exists" => out.push(Assertion::FileExists(value.to_string())),
             other => {
-                eprintln!("⚠  {lineno}-qator: noma'lum direktiva @test:{other} (e'tibordan chetda)");
+                eprintln!(
+                    "{}",
+                    tr!(
+                        "⚠  {}-qator: noma'lum direktiva @test:{} (e'tibordan chetda)",
+                        "⚠  line {}: unknown directive @test:{} (ignored)",
+                        lineno,
+                        other
+                    )
+                );
             }
         }
     }
@@ -178,7 +199,9 @@ pub fn run_script(path: &Path, cwd: &Path) -> Result<ScriptOutput> {
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .spawn()
-        .with_context(|| format!("'bash {}' ni ishga tushira olmadik", path.display()))?;
+        .with_context(|| {
+            tr!("'bash {}' ni ishga tushira olmadik", "could not run 'bash {}'", path.display())
+        })?;
 
     // Drain stdout/stderr on separate threads so a chatty script can't fill the
     // pipe buffer and deadlock while we poll for the timeout.
@@ -198,13 +221,19 @@ pub fn run_script(path: &Path, cwd: &Path) -> Result<ScriptOutput> {
     let start = Instant::now();
     let mut timed_out = false;
     let status = loop {
-        match child.try_wait().context("skript holatini tekshirib bo'lmadi")? {
+        match child
+            .try_wait()
+            .context(tr!("skript holatini tekshirib bo'lmadi", "could not check script status"))?
+        {
             Some(status) => break status,
             None => {
                 if start.elapsed() >= SCRIPT_TIMEOUT {
                     let _ = child.kill();
                     timed_out = true;
-                    break child.wait().context("to'xtatilgan skriptni kutib bo'lmadi")?;
+                    break child.wait().context(tr!(
+                        "to'xtatilgan skriptni kutib bo'lmadi",
+                        "could not wait on the killed script"
+                    ))?;
                 }
                 std::thread::sleep(Duration::from_millis(20));
             }
@@ -235,7 +264,13 @@ fn run_expected_cmd(cmd: &str, cwd: &Path) -> Result<String> {
         .current_dir(cwd)
         .stdin(Stdio::null())
         .output()
-        .with_context(|| format!("expected komandasini bajara olmadik: 'bash -c {cmd}'"))?;
+        .with_context(|| {
+            tr!(
+                "expected komandasini bajara olmadik: 'bash -c {}'",
+                "could not run the expected command: 'bash -c {}'",
+                cmd
+            )
+        })?;
     Ok(String::from_utf8_lossy(&output.stdout).into_owned())
 }
 
@@ -306,7 +341,7 @@ pub fn evaluate(
             Assertion::StdoutRegex(pat) => {
                 // Pattern is validated at parse time, so this won't normally fail.
                 let re = regex::Regex::new(pat)
-                    .with_context(|| format!("noto'g'ri regex: '{pat}'"))?;
+                    .with_context(|| tr!("noto'g'ri regex: '{}'", "invalid regex: '{}'", pat))?;
                 let passed = re.is_match(&normalized_stdout);
                 (passed, format!("/{pat}/"), normalized_stdout.clone())
             }
@@ -330,7 +365,12 @@ pub fn evaluate(
                 (
                     exists,
                     format!("mavjud: {p}"),
-                    if exists { "mavjud" } else { "yo'q" }.to_string(),
+                    if exists {
+                        tr!("mavjud", "exists")
+                    } else {
+                        tr!("yo'q", "missing")
+                    }
+                    .to_string(),
                 )
             }
         };
@@ -347,7 +387,7 @@ pub fn evaluate(
 /// Convenience: parse, run (in `cwd`), evaluate — and return everything.
 pub fn run_full(path: &Path, cwd: &Path) -> Result<TestReport> {
     let content = std::fs::read_to_string(path)
-        .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
+        .with_context(|| tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", path.display()))?;
     let assertions = parse_assertions(&content)?;
     let run = run_script(path, cwd)?;
     let results = evaluate(&assertions, &run.stdout, &run.stderr, run.exit_code, cwd)?;

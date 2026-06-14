@@ -1,6 +1,7 @@
 //! Tiny persisted state: tracks how many hint steps the learner has revealed
 //! per exercise. Stored at `<workspace>/.bashlings/state.toml` (gitignored).
 
+use crate::tr;
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
@@ -31,12 +32,14 @@ pub fn load(root: &Path) -> State {
 pub fn save(root: &Path, state: &State) -> Result<()> {
     let path = state_path(root);
     if let Some(dir) = path.parent() {
-        std::fs::create_dir_all(dir)
-            .with_context(|| format!("'{}' katalogini yarata olmadik", dir.display()))?;
+        std::fs::create_dir_all(dir).with_context(|| {
+            tr!("'{}' katalogini yarata olmadik", "could not create directory '{}'", dir.display())
+        })?;
     }
-    let content = toml::to_string(state).context("state'ni serialize qila olmadik")?;
+    let content = toml::to_string(state)
+        .context(tr!("state'ni serialize qila olmadik", "could not serialize state"))?;
     std::fs::write(&path, content)
-        .with_context(|| format!("'{}' ga yoza olmadik", path.display()))?;
+        .with_context(|| tr!("'{}' ga yoza olmadik", "could not write to '{}'", path.display()))?;
     Ok(())
 }
 

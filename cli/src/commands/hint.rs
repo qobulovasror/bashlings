@@ -64,8 +64,9 @@ pub fn run(name: &str, show_all: bool, reset: bool) -> Result<bool> {
         return Ok(true);
     }
 
-    let content = std::fs::read_to_string(&hint_path)
-        .with_context(|| format!("'{}' faylini o'qib bo'lmadi", hint_path.display()))?;
+    let content = std::fs::read_to_string(&hint_path).with_context(|| {
+        tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", hint_path.display())
+    })?;
 
     let total = split_sections(&content).1.len();
 

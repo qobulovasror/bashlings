@@ -1,3 +1,4 @@
+use crate::tr;
 use anyhow::{anyhow, Context, Result};
 use serde::Deserialize;
 use std::path::{Path, PathBuf};
@@ -42,7 +43,7 @@ impl Exercise {
     pub fn is_done(&self, workspace_root: &Path) -> Result<bool> {
         let path = self.full_path(workspace_root);
         let content = std::fs::read_to_string(&path)
-            .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
+            .with_context(|| tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", path.display()))?;
         Ok(!has_marker_line(&content))
     }
 
@@ -51,7 +52,7 @@ impl Exercise {
     pub fn has_marker(&self, workspace_root: &Path) -> Result<bool> {
         let path = self.full_path(workspace_root);
         let content = std::fs::read_to_string(&path)
-            .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
+            .with_context(|| tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", path.display()))?;
         Ok(has_marker_line(&content))
     }
 }
@@ -125,12 +126,12 @@ pub fn restore_done_marker_str(content: &str) -> Option<String> {
 /// Returns `true` if a change was written.
 pub fn strip_done_marker(path: &Path) -> Result<bool> {
     let content = std::fs::read_to_string(path)
-        .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
+        .with_context(|| tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", path.display()))?;
     let Some(new_content) = strip_done_marker_str(&content) else {
         return Ok(false);
     };
     std::fs::write(path, new_content)
-        .with_context(|| format!("'{}' ga yoza olmadik", path.display()))?;
+        .with_context(|| tr!("'{}' ga yoza olmadik", "could not write to '{}'", path.display()))?;
     Ok(true)
 }
 
@@ -138,12 +139,12 @@ pub fn strip_done_marker(path: &Path) -> Result<bool> {
 /// the marker is already present. Returns `true` if a change was written.
 pub fn restore_done_marker(path: &Path) -> Result<bool> {
     let content = std::fs::read_to_string(path)
-        .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
+        .with_context(|| tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", path.display()))?;
     let Some(new_content) = restore_done_marker_str(&content) else {
         return Ok(false);
     };
     std::fs::write(path, new_content)
-        .with_context(|| format!("'{}' ga yoza olmadik", path.display()))?;
+        .with_context(|| tr!("'{}' ga yoza olmadik", "could not write to '{}'", path.display()))?;
     Ok(true)
 }
 
@@ -151,24 +152,27 @@ pub fn restore_done_marker(path: &Path) -> Result<bool> {
 pub fn load(workspace_root: &Path) -> Result<Info> {
     let path = workspace_root.join("exercises").join("info.toml");
     let content = std::fs::read_to_string(&path)
-        .with_context(|| format!("'{}' faylini o'qib bo'lmadi", path.display()))?;
+        .with_context(|| tr!("'{}' faylini o'qib bo'lmadi", "could not read file '{}'", path.display()))?;
     let info: Info = toml::from_str(&content)
-        .with_context(|| format!("'{}' tahlilida xato", path.display()))?;
+        .with_context(|| tr!("'{}' tahlilida xato", "error parsing '{}'", path.display()))?;
     Ok(info)
 }
 
 /// Walk up from the current directory until we find `exercises/info.toml`.
 pub fn find_workspace_root() -> Result<PathBuf> {
-    let mut current = std::env::current_dir().context("joriy katalogni o'qib bo'lmadi")?;
+    let mut current = std::env::current_dir()
+        .context(tr!("joriy katalogni o'qib bo'lmadi", "could not read current directory"))?;
     loop {
         if current.join("exercises").join("info.toml").is_file() {
             return Ok(current);
         }
         if !current.pop() {
-            return Err(anyhow!(
+            return Err(anyhow!(tr!(
                 "workspace topilmadi: 'exercises/info.toml' fayli yo'q. \
-                 bashlings ni repo ichidan ishga tushiring."
-            ));
+                 bashlings ni repo ichidan ishga tushiring.",
+                "workspace not found: no 'exercises/info.toml'. \
+                 Run bashlings from inside the repo."
+            )));
         }
     }
 }
