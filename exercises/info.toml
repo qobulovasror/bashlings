@@ -253,6 +253,20 @@ mode = "stdout-cmd"
 hint = "05_scripting/script6.hint.md"
 chapter = "part1/05-basic-scripting"
 
+[[exercises]]
+name = "script7"
+path = "05_scripting/script7.sh"
+mode = "stdout-cmd"
+hint = "05_scripting/script7.hint.md"
+chapter = "part1/05-basic-scripting"
+
+[[exercises]]
+name = "script8"
+path = "05_scripting/script8.sh"
+mode = "stdout-cmd"
+hint = "05_scripting/script8.hint.md"
+chapter = "part1/05-basic-scripting"
+
 # ============================================================================
 # 06 — Funksiyalar va modullik (Part 2/01)
 # ============================================================================
