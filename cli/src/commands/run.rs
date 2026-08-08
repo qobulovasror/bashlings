@@ -77,7 +77,7 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
             tr!(
                 "Skript {}s ichida tugamadi — to'xtatildi (cheksiz tsikl?).",
                 "Script didn't finish within {}s — killed (infinite loop?).",
-                test::SCRIPT_TIMEOUT_SECS
+                report.timeout_secs
             )
             .red()
         );
@@ -108,28 +108,27 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
         return Ok(false);
     }
 
-    // Print each assertion result
+    // Print each assertion result. The kind column is padded *before* styling:
+    // `Painted` writes through `write!`, which ignores width flags.
+    // Wide enough for the longest kind, `stdout-contains`.
+    const KIND_WIDTH: usize = 16;
     for r in &report.results {
-        let kind = r.assertion.kind();
+        let kind = format!("{:<KIND_WIDTH$}", r.assertion.kind());
         if r.passed {
             let preview = r.assertion.preview();
-            println!(
-                "  {}  {:<12} {}",
-                "✓".green(),
-                kind.bold(),
-                preview.dimmed()
-            );
+            println!("  {}  {} {}", "✓".green(), kind.bold(), preview.dimmed());
         } else {
             println!(
-                "  {}  {:<12} expected:  {}",
+                "  {}  {} expected:  {}",
                 "✗".red(),
                 kind.bold(),
                 format_value(&r.expected).red()
             );
             println!(
-                "     {:<12} actual:    {}",
+                "     {:width$} actual:    {}",
                 "",
-                format_value(&r.actual).red()
+                format_value(&r.actual).red(),
+                width = KIND_WIDTH
             );
         }
     }
@@ -197,6 +196,18 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
                 "ℹ".cyan(),
                 tr!("skript exit kodi:", "script exit code:"),
                 report.exit_code.to_string().yellow()
+            );
+        }
+
+        // Only set with `--keep-sandbox`; otherwise the directory is already gone.
+        if let Some(dir) = &report.sandbox {
+            let shown = dir.strip_prefix(root).unwrap_or(dir);
+            println!();
+            println!(
+                "  {} {} {}",
+                "🗂".cyan(),
+                tr!("Sandbox:", "Sandbox:"),
+                shown.display().to_string().cyan()
             );
         }
 

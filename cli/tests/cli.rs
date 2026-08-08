@@ -49,8 +49,11 @@ fn list_json_is_valid_and_has_total() {
     let out = bashlings().args(["list", "--json"]).assert().success();
     let stdout = String::from_utf8_lossy(&out.get_output().stdout).into_owned();
     let v: serde_json::Value = serde_json::from_str(&stdout).expect("valid JSON");
-    assert_eq!(v["total"].as_u64(), Some(101));
-    assert!(v["exercises"].is_array());
+    let exercises = v["exercises"].as_array().expect("exercises array");
+    // Tied to the registry rather than a hard-coded number, so adding an
+    // exercise doesn't fail this test.
+    assert!(!exercises.is_empty());
+    assert_eq!(v["total"].as_u64(), Some(exercises.len() as u64));
 }
 
 #[test]
