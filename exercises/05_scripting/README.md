@@ -12,6 +12,8 @@
 | 4 | `script4`  | `for` loop (diapazon)                  | ★★★☆☆       |
 | 5 | `script5`  | `case` operatori                       | ★★★★☆       |
 | 6 | `script6`  | `while` loop (hisoblagich)             | ★★★★☆       |
+| 7 | `script7`  | Skript argumentlari `$1`, `$#`, `"$@"` | ★★★☆☆       |
+| 8 | `script8`  | `read` — stdin'dan o'qish              | ★★★☆☆       |
 
 ## Boshlash
 

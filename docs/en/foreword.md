@@ -78,11 +78,11 @@ delete that line. The CLI uses it as a progress indicator.
 
 | Part | Topic | Exercises | Recommendation |
 |---|---|---|---|
-| **Part 1** | Linux & Bash fundamentals | 32 | Read in order |
+| **Part 1** | Linux & Bash fundamentals | 34 | Read in order |
 | **Part 2** | Advanced scripting | 28 | After Part 1 |
 | **Part 3** | Real-world (network, ssh, jq, cron, docker, ci) | 41 | Choose by topic |
 
-**Total:** 16 chapters + 101 exercises.
+**Total:** 16 chapters + 103 exercises.
 
 ---
 

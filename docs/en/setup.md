@@ -112,12 +112,12 @@ bashlings list
 
 Output of `bashlings list`:
 ```
-  Bashlings  ·  101 ta mashq
+  Bashlings  ·  103 ta mashq
 
   ·  intro1     part1/01-introduction
   ·  intro2     part1/01-introduction
   ...
-  Progress: 0 / 101  (0%)
+  Progress: 0 / 103  (0%)
 
   Keyingi: intro1
 ```
@@ -130,7 +130,7 @@ A Homebrew formula is being prepared. For now, install via `cargo install`.
 
 | Command                      | Purpose                                               |
 |------------------------------|-------------------------------------------------------|
-| `bashlings list`             | 101 exercises + status                                |
+| `bashlings list`             | 103 exercises + status                                |
 | `bashlings watch`            | **Start here** — interactive mode                     |
 | `bashlings run intro1`       | Check a single exercise                               |
 | `bashlings hint intro1`      | Hint (3 levels)                                       |
@@ -201,7 +201,7 @@ From the repo root:
 
 ```bash
 bashlings --version           # 0.1.x
-bashlings list                # 101 exercises
+bashlings list                # 103 exercises
 bashlings run intro1          # first exercise — it's normal for it to fail!
 ```
 

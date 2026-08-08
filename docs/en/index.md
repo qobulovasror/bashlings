@@ -55,9 +55,9 @@ For many Uzbek developers, the terminal and Bash still remain "mysterious" terri
 
 ## Tutorial structure
 
-The tutorial consists of **3 large parts** — **16 chapters** and **101 interactive exercises** in total.
+The tutorial consists of **3 large parts** — **16 chapters** and **103 interactive exercises** in total.
 
-### 📘 Part 1 — Linux & Bash fundamentals (32 exercises)
+### 📘 Part 1 — Linux & Bash fundamentals (34 exercises)
 Designed for beginners. The journey from the terminal all the way to writing your first Bash script.
 
 [**→ Start Part 1**](/en/part1/01-introduction)
