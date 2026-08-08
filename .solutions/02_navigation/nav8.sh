@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # SOLUTION: nav8 — rm + qolganlar
-work=/tmp/bashlings-nav8
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-touch tmp{1,2,3}.txt
-
 rm tmp2.txt
 ls
+
+# === SETUP (qo'l urmang) ===
+# @setup:file: tmp1.txt
+# @setup:file: tmp2.txt
+# @setup:file: tmp3.txt
 
 # === TEST META ===
 # @test:stdout-cmd: printf '%s\n' tmp1.txt tmp3.txt

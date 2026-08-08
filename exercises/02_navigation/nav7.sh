@@ -21,13 +21,12 @@
 
 # I AM NOT DONE
 
-work=/tmp/bashlings-nav7
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-touch eski.txt
-
 # TODO: eski.txt ni yangi.txt ga rename qiling
 
 # TODO: ls
+
+# === SETUP (qo'l urmang) ===
+# @setup:file: eski.txt
 
 # === TEST META ===
 # @test:stdout: yangi.txt
