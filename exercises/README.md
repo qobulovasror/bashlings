@@ -39,17 +39,68 @@ exercises/
 4. Tuzating va `# I AM NOT DONE` qatorini o'chiring
 5. `bashlings run intro1` (yoki `watch` rejimida o'z-o'zidan tekshiradi)
 
+## Sandbox
+
+Har mashq **bir martalik sandbox** ichida ishlaydi
+(`.bashlings/sandbox/<nom>-<pid>-<n>/work/`), repo ichida emas. Ya'ni:
+
+- mashq fayl yaratsa, o'chirsa, `chmod` qilsa — repo'ga tegmaydi
+- `ls`, `find`, `wc -l` har doim bir xil, ma'lum daraxtni ko'radi
+- run tugagach katalog o'chiriladi; ko'rish uchun `bashlings --keep-sandbox run <nom>`
+
+Shuning uchun mashq ichida `work=/tmp/... && cd "$work"` kabi boilerplate
+**kerak emas** — quyidagi `# @setup:` direktivalaridan foydalaning.
+
+## Setup meta-format
+
+Skript ishga tushishidan oldin sandbox ichida yaratiladi:
+
+| Direktiva                              | Ma'nosi                                                  |
+|----------------------------------------|-----------------------------------------------------------|
+| `# @setup:file: <yo'l>`                | Fayl yaratadi; tarkibi keyingi `# \|` qatorlarida         |
+| `# @setup:mkdir: <yo'l>`               | Katalog yaratadi (`mkdir -p` kabi)                        |
+| `# @setup:fixture: <katalog>`          | Mashq yonidagi `<katalog>/` ni rekursiv nusxalaydi        |
+| `# @setup:perm: <yo'l> <0644>`         | Huquqlarni o'rnatadi (sakkizlik)                          |
+| `# @setup:symlink: <link> :: <nishon>` | Symlink yaratadi                                          |
+| `# @setup:env: KALIT=qiymat`           | Skript uchun environment o'zgaruvchisi                    |
+| `# @setup:args: <argumentlar>`         | `$1`, `$#`, `"$@"` — shell qoidasi bo'yicha bo'linadi     |
+| `# @setup:stdin:`                      | Skript stdin'i; tarkibi keyingi `# \|` qatorlarida        |
+| `# @setup:timeout: <soniya>`           | Vaqt chegarasi (default 10s, maksimum 300)                |
+| `# @setup:isolate-home`                | `HOME` ni sandbox ichiga yo'naltiradi (qiymatsiz)          |
+
+Yo'llar sandbox ichida bo'lishi shart — absolut yo'l va `..` rad etiladi.
+
+```bash
+# === SETUP (qo'l urmang) ===
+# @setup:mkdir: data/sub
+# @setup:file: data/a.txt
+# |olma
+# |anor
+# @setup:perm: data/a.txt 0600
+```
+
 ## Test meta-format
 
 Har `.sh` fayl oxirida quyidagi qatorlardan biri bo'ladi:
 
-| Direktiva                     | Ma'nosi                                             |
-|-------------------------------|-----------------------------------------------------|
-| `# @test:stdout: <matn>`      | Skript stdout aynan shu satrga teng bo'lishi kerak  |
-| `# @test:stdout-cmd: <cmd>`   | Stdout boshqa buyruq natijasiga teng bo'lishi kerak |
-| `# @test:exit: <code>`        | Exit code teng bo'lishi kerak                       |
-| `# @test:regex: <pattern>`    | Stdout regex'ga mos kelishi kerak                   |
-| `# @test:file: <yo'l>`        | Belgilangan fayl yaratilgan bo'lishi kerak          |
+| Direktiva                        | Ma'nosi                                             |
+|----------------------------------|-----------------------------------------------------|
+| `# @test:stdout: <matn>`         | Skript stdout aynan shu satrga teng bo'lishi kerak  |
+| `# @test:stdout-cmd: <cmd>`      | Stdout boshqa buyruq natijasiga teng bo'lishi kerak |
+| `# @test:stdout-contains: <sub>` | Stdout ichida shu satr bo'lishi kerak               |
+| `# @test:stdout-regex: <pattern>`| Stdout regex'ga mos kelishi kerak                   |
+| `# @test:stderr: <matn>`         | Stderr aynan shu satrga teng bo'lishi kerak         |
+| `# @test:exit: <code>`           | Exit code teng bo'lishi kerak                       |
+| `# @test:file-exists: <yo'l>`    | Belgilangan fayl yaratilgan bo'lishi kerak          |
+| `# @test:file-missing: <yo'l>`   | Bu yo'lda hech narsa qolmasligi kerak               |
+| `# @test:file-content: <yo'l> :: <matn>` | Fayl tarkibi aynan shunday bo'lsin          |
+| `# @test:file-contains: <yo'l> :: <sub>` | Fayl ichida shu satr bo'lsin                |
+| `# @test:perm: <yo'l> <0755>`    | Fayl huquqlari (sakkizlik)                          |
+| `# @test:tree: a.txt, sub/b.txt` | Ish katalogida **aynan** shu fayllar qolsin         |
+
+`file-*` va `perm` yo'llari sandbox ish katalogiga nisbatan hisoblanadi.
+`tree` faqat fayllarni sanaydi — bo'sh katalog ko'rinmaydi.
+`file-missing` singan symlink'ni ham "mavjud" deb biladi.
 
 ## Daraja belgisi
 

@@ -44,7 +44,7 @@ jobs:
         run: cargo clippy --manifest-path cli/Cargo.toml --release --all-targets -- -D warnings
 
   solutions:
-    name: 101 solutions pass
+    name: All solutions pass
     runs-on: ubuntu-latest
     needs: cli
     steps:
@@ -67,7 +67,7 @@ jobs:
       - name: Build bashlings
         run: cargo build --release --manifest-path cli/Cargo.toml
 
-      - name: Run all 101 solutions
+      - name: Run every solution
         run: ./scripts/test-solutions.sh
 
   shellcheck:

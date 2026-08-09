@@ -55,9 +55,9 @@ Ko'pchilik o'zbek dasturchilari uchun terminal va Bash hali ham "sirli" hudud bo
 
 ## Darslik tuzilishi
 
-Darslik **3 ta katta qism**dan iborat — jami **16 bob** va **101 interaktiv mashq**.
+Darslik **3 ta katta qism**dan iborat — jami **16 bob** va **103 interaktiv mashq**.
 
-### 📘 1-qism — Linux & Bash asoslari (32 mashq)
+### 📘 1-qism — Linux & Bash asoslari (34 mashq)
 Boshlovchilar uchun mo'ljallangan. Terminaldan tortib, birinchi Bash skript yozishgacha bo'lgan yo'l.
 
 [**→ 1-qismni boshlash**](/part1/01-introduction)

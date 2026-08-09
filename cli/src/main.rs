@@ -1,6 +1,8 @@
 mod commands;
 mod i18n;
 mod info;
+mod sandbox;
+mod setup;
 mod state;
 mod style;
 mod test;
@@ -24,6 +26,10 @@ struct Cli {
     /// Interfeys tili · Interface language: uz | en  [env: BASHLINGS_LANG]
     #[arg(long, global = true, value_name = "uz|en")]
     lang: Option<String>,
+
+    /// Sandbox katalogini saqlab qolish (debug) · Keep the run sandbox for inspection
+    #[arg(long, global = true)]
+    keep_sandbox: bool,
 
     #[command(subcommand)]
     command: Commands,
@@ -113,6 +119,7 @@ fn main() -> ExitCode {
 
     let cli = Cli::parse();
     i18n::set(i18n::resolve(cli.lang.as_deref()));
+    sandbox::set_keep(cli.keep_sandbox);
 
     match dispatch(cli) {
         Ok(true) => ExitCode::SUCCESS,

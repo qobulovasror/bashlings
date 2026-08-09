@@ -112,12 +112,12 @@ bashlings list
 
 `bashlings list` natijasi:
 ```
-  Bashlings  ·  101 ta mashq
+  Bashlings  ·  103 ta mashq
 
   ·  intro1     part1/01-introduction
   ·  intro2     part1/01-introduction
   ...
-  Progress: 0 / 101  (0%)
+  Progress: 0 / 103  (0%)
 
   Keyingi: intro1
 ```
@@ -131,7 +131,7 @@ o'rnating.
 
 | Buyruq                       | Vazifasi                                              |
 |------------------------------|-------------------------------------------------------|
-| `bashlings list`             | 101 mashq + status                                    |
+| `bashlings list`             | 103 mashq + status                                    |
 | `bashlings watch`            | **Boshlash uchun shu** — interaktiv rejim             |
 | `bashlings run intro1`       | Bitta mashqni tekshirish                              |
 | `bashlings hint intro1`      | Maslahat (3-bosqich)                                  |
@@ -202,7 +202,7 @@ Repo ildizidan:
 
 ```bash
 bashlings --version           # 0.1.x
-bashlings list                # 101 mashq
+bashlings list                # 103 mashq
 bashlings run intro1          # birinchi mashq — xato berishi normal!
 ```
 

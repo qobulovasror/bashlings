@@ -9,7 +9,7 @@
 | Pillar          | Mavzu                              | Texnologiya       |
 |-----------------|------------------------------------|-------------------|
 | 📘 **Kitob**     | 16 ta bob, ~8 500 qator markdown   | VitePress         |
-| 🧪 **Mashqlar**   | 101 ta `# I AM NOT DONE` mashq     | Bash skript fayllar |
+| 🧪 **Mashqlar**   | 103 ta `# I AM NOT DONE` mashq     | Bash skript fayllar |
 | ⚡ **CLI**       | `bashlings` runner + watch         | Rust              |
 
 ---
@@ -55,7 +55,7 @@ cp target/release/bashlings ~/.local/bin/   # PATH ichida bo'lsin
 Repo ildizidan:
 
 ```bash
-bashlings list           # 101 ta mashqning hammasi va statusi
+bashlings list           # 103 ta mashqning hammasi va statusi
 bashlings watch          # interaktiv rejim — saqlasangiz avto-tekshiruv
 bashlings run            # keyingi pending mashqni tekshirish
 bashlings run intro1     # aniq bitta mashq
@@ -163,7 +163,7 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | 05 | Docker asoslari                  | 7        |
 | 06 | CI/CD — GitHub Actions           | 7        |
 
-**Jami:** 16 bob, 101 mashq, ~8 500+ qator markdown.
+**Jami:** 16 bob, 103 mashq, ~8 500+ qator markdown.
 
 ---
 
@@ -218,7 +218,7 @@ export BASHLINGS_LANG=en             # sessiya uchun
 ```
 
 Hint fayllari ham locale'ga qarab tanlanadi: `<mashq>.hint.en.md` mavjud bo'lsa
-inglizchasi, bo'lmasa o'zbekchasiga (`.hint.md`) qaytadi. Barcha 101 hint va 101
+inglizchasi, bo'lmasa o'zbekchasiga (`.hint.md`) qaytadi. Barcha 103 hint va 103
 mashq tavsifi ikki tilli.
 
 **Kitob** ham ikki tilda: o'zbekcha (default) va inglizcha (`/en/` — saytdagi til
@@ -247,7 +247,7 @@ Loyihaning batafsil holati [`STATUS.md`](./STATUS.md) faylida.
 | Pillar | Holat                                                          |
 |--------|----------------------------------------------------------------|
 | 📘 Kitob | 95% (Part 1+2+3 to'la, Foreword+Setup+Glossary; Appendix qarz) |
-| 🧪 Mashqlar | 100% (101/101 — Part 1: 32, Part 2: 28, Part 3: 41)          |
+| 🧪 Mashqlar | 100% (103/103 — Part 1: 34, Part 2: 28, Part 3: 41)          |
 | ⚡ CLI | 100% (8 buyruq: list/run/watch/hint/solution/reset/progress/next) |
 
 ---

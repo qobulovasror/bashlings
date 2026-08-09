@@ -25,7 +25,7 @@ flowchart LR
 | Pillar               | Mavzu                              | Roli                          | Hozirgi holat       |
 |----------------------|------------------------------------|-------------------------------|---------------------|
 | **A. KITOB**         | VitePress markdown sahifalar       | "Nima va nima uchun"          | 🟢 ~95% tayyor      |
-| **B. MASHQLAR**      | `exercises/*.sh` fayllar           | "Hozir o'zing bajarib ko'r"   | 🟢 100% (101/101)   |
+| **B. MASHQLAR**      | `exercises/*.sh` fayllar           | "Hozir o'zing bajarib ko'r"   | 🟢 100% (103/103)   |
 | **C. CLI**           | `bashlings` runner (Rust)          | "Avto-tekshirish + UX"        | 🟢 100% (8 buyruq)  |
 
 ### 0.3. Loyihaning yakuniy ko'rinishi
@@ -37,8 +37,8 @@ bash-doc/
 │   ├── part1/ ... part3/              # 16 bob
 │   └── .vitepress/config.ts
 ├── exercises/                         ← Pillar B: MASHQLAR
-│   ├── info.toml                      # 101 ta yozuv
-│   ├── 01_intro/ ... 16_cicd/         # 16 bo'lim, 101 ta .sh + hint + README
+│   ├── info.toml                      # 103 ta yozuv
+│   ├── 01_intro/ ... 16_cicd/         # 16 bo'lim, 103 ta .sh + hint + README
 ├── .solutions/                        ← YASHIRIN — CLI orqali ochiladi
 ├── cli/                               ← Pillar C: bashlings CLI
 │   ├── src/                           # main.rs, info.rs, test.rs, commands/
@@ -58,9 +58,9 @@ bash-doc/
 | Markdown fayllar (kitob)      | **19 ta**    |
 | Jami kitob qatorlari          | **~8 500+**  |
 | Boblar (3 qism)               | **16 ta**    |
-| **Mashq (`.sh`) fayllar**     | **101 ta** 🟢 |
-| **Hint fayllar**              | **101 ta** 🟢 |
-| **Yechim fayllar**            | **101 ta** 🟢 |
+| **Mashq (`.sh`) fayllar**     | **103 ta** 🟢 |
+| **Hint fayllar**              | **103 ta** 🟢 |
+| **Yechim fayllar**            | **103 ta** 🟢 |
 | **CLI binary**                | **0.8 MB** 🟢 |
 | **CLI buyruqlari**            | **8 ta** 🟢   |
 | **Capstone loyihalar**        | **0 ta** 🔴  |
@@ -69,10 +69,10 @@ bash-doc/
 
 | Qism    | Boblar | Mashqlar | Holat |
 |---------|--------|----------|-------|
-| Part 1  | 5      | 32       | 🟢 100% |
+| Part 1  | 5      | 34       | 🟢 100% |
 | Part 2  | 5      | 28       | 🟢 100% |
 | Part 3  | 6      | 41       | 🟢 100% |
-| **JAMI** | **16** | **101**  | 🟢      |
+| **JAMI** | **16** | **103**  | 🟢      |
 
 ### 1.3. Pillar A — Kitob detali
 
@@ -131,20 +131,48 @@ bash-doc/
 | `stderr`           | 🟢    | stderr literal taqqoslash                   |
 | `exit`             | 🟢    | Exit code taqqoslash                        |
 | `file-exists`      | 🟢    | Fayl/katalog mavjudligini tekshirish        |
+| `file-missing`     | 🟢    | Yo'l bo'sh bo'lishi (singan symlink ham "bor") |
+| `file-content`     | 🟢    | `<yo'l> :: <matn>` fayl tarkibi             |
+| `file-contains`    | 🟢    | `<yo'l> :: <substring>`                     |
+| `perm`             | 🟢    | `<yo'l> <0755>` huquq bitlari (Unix)        |
+| `tree`             | 🟢    | Ish katalogidagi fayllar to'plami aynan     |
 | `shellcheck`       | 🔴    | Hali runner'da yo'q (CI'da alohida bor)     |
 
-**Runner mustahkamligi:** har skript 10s timeout bilan (cheksiz tsikl CLI'ni
-osmaydi), `stdin=/dev/null` (`read` bloklanmaydi), workspace root cwd'da
-(deterministik). `watch` raw-mode RAII guard bilan (xato bo'lsa ham terminal
+### 2.4. Setup direktivalari (fixture)
+
+| Direktiva      | Izoh                                                    |
+|----------------|---------------------------------------------------------|
+| `file`         | Fayl + tarkib (`# \|` davomi qatorlari)                 |
+| `mkdir`        | Katalog                                                  |
+| `fixture`      | Mashq yonidagi katalogni rekursiv nusxalash             |
+| `perm`         | Huquqlar (sakkizlik)                                     |
+| `symlink`      | `<link> :: <nishon>`                                     |
+| `env`          | `KALIT=qiymat`                                           |
+| `args`         | `$1`, `$#`, `"$@"` — shell qoidasi bo'yicha bo'linadi   |
+| `stdin`        | Skript stdin'i (`# \|` davomi qatorlari)                |
+| `timeout`      | Vaqt chegarasi, soniya (default 10, maksimum 300)        |
+| `isolate-home` | `HOME` ni sandbox ichiga yo'naltiradi (qiymatsiz)        |
+
+**Sandbox:** har run bir martalik `.bashlings/sandbox/<nom>-<pid>-<n>/` ichida
+bo'ladi — `work/` skriptning cwd'i, skript nusxasi esa undan tashqarida (shuning
+uchun mashqning `ls` chiqishi toza). Run tugagach o'chiriladi; ko'rish uchun
+`--keep-sandbox`. Ya'ni `rm -rf *` yozgan mashq repo'ga tegmaydi va `ls`/`find`
+natijasi deterministik.
+
+**Runner mustahkamligi:** har skript default 10s timeout bilan (cheksiz tsikl
+CLI'ni osmaydi), o'z jarayon guruhida (`killpg` — fork bomba avlodlari ham
+o'ladi), `ulimit -u`/`-f` cheklovlari bilan, stdin `/dev/null` yoki
+`@setup:stdin`. Fon vazifasi pipe'ni ushlab qolsa 200ms grace'dan keyin guruh
+o'ldiriladi. `watch` raw-mode RAII guard bilan (xato bo'lsa ham terminal
 tiklanadi). bash 4'dan past versiyada ogohlantirish chiqadi.
 
 **Til (i18n):** default o'zbekcha; inglizcha `--lang en` yoki `BASHLINGS_LANG=en`.
 - 🟢 CLI: barcha runtime satrlari uz/en (`tr!` makrosi, `i18n.rs`).
-- 🟢 Hintlar: 101/101 ikki tilli (`*.hint.en.md`, locale lookup + fallback).
-- 🟢 Mashq tavsiflari: 101/101 ikki tilli izoh (UZ + EN bir faylda).
+- 🟢 Hintlar: 103/103 ikki tilli (`*.hint.en.md`, locale lookup + fallback).
+- 🟢 Mashq tavsiflari: 103/103 ikki tilli izoh (UZ + EN bir faylda).
 - 🟢 Kitob (docs): 21/21 sahifa inglizcha (VitePress `locales`, `/en/`).
 
-### 2.4. Distribution
+### 2.5. Distribution
 
 | Kanal           | Holat                                       |
 |-----------------|---------------------------------------------|
@@ -172,7 +200,7 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 |----------------------------------------|-------------|
 | `cargo build --release`                | 🟢 0 warning |
 | `cargo test`                           | 🟢 50 ta test (42 unit + 8 integratsion `tests/cli.rs`) |
-| Solutions test pipeline (har solution o'tishini tasdiqlash) | 🟢 `scripts/test-solutions.sh` (101/101) |
+| Solutions test pipeline (har solution o'tishini tasdiqlash) | 🟢 `scripts/test-solutions.sh` (103/103) |
 | `shellcheck exercises/`                | 🟢 CI'da (exercises info-only, .solutions strict) |
 | `docs:build` (VitePress)               | 🟢 Lokalda + CI'da ishlaydi |
 | **GitHub Actions CI**                  | 🟢 `.github/workflows/ci.yml` (cli + solutions + shellcheck + docs) |
@@ -200,7 +228,8 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 | Sprint | Vazifa | DoD |
 |--------|--------|-----|
 | B1     | Capstone-grade multi-step mashqlar (3 pack) | 3 capstone exercise pack |
-| B2     | Test framework kengaytirish: `stderr`, `regex`, `file`, `shellcheck` rejimlari | runner'da to'liq qo'llab-quvvatlash |
+| B2     | 🟢 Test framework kengaytirish: `stderr`, `stdout-regex`, `file-*`, `perm`, `tree` | bajarildi (`shellcheck` rejimi qoldi) |
+| B3     | Sandbox + `@setup:` ni mavjud mashqlarga yoyish (`/tmp/...` boilerplate'ni olib tashlash) | 02_navigation pilot bajarildi, qolgan boblar |
 
 ### 4.3. Track C — CLI / Infrastructure
 
@@ -221,7 +250,7 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 
 ✅ **3 ustun ishlamoqda:** kitob (95%), mashqlar (100%), CLI (100% MVP).
 ✅ **Rustlings parity:** auto-marker-removal, gated solution reveal, interaktiv watch hotkeys.
-✅ **101 mashq + 101 hint + 101 yechim** — har birining yechimi avtomatik tekshirilgan.
+✅ **103 mashq + 103 hint + 103 yechim** — har birining yechimi avtomatik tekshirilgan.
 
 ### Eng katta qolgan bo'shliqlar (ROI tartibida)
 
@@ -233,4 +262,4 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 
 ### Yakuniy ko'rinish (Q3 2026)
 
-> Foydalanuvchi `brew install bashlings` qiladi → `bashlings.uz` ga o'tib kitobni o'qiy boshlaydi → har bobdan keyin `bashlings watch` ni ochib qoldiradi → terminalda 101 ta yashil ✓ to'plab borib, oxirida **Backup CLI**, **mini-grep** va **Server Dashboard** capstone loyihalarini o'z qo'li bilan yozadi.
+> Foydalanuvchi `brew install bashlings` qiladi → `bashlings.uz` ga o'tib kitobni o'qiy boshlaydi → har bobdan keyin `bashlings watch` ni ochib qoldiradi → terminalda 103 ta yashil ✓ to'plab borib, oxirida **Backup CLI**, **mini-grep** va **Server Dashboard** capstone loyihalarini o'z qo'li bilan yozadi.

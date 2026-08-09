@@ -78,11 +78,11 @@ shu qatorni o'chiring. CLI buni progress ko'rsatkichi sifatida ishlatadi.
 
 | Qism | Mavzu | Mashqlar | Tavsiya |
 |---|---|---|---|
-| **Part 1** | Linux & Bash asoslari | 32 ta | Tartib bilan o'qing |
+| **Part 1** | Linux & Bash asoslari | 34 ta | Tartib bilan o'qing |
 | **Part 2** | Advanced scripting | 28 ta | Part 1 dan keyin |
 | **Part 3** | Real-world (network, ssh, jq, cron, docker, ci) | 41 ta | Mavzuga ko'ra tanlang |
 
-**Jami:** 16 bob + 101 mashq.
+**Jami:** 16 bob + 103 mashq.
 
 ---
 
