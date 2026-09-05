@@ -7,7 +7,7 @@ progress from beginner to advanced.
 The interface is bilingual: **Uzbek by default**, English via `--lang en` or
 `BASHLINGS_LANG=en`.
 
-> `bashlings` is the CLI for the [Bash UZ](https://github.com/qobulovasror/bashlings)
+> `bashlings` is the CLI for the [Bash UZ](https://bashlings.uz)
 > learning ecosystem (a VitePress book + 103 exercises). The binary loads
 > exercises from a cloned repo, so install the CLI **and** clone the repo.
 

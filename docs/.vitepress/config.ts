@@ -1,20 +1,104 @@
 import { defineConfig } from 'vitepress'
 
+const HOSTNAME = 'https://bashlings.uz'
+const OG_IMAGE = `${HOSTNAME}/og.png`
+
+// Breadcrumb uchun bo'lim nomlari
+const SECTIONS: Record<string, { uz: string; en: string }> = {
+  part1: { uz: '1-qism · Linux & Bash asoslari', en: 'Part 1 · Linux & Bash Basics' },
+  part2: { uz: '2-qism · Advanced Bash Scripting', en: 'Part 2 · Advanced Bash Scripting' },
+  part3: { uz: "3-qism · Real-world ko'nikmalar", en: 'Part 3 · Real-world skills' }
+}
+
 export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
+  sitemap: { hostname: HOSTNAME },
 
   head: [
     ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
-    ['meta', { property: 'og:title', content: 'Bash & Linux Darsligi' }],
-    ['meta', {
-      property: 'og:description',
-      content: "Linux va Bash bo'yicha o'zbek tilidagi interaktiv darslik"
-    }],
-    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:image', content: OG_IMAGE }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: OG_IMAGE }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }]
   ],
+
+  // Har sahifaga canonical, hreflang, per-page og va JSON-LD qo'shadi
+  transformPageData(pageData) {
+    const slug = pageData.relativePath
+      .replace(/(^|\/)index\.md$/, '$1')
+      .replace(/\.md$/, '')
+    const isEn = slug === 'en/' || slug.startsWith('en/')
+    const uzSlug = isEn ? slug.slice(3) : slug
+    const enSlug = isEn ? slug : `en/${slug}`
+    const lang = isEn ? 'en-US' : 'uz-UZ'
+    const url = `${HOSTNAME}/${slug}`
+    const fallbackTitle = isEn ? 'Bash & Linux Guide' : 'Bash & Linux Darsligi'
+    const fallbackDescription = isEn
+      ? 'A complete guide to Linux commands and advanced Bash scripting (Uzbek-first, English translation).'
+      : "Linux buyruqlari va Advanced Bash Scripting bo'yicha o'zbek tilidagi to'liq qo'llanma"
+    const title = pageData.frontmatter.title || pageData.title || fallbackTitle
+    const description =
+      pageData.frontmatter.description || pageData.description || fallbackDescription
+
+    const isHome = slug === '' || slug === 'en/'
+
+    const jsonLd = isHome
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Course',
+          name: title,
+          description,
+          url,
+          inLanguage: lang,
+          isAccessibleForFree: true,
+          provider: { '@type': 'Organization', name: 'Bash UZ', url: HOSTNAME },
+          hasCourseInstance: {
+            '@type': 'CourseInstance',
+            courseMode: 'online',
+            courseWorkload: 'PT20H'
+          },
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'UZS', category: 'Free' }
+        }
+      : {
+          '@context': 'https://schema.org',
+          '@type': 'TechArticle',
+          headline: title,
+          description,
+          url,
+          inLanguage: lang,
+          isAccessibleForFree: true,
+          author: { '@type': 'Organization', name: 'Bash UZ' },
+          publisher: { '@type': 'Organization', name: 'Bash UZ', url: HOSTNAME },
+          ...(pageData.lastUpdated
+            ? { dateModified: new Date(pageData.lastUpdated).toISOString() }
+            : {}),
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: buildCrumbs(slug, uzSlug, title, isEn)
+          }
+        }
+
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      ['link', { rel: 'canonical', href: url }],
+      ['link', { rel: 'alternate', hreflang: 'uz', href: `${HOSTNAME}/${uzSlug}` }],
+      ['link', { rel: 'alternate', hreflang: 'en', href: `${HOSTNAME}/${enSlug}` }],
+      ['link', { rel: 'alternate', hreflang: 'x-default', href: `${HOSTNAME}/${uzSlug}` }],
+      ['meta', { property: 'og:url', content: url }],
+      ['meta', { property: 'og:type', content: isHome ? 'website' : 'article' }],
+      ['meta', { property: 'og:site_name', content: fallbackTitle }],
+      ['meta', { property: 'og:locale', content: isEn ? 'en_US' : 'uz_UZ' }],
+      ['meta', { property: 'og:title', content: title }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { name: 'twitter:title', content: title }],
+      ['meta', { name: 'twitter:description', content: description }],
+      ['script', { type: 'application/ld+json' }, JSON.stringify(jsonLd)]
+    )
+  },
 
   themeConfig: {
     // ── Locale'lar uchun umumiy ──────────────────────────────────────────
@@ -40,10 +124,6 @@ export default defineConfig({
           }
         }
       }
-    },
-
-    markdown: {
-      theme: { light: 'github-light', dark: 'github-dark' }
     }
   },
 
@@ -305,3 +385,25 @@ export default defineConfig({
     }
   }
 })
+
+function buildCrumbs(slug: string, uzSlug: string, title: string, isEn: boolean) {
+  const home = isEn ? `${HOSTNAME}/en/` : `${HOSTNAME}/`
+  const crumbs: Array<Record<string, unknown>> = [
+    { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Bosh sahifa', item: home }
+  ]
+  const section = SECTIONS[uzSlug.split('/')[0]]
+  if (section) {
+    crumbs.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: isEn ? section.en : section.uz
+    })
+  }
+  crumbs.push({
+    '@type': 'ListItem',
+    position: crumbs.length + 1,
+    name: title,
+    item: `${HOSTNAME}/${slug}`
+  })
+  return crumbs
+}
