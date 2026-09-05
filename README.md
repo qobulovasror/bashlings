@@ -1,4 +1,4 @@
-# Bash UZ — Linux va Bash o'rganish ekotizimi
+# Bashlings — Linux va Bash o'rganish ekotizimi
 
 > Rust-book + Rustlings modelida ishlovchi **uzbek tilidagi** to'liq Bash & Linux o'qitish ekotizimi.
 
