@@ -2,6 +2,11 @@
   "name": "bashlings",
   "version": "1.0.0",
   "description": "Linux Commands va Advanced Bash Scripting bo'yicha o'zbek tilidagi interaktiv darslik",
+  "homepage": "https://bashlings.uz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qobulovasror/bashlings.git"
+  },
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs",

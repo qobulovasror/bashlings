@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bashlings.uz/sitemap.xml
