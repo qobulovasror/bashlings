@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress'
 
-const HOSTNAME = 'https://bashlings.uz'
+const HOSTNAME = 'https://www.bashlings.uz'
 const OG_IMAGE = `${HOSTNAME}/og.png`
 
 // Breadcrumb uchun bo'lim nomlari

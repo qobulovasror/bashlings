@@ -2,7 +2,7 @@
 
 > Rust-book + Rustlings modelida ishlovchi **uzbek tilidagi** to'liq Bash & Linux o'qitish ekotizimi.
 
-**🌐 Sayt: [bashlings.uz](https://bashlings.uz)** — kitobni onlayn o'qing.
+**🌐 Sayt: [bashlings.uz](https://www.bashlings.uz)** — kitobni onlayn o'qing.
 
 ---
 
