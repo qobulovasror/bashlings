@@ -180,8 +180,8 @@ tiklanadi). bash 4'dan past versiyada ogohlantirish chiqadi.
 | GitHub Releases (tayyor binarylar) | 🟡 Workflow tayyor (`release.yml`) — `v*` tag push kerak |
 | Bir qatorli install skript        | 🟢 `scripts/install.sh` (Releases'ga tayanadi) |
 | `cargo install bashlings` (crates.io) | 🟡 Paket tayyor (`--dry-run` ✓) + CI step — token kerak |
-| Homebrew formula (binar)          | 🟢 `cli/Formula/bashlings.rb` + `scripts/update-formula.sh` |
-| Homebrew tap (jonli) | 🟡 Formula tayyor — `homebrew-bashlings` repo kerak |
+| Homebrew formula (binar)          | 🟢 [`qobulovasror/homebrew-tap`](https://github.com/qobulovasror/homebrew-tap) — `Formula/bashlings.rb` |
+| Homebrew tap (jonli) | 🟢 `brew install qobulovasror/tap/bashlings` (v0.1.1, `brew audit --strict` ✓) |
 
 **Release oqimi:** `v0.1.0` tag push → `release.yml` 5 platforma uchun binar +
 sha256 yuklaydi → install skript va Homebrew formula shularni iste'mol qiladi.
@@ -190,7 +190,7 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 **Qolgan qo'lda qadamlar (tashqi hisob/token kerak):**
 1. `git tag v0.1.0 && git push origin v0.1.0` — Releases'ni ishga tushiradi
 2. crates.io: token → `CARGO_REGISTRY_TOKEN` secret (yoki `cargo publish`)
-3. Homebrew: `homebrew-bashlings` repo yaratish → `scripts/update-formula.sh v0.1.0` → formulani commit
+3. Homebrew: har release'dan keyin `scripts/update-formula.sh vX.Y.Z` → `homebrew-tap` repo'da formulani commit
 
 ---
 
@@ -238,7 +238,7 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 | C1     | `cargo test` — info.rs unit testlari (`strip_done_marker`, `restore_done_marker`, `has_marker_line`) | ≥10 ta test |
 | C2     | **GitHub Actions CI** — `cargo build`, `docs:build`, solutions test, shellcheck | `.github/workflows/ci.yml` |
 | C3     | Crates.io'ga publish | `cargo publish` muvaffaqiyatli |
-| C4     | Homebrew tap (`homebrew-bashlings` repo) | `brew install qobulovasror/bashlings/bashlings` ishlaydi |
+| C4     | Homebrew tap (`homebrew-tap` repo) | `brew install qobulovasror/tap/bashlings` ishlaydi |
 | C5     | Bir buyruqli install script (`curl ... \| sh`) | macOS+Linux'da ishlaydi |
 | C6     | `CONTRIBUTING.md` + `LICENSE` + `CHANGELOG.md` | Standart OSS fayllar |
 

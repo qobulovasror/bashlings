@@ -1,26 +1,31 @@
 #!/usr/bin/env bash
 #
-# update-formula.sh — Homebrew formuladagi url/sha256/version qiymatlarini
-# berilgan release tag bo'yicha avtomatik to'ldiradi.
+# update-formula.sh — homebrew-tap'dagi Formula/bashlings.rb ni berilgan
+# release tag bo'yicha yangilaydi (url'lardagi versiya + sha256).
 #
 # Foydalanish:
-#   scripts/update-formula.sh v0.1.0
+#   scripts/update-formula.sh v0.1.2 [path/to/homebrew-tap]
 #
+# Tap yo'li berilmasa `../homebrew-tap` (bashlings bilan yonma-yon) ishlatiladi.
 # Release (binar .tar.gz + .sha256 fayllari bilan) allaqachon mavjud bo'lishi
-# kerak. Natijani `homebrew-bashlings` tap repo'siga commit qiling.
+# kerak. Natijani homebrew-tap repo'sida commit qiling.
 
 set -euo pipefail
 
 REPO="qobulovasror/bashlings"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FORMULA="$ROOT/cli/Formula/bashlings.rb"
 
 TAG="${1:-}"
 [ -n "$TAG" ] || {
-    echo "Foydalanish: $0 <tag>   (masalan: v0.1.0)" >&2
+    echo "Foydalanish: $0 <tag> [homebrew-tap yo'li]   (masalan: v0.1.2)" >&2
     exit 2
 }
-VERSION="${TAG#v}"
+TAP="${2:-$ROOT/../homebrew-tap}"
+FORMULA="$TAP/Formula/bashlings.rb"
+[ -f "$FORMULA" ] || {
+    echo "Formula topilmadi: $FORMULA" >&2
+    exit 1
+}
 
 TARGETS="
 aarch64-apple-darwin
@@ -33,9 +38,6 @@ tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
 echo "Tag: $TAG  →  formula: $FORMULA"
-
-# version qatorini yangilash
-sed -i.bak "s/^  version \".*\"/  version \"$VERSION\"/" "$FORMULA"
 
 for target in $TARGETS; do
     [ -n "$target" ] || continue
@@ -54,16 +56,17 @@ for target in $TARGETS; do
             sha="$(shasum -a 256 "$tmp/$asset" | awk '{print $1}')"
         fi
     fi
-
     echo "  $target → $sha"
-    # Shu target uchun url va sha256 qatorlarini yangilash
-    sed -i.bak \
-        -e "s#releases/download/[^/]*/bashlings-${target}.tar.gz#releases/download/${TAG}/bashlings-${target}.tar.gz#" \
-        -e "s/REPLACE_WITH_SHA256_${target}/${sha}/" \
-        "$FORMULA"
-    # Allaqachon to'ldirilgan bo'lsa (qayta ishga tushirishda) ham yangilash:
-    perl -0pi -e "s{(bashlings-\Q${target}\E\.tar\.gz\"\n      sha256 \")[0-9a-f]{64}(\")}{\${1}${sha}\${2}}g" "$FORMULA"
+
+    # Shu target'ning url'i (versiya) va keyingi qatordagi sha256'ni yangilash.
+    URL="$url" SHA="$sha" ASSET="$asset" perl -0pi -e '
+        s{url "[^"]*/\Q$ENV{ASSET}\E"\n(\s*)sha256 "[^"]*"}{url "$ENV{URL}"\n${1}sha256 "$ENV{SHA}"}g
+    ' "$FORMULA"
+    grep -q "$sha" "$FORMULA" || {
+        echo "Xato: $target uchun url/sha256 qatori topilmadi" >&2
+        exit 1
+    }
 done
 
-rm -f "$FORMULA.bak"
-echo "✅ Formula yangilandi. Endi homebrew-bashlings tap repo'siga commit qiling."
+echo "✅ Formula yangilandi. Tekshirish: brew audit --strict qobulovasror/tap/bashlings"
+echo "   Keyin homebrew-tap repo'sida commit qiling."

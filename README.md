@@ -35,7 +35,7 @@ curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts
 **Homebrew:**
 
 ```bash
-brew install qobulovasror/bashlings/bashlings
+brew install qobulovasror/tap/bashlings
 ```
 
 **Cargo orqali** (crates.io — Rust kerak):
@@ -93,8 +93,7 @@ bash-doc/
 ├── .solutions/           # 🔐 Yechimlar (yashirin — CLI orqali ochiladi)
 ├── cli/                  # ⚡ bashlings (Rust)
 │   ├── src/
-│   ├── Cargo.toml
-│   └── Formula/          # Homebrew formula
+│   └── Cargo.toml
 ├── STATUS.md             # batafsil status va yo'l xaritasi
 └── README.md             # bu fayl
 ```

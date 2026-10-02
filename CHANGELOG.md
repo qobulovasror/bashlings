@@ -34,6 +34,7 @@ versiyalash [SemVer](https://semver.org/) bo'yicha.
 
 ### O'zgartirildi
 
+- 🍺 **Homebrew formula `qobulovasror/homebrew-tap` ga ko'chirildi** — o'rnatish: `brew install qobulovasror/tap/bashlings`; `cli/Formula/` olib tashlandi, `scripts/update-formula.sh` endi tap'dagi formulani yangilaydi
 - 🔐 **`solutions/` → `.solutions/`** — yechim fayllari yashirin katalogga ko'chirildi (rustlings-style)
 - ⚡ **Test pass'da `# I AM NOT DONE` AVTO-o'chadi** — manual edit'dan friction olib tashlandi
 - 📘 **Hint fayllaridan `## ✅ Yechim` bo'limi olib tashlandi** (101 fayl) — yechim faqat `bashlings solution` orqali

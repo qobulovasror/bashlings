@@ -122,9 +122,12 @@ bashlings list
   Keyingi: intro1
 ```
 
-::: tip Homebrew (yaqin kelajakda)
-Homebrew formula tayyorlanmoqda. Hozirgi paytda `cargo install` orqali
-o'rnating.
+::: tip Homebrew
+macOS va Linux'da Homebrew orqali ham o'rnatish mumkin (tayyor binar, Rust shart emas):
+
+```bash
+brew install qobulovasror/tap/bashlings
+```
 :::
 
 ### Asosiy buyruqlar — qisqacha
