@@ -692,7 +692,7 @@ trap 'rm -rf "$tmpfile" "$tmpdir"' EXIT
 DB_PASSWORD="hardcoded123"
 
 # ✓ Environment'dan
-DB_PASSWORD="${DB_PASSWORD:?DB_PASSWORD o'rnatilmagan}"
+DB_PASSWORD="${DB_PASSWORD:?DB_PASSWORD berilmagan}"
 
 # ✓ Yoki secrets manager (vault, AWS Secrets, ...)
 DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id db --query SecretString --output text)

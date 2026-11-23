@@ -22,9 +22,10 @@ progress:
 | Tool       | Requirement | Reason                                      |
 |------------|-------|---------------------------------------------|
 | **Bash 4+** | mandatory | The exercises depend on this version (assoc array, `mapfile`) |
-| **Rust** (cargo) | mandatory | To build the `bashlings` CLI |
+| **Rust** (cargo) | optional | Only to build the CLI from source (brew / the install script give a prebuilt binary) |
 | **git**    | mandatory | To clone the repo |
 | **jq**     | recommended | For the Part 3 / `13_jq` exercises |
+| **bc**     | recommended | For the `pipe8` exercise (may be missing on minimal Linux / WSL: `sudo apt install bc`) |
 | **Node.js 18+** | optional | To view the book locally via `npm run docs:dev` |
 
 ---
@@ -66,20 +67,26 @@ bash --version    # usually 5.x
 
 ### Windows
 
-Bash cannot be run directly on Windows. You need **WSL2** or **Git Bash**:
+The supported path is **WSL2**: install Ubuntu and follow every next step in
+the WSL terminal, as on Linux.
 
 ```powershell
-# WSL2 (recommended)
 wsl --install -d Ubuntu
-
-# Or Git for Windows: https://git-scm.com/download/win
 ```
+
+::: warning Native Windows — experimental
+The Releases page has a Windows binary (`bashlings-x86_64-pc-windows-msvc.tar.gz`),
+but it is meant for use inside Git Bash and is not fully tested (a timeout
+cannot stop the whole process tree, `perm`/`symlink` fixtures don't work).
+If you hit problems, use WSL2.
+:::
 
 ---
 
-## 2. Install the Rust toolchain
+## 2. Rust toolchain (optional)
 
-The `bashlings` CLI is written in Rust — we build it with `cargo`.
+Only needed to build the CLI from source. For a prebuilt binary (Homebrew or
+the install script) skip this section.
 
 ```bash
 # Linux / macOS / WSL — via rustup
@@ -97,16 +104,16 @@ cargo --version    # cargo 1.70+
 ## 3. Install the Bashlings CLI
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repo — the exercises live here
 git clone https://github.com/qobulovasror/bashlings
 cd bashlings
 
-# 2. Build + install the CLI
-cd cli
-cargo install --path .
+# 2. Install the CLI — pick one:
+brew install qobulovasror/tap/bashlings      # macOS / Linux, prebuilt binary
+curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts/install.sh | sh
+cargo install --path cli                      # from source (needs Rust)
 
 # 3. Check — from the repo root
-cd ..
 bashlings list
 ```
 
@@ -232,11 +239,12 @@ and fix it!
 ## Frequently encountered problems
 
 ::: details "command not found: bashlings"
-`cargo install --path .` succeeded, but `bashlings` can't be found?
+The install succeeded, but `bashlings` can't be found?
 
-`~/.cargo/bin` is not in your PATH. Add it to `.bashrc` or `.zshrc`:
+The binary's directory is not in your PATH: `~/.local/bin` for the install
+script, `~/.cargo/bin` for cargo. Add it to `.bashrc` or `.zshrc`:
 ```bash
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 ```
 Then: `source ~/.bashrc` (or open a new terminal).
 :::

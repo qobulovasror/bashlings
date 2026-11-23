@@ -1,6 +1,6 @@
 # Loyiha holati va yo'l xaritasi
 
-> Yaratilgan: **2026-05-16** · Yangilangan: **2026-05-26** (Part 3 + CLI overhaul tugadi)
+> Yaratilgan: **2026-05-16** · Yangilangan: **2026-11-23** (release oldi audit tuzatishlari)
 > Maqsad: **Rust-book + Rustlings** modelida ishlovchi **uzbek tilidagi to'liq Bash & Linux o'qitish ekotizimi** yaratish.
 
 ---
@@ -26,7 +26,7 @@ flowchart LR
 |----------------------|------------------------------------|-------------------------------|---------------------|
 | **A. KITOB**         | VitePress markdown sahifalar       | "Nima va nima uchun"          | 🟢 ~95% tayyor      |
 | **B. MASHQLAR**      | `exercises/*.sh` fayllar           | "Hozir o'zing bajarib ko'r"   | 🟢 100% (103/103)   |
-| **C. CLI**           | `bashlings` runner (Rust)          | "Avto-tekshirish + UX"        | 🟢 100% (8 buyruq)  |
+| **C. CLI**           | `bashlings` runner (Rust)          | "Avto-tekshirish + UX"        | 🟢 100% (10 buyruq) |
 
 ### 0.3. Loyihaning yakuniy ko'rinishi
 
@@ -62,7 +62,7 @@ bash-doc/
 | **Hint fayllar**              | **103 ta** 🟢 |
 | **Yechim fayllar**            | **103 ta** 🟢 |
 | **CLI binary**                | **0.8 MB** 🟢 |
-| **CLI buyruqlari**            | **8 ta** 🟢   |
+| **CLI buyruqlari**            | **10 ta** 🟢  |
 | **Capstone loyihalar**        | **0 ta** 🔴  |
 
 ### 1.2. Qism bo'yicha mashqlar
@@ -105,7 +105,7 @@ bash-doc/
 | `bashlings watch`            | Interaktiv rejim — fayl saqlash + hotkeys             | 🟢    |
 | `bashlings hint <name>`      | Progressiv maslahat (`--all/--reset`)                  | 🟢    |
 | `bashlings solution <name>`  | Yechim — **faqat test pass'dan keyin**                | 🟢    |
-| `bashlings reset <name>`     | Asl holatga qaytarish (git checkout — kod + marker)    | 🟢    |
+| `bashlings reset <name>`     | Asl holatga qaytarish (git checkout + qayta pending)   | 🟢    |
 | `bashlings progress`         | Compact statistika (`--json` ham)                      | 🟢    |
 | `bashlings next`             | Birinchi pending mashq nomi (`--json` ham)             | 🟢    |
 | `bashlings completions <sh>` | Shell completion (bash/zsh/fish/...)                   | 🟢    |
@@ -117,6 +117,7 @@ bash-doc/
 | `h`                    | Maslahat ko'rsatish                  |
 | `s`                    | Yechim (test pass'dan keyin ochiladi) |
 | `r` / `Enter`          | Joriy mashqni qayta tekshirish        |
+| `n`                    | Keyingi mashq (pass'dan keyin)        |
 | `l` / `p`              | Progress overview                    |
 | `q` / `Esc` / `Ctrl+C` | Chiqish                              |
 
@@ -199,7 +200,7 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 | Element                                | Holat       |
 |----------------------------------------|-------------|
 | `cargo build --release`                | 🟢 0 warning |
-| `cargo test`                           | 🟢 50 ta test (42 unit + 8 integratsion `tests/cli.rs`) |
+| `cargo test`                           | 🟢 unit + integratsion (`tests/cli.rs`); Windows'da build + clippy |
 | Solutions test pipeline (har solution o'tishini tasdiqlash) | 🟢 `scripts/test-solutions.sh` (103/103) |
 | `shellcheck exercises/`                | 🟢 CI'da (exercises info-only, .solutions strict) |
 | `docs:build` (VitePress)               | 🟢 Lokalda + CI'da ishlaydi |
@@ -235,7 +236,7 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 
 | Sprint | Vazifa | DoD |
 |--------|--------|-----|
-| C1     | `cargo test` — info.rs unit testlari (`strip_done_marker`, `restore_done_marker`, `has_marker_line`) | ≥10 ta test |
+| C1     | `cargo test` — runner, sandbox, setup, state unit testlari | 🟢 bajarildi |
 | C2     | **GitHub Actions CI** — `cargo build`, `docs:build`, solutions test, shellcheck | `.github/workflows/ci.yml` |
 | C3     | Crates.io'ga publish | `cargo publish` muvaffaqiyatli |
 | C4     | Homebrew tap (`homebrew-tap` repo) | `brew install qobulovasror/tap/bashlings` ishlaydi |
@@ -249,13 +250,13 @@ crates.io publish `CARGO_REGISTRY_TOKEN` secret bo'lsa avtomatik.
 ### Bajarilgani
 
 ✅ **3 ustun ishlamoqda:** kitob (95%), mashqlar (100%), CLI (100% MVP).
-✅ **Rustlings parity:** auto-marker-removal, gated solution reveal, interaktiv watch hotkeys.
+✅ **Rustlings parity:** progress `state.toml`'da (faqat test o'tganda), gated solution reveal, interaktiv watch hotkeys.
 ✅ **103 mashq + 103 hint + 103 yechim** — har birining yechimi avtomatik tekshirilgan.
 
 ### Eng katta qolgan bo'shliqlar (ROI tartibida)
 
 1. 🟢 **GitHub Actions CI** — bajarildi (`.github/workflows/ci.yml`)
-2. 🟢 **Cargo unit testlar** — bajarildi (31 ta test)
+2. 🟢 **Cargo unit testlar** — bajarildi
 3. 🔴 **Part 1 top callouts** — uchlik bashlash nuqtasini birinchi taasurot uchun
 4. 🔴 **1 ta Capstone bob** — kursni "tugatilgan" his qildiradi
 5. 🔴 **Distribution** — Crates.io / Homebrew tap

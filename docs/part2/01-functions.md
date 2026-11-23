@@ -203,13 +203,18 @@ salomlash           # Salom, Anonim!
 
 ```bash
 backup() {
-    local src="${1:?manba katalog ko'rsatilmagan}"
+    local src="${1:?manba katalog berilmagan}"
     echo "Backup boshlandi: $src"
 }
 
-backup           # XATO: manba katalog ko'rsatilmagan
+backup           # XATO: manba katalog berilmagan
 backup ~/docs    # Backup boshlandi: /Users/mac/docs
 ```
+
+::: warning `${...:?...}` ichida apostrof yozmang
+`"${1:?ko'rsatilmagan}"` — sintaksis xatosi: bash `'` ni tirnoq boshi deb o'qiydi.
+Apostrofsiz so'z tanlang yoki `ʻ` (U+02BB) belgisini ishlating.
+:::
 
 ::: tip Parameter expansion to'plami
 | Sintaksis             | Mazmuni                                       |
