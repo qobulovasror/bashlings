@@ -4,10 +4,13 @@
 #   name     — noyob qisqa nom (bashlings run <name> orqali chaqiriladi)
 #   path     — exercises/ ga nisbatan yo'l
 #   mode     — informatsion teg (faqat hujjat uchun). Haqiqiy tekshiruv
-#              mashq fayli ichidagi `# @test:...` direktivalaridan olinadi.
-#              Qo'llab-quvvatlanadiganlar: "stdout" | "stdout-cmd" | "exit".
+#              mashq fayli ichidagi `# @test:...` direktivalaridan olinadi
+#              (to'liq ro'yxat — README.md "Test format").
 #   hint     — maslahat fayli yo'li
 #   chapter  — kitobdagi bog'langan bob
+
+# Mashqlar ishlatadigan eng eski CLI (`@setup:`, sandbox). Eski CLI xato beradi.
+min_cli_version = "0.1.2"
 
 # ============================================================================
 # 01 — Kirish: Shell, Terminal, Bash

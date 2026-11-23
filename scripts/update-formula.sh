@@ -30,8 +30,8 @@ FORMULA="$TAP/Formula/bashlings.rb"
 TARGETS="
 aarch64-apple-darwin
 x86_64-apple-darwin
-aarch64-unknown-linux-gnu
-x86_64-unknown-linux-gnu
+aarch64-unknown-linux-musl
+x86_64-unknown-linux-musl
 "
 
 tmp="$(mktemp -d)"
@@ -59,8 +59,10 @@ for target in $TARGETS; do
     echo "  $target → $sha"
 
     # Shu target'ning url'i (versiya) va keyingi qatordagi sha256'ni yangilash.
+    # Linux: eski `-gnu` url ham topiladi — formula musl'ga bir marta ko'chadi.
     URL="$url" SHA="$sha" ASSET="$asset" perl -0pi -e '
-        s{url "[^"]*/\Q$ENV{ASSET}\E"\n(\s*)sha256 "[^"]*"}{url "$ENV{URL}"\n${1}sha256 "$ENV{SHA}"}g
+        my $pat = quotemeta($ENV{ASSET}); $pat =~ s/linux\\-musl/linux\\-(?:gnu|musl)/;
+        s{url "[^"]*/$pat"\n(\s*)sha256 "[^"]*"}{url "$ENV{URL}"\n${1}sha256 "$ENV{SHA}"}g
     ' "$FORMULA"
     grep -q "$sha" "$FORMULA" || {
         echo "Xato: $target uchun url/sha256 qatori topilmadi" >&2
