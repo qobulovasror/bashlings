@@ -69,9 +69,9 @@ Details → [Setup](/en/setup)
 2. **Open `bashlings watch`** — collect green ✓ marks in the terminal
 3. **Try the extra tasks at the end of the section** by hand in the terminal
 
-::: info The "I AM NOT DONE" concept
-Every exercise starts with the `# I AM NOT DONE` marker. Finished the exercise? —
-delete that line. The CLI uses it as a progress indicator.
+::: info How progress is tracked
+An exercise counts as done only once its tests pass — the CLI records this in
+`.bashlings/state.toml` and never touches your exercise file.
 :::
 
 ### 3. Chapters in order (or adapt to yourself)

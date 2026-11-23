@@ -166,8 +166,8 @@ Takroriy bajarish konstruksiyasi. Bash'da: `for`, `while`, `until`.
 ### `man`
 Manual sahifa — buyruq haqida to'liq qo'llanma. `man bash`, `man curl`.
 
-### Marker (I AM NOT DONE)
-Bashlings'da har mashq faylida `# I AM NOT DONE` qatori. Mashqni tugatganingizdan keyin o'chiriladi — CLI buni `is_done` indikatori sifatida ishlatadi.
+### Progress (`.bashlings/state.toml`)
+Bashlings qaysi mashqlar testdan o'tganini shu faylda saqlaydi. Mashq faqat testlari o'tganda "tugatildi" bo'ladi; `bashlings reset <nom>` uni qayta pending qiladi.
 
 ### Multiplexing (SSH)
 Bir TCP ulanish ustida ko'p SSH sessiyasi (`ControlMaster`). Tez qayta-ulanish uchun.

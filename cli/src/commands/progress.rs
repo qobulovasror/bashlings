@@ -1,7 +1,7 @@
 //! `bashlings progress` — compact overall + per-chapter progress overview.
 
 use crate::style::Style;
-use crate::{info, tr};
+use crate::{info, state, tr};
 use anyhow::Result;
 use serde::Serialize;
 use std::collections::BTreeMap;
@@ -23,13 +23,14 @@ struct JsonProgress {
 pub fn run(json: bool) -> Result<bool> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
+    let state = state::load(&root);
 
     let total = info_data.exercises.len();
     let mut done = 0usize;
     let mut by_chapter: BTreeMap<String, (usize, usize)> = BTreeMap::new();
 
     for ex in &info_data.exercises {
-        let is_done = ex.is_done(&root).unwrap_or(false);
+        let is_done = state.is_done(&ex.name);
         if is_done {
             done += 1;
         }
@@ -103,7 +104,7 @@ pub fn run(json: bool) -> Result<bool> {
         let next = info_data
             .exercises
             .iter()
-            .find(|e| !e.is_done(&root).unwrap_or(true));
+            .find(|e| !state.is_done(&e.name));
         if let Some(ex) = next {
             println!("  {} {}", tr!("Keyingi:", "Next:"), ex.name.cyan().bold());
         }

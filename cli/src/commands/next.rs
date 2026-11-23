@@ -12,17 +12,15 @@
 //!   - 0 : a pending exercise exists, its name is on stdout
 //!   - 1 : everything is done (no output)
 
-use crate::{info, tr};
+use crate::{info, state, tr};
 use anyhow::Result;
 
 pub fn run(json: bool) -> Result<bool> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
 
-    let pending = info_data
-        .exercises
-        .iter()
-        .find(|e| !e.is_done(&root).unwrap_or(false));
+    let state = state::load(&root);
+    let pending = info_data.exercises.iter().find(|e| !state.is_done(&e.name));
 
     match pending {
         Some(ex) => {

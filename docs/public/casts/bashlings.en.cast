@@ -178,7 +178,7 @@
 [16.97, "o", "o"]
 [17.015, "o", "1"]
 [17.315, "o", "\r\n"]
-[17.815, "o", "\r\n  \u001b[2mRunning\u001b[22m \u001b[36m\u001b[1mintro1\u001b[22m\u001b[39m\r\n  \u001b[2mFile:\u001b[22m \u001b[2mexercises/01_intro/intro1.sh\u001b[22m\r\n\r\n  \u001b[32m✓\u001b[39m  \u001b[1mstdout\u001b[22m \u001b[2m\"Salom, Bash!\"\u001b[22m\r\n  \u001b[32m✓\u001b[39m  \u001b[1mexit\u001b[22m \u001b[2m0\u001b[22m\r\n\r\n  \u001b[32m✅\u001b[39m \u001b[1mintro1\u001b[22m — \u001b[1m\u001b[32msuccess\u001b[39m\u001b[22m (2/2)\r\n\r\n  \u001b[36m✨\u001b[39m \u001b[2m`# I AM NOT DONE`\u001b[22m \u001b[2mmarker auto-removed.\u001b[22m\r\n"]
+[17.815, "o", "\r\n  \u001b[2mRunning\u001b[22m \u001b[36m\u001b[1mintro1\u001b[22m\u001b[39m\r\n  \u001b[2mFile:\u001b[22m \u001b[2mexercises/01_intro/intro1.sh\u001b[22m\r\n\r\n  \u001b[32m✓\u001b[39m  \u001b[1mstdout\u001b[22m \u001b[2m\"Salom, Bash!\"\u001b[22m\r\n  \u001b[32m✓\u001b[39m  \u001b[1mexit\u001b[22m \u001b[2m0\u001b[22m\r\n\r\n  \u001b[32m✅\u001b[39m \u001b[1mintro1\u001b[22m — \u001b[1m\u001b[32msuccess\u001b[39m\u001b[22m (2/2)\r\n"]
 [20.015, "o", "\u001b[32m$\u001b[39m "]
 [20.06, "o", "b"]
 [20.105, "o", "a"]

@@ -1,5 +1,5 @@
 use crate::style::Style;
-use crate::{info, tr};
+use crate::{info, state, tr};
 use anyhow::Result;
 use serde::Serialize;
 
@@ -27,12 +27,13 @@ struct JsonList<'a> {
 pub fn run(filter: Filter, json: bool) -> Result<()> {
     let root = info::find_workspace_root()?;
     let info_data = info::load(&root)?;
+    let state = state::load(&root);
 
     if json {
         let mut done = 0usize;
         let mut exercises = Vec::new();
         for ex in &info_data.exercises {
-            let is_done = ex.is_done(&root)?;
+            let is_done = state.is_done(&ex.name);
             if is_done {
                 done += 1;
             }
@@ -88,7 +89,7 @@ pub fn run(filter: Filter, json: bool) -> Result<()> {
         .unwrap_or(10);
 
     for ex in &info_data.exercises {
-        let is_done = ex.is_done(&root)?;
+        let is_done = state.is_done(&ex.name);
         if is_done {
             done += 1;
         }
@@ -158,7 +159,7 @@ pub fn run(filter: Filter, json: bool) -> Result<()> {
         let next = info_data
             .exercises
             .iter()
-            .find(|e| !e.is_done(&root).unwrap_or(true));
+            .find(|e| !state.is_done(&e.name));
         if let Some(ex) = next {
             println!("  {} {}", tr!("Keyingi:", "Next:"), ex.name.cyan().bold());
             println!(

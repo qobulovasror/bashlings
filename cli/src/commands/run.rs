@@ -1,5 +1,5 @@
 use crate::style::Style;
-use crate::{info, test, tr};
+use crate::{info, state, test, tr};
 use anyhow::{anyhow, Result};
 use std::path::Path;
 
@@ -9,6 +9,7 @@ pub fn run(name: Option<&str>) -> Result<bool> {
     test::warn_if_old_bash();
     let root = info::find_workspace_root()?;
     let info = info::load(&root)?;
+    let state = state::load(&root);
 
     let ex = match name {
         Some(n) => info.find(n).ok_or_else(|| {
@@ -18,11 +19,7 @@ pub fn run(name: Option<&str>) -> Result<bool> {
                 n
             ))
         })?,
-        None => match info
-            .exercises
-            .iter()
-            .find(|e| !e.is_done(&root).unwrap_or(false))
-        {
+        None => match info.exercises.iter().find(|e| !state.is_done(&e.name)) {
             Some(e) => e,
             None => {
                 println!();
@@ -43,32 +40,43 @@ pub fn run(name: Option<&str>) -> Result<bool> {
     run_exercise(&root, ex)
 }
 
-/// Execute and verify a single exercise.
+/// Execute and verify a single exercise, recording the outcome in the state.
 ///
 /// Returns `Ok(true)` when every assertion passed, `Ok(false)` on any failure.
 /// Hard I/O errors propagate as `Err`.
 pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
-    let name = ex.name.as_str();
     let path = ex.full_path(root);
-
     if !path.is_file() {
         return Err(anyhow!(
             tr!("fayl mavjud emas: {}", "file does not exist: {}", path.display())
         ));
     }
 
+    print_header(root, ex);
+    let report = test::run_full(&path, root)?;
+    show_report(root, ex, &report)
+}
+
+/// The "Running <name>" banner shown before a report.
+pub fn print_header(root: &Path, ex: &info::Exercise) {
+    let path = ex.full_path(root);
     let rel_path = path.strip_prefix(root).unwrap_or(&path).display().to_string();
 
     println!();
     println!(
         "  {} {}",
         tr!("Running", "Running").dimmed(),
-        name.bold().cyan()
+        ex.name.as_str().bold().cyan()
     );
     println!("  {} {}", tr!("Fayl:", "File:").dimmed(), rel_path.dimmed());
     println!();
+}
 
-    let report = test::run_full(&path, root)?;
+/// Print a finished run in full and record pass/fail in the state, so a
+/// caller that already has the report (`verify`) need not run it again.
+pub fn show_report(root: &Path, ex: &info::Exercise, report: &test::TestReport) -> Result<bool> {
+    let name = ex.name.as_str();
+    state::set_done(root, name, report.all_passed())?;
 
     if report.timed_out {
         println!(
@@ -147,18 +155,6 @@ pub fn run_exercise(root: &Path, ex: &info::Exercise) -> Result<bool> {
             passed,
             total
         );
-
-        // Auto-strip the marker so subsequent runs (and `list`) treat this as done.
-        let removed = info::strip_done_marker(&path)?;
-        if removed {
-            println!();
-            println!(
-                "  {} {} {}",
-                "✨".cyan(),
-                "`# I AM NOT DONE`".dimmed(),
-                tr!("marker avto-o'chirildi.", "marker auto-removed.").dimmed()
-            );
-        }
         println!();
         Ok(true)
     } else {

@@ -25,7 +25,7 @@ exercises/
 ├── README.md             # bu fayl
 ├── 01_intro/             # part1/01-introduction
 │   ├── README.md
-│   ├── intro1.sh         # mashq (# I AM NOT DONE markerli)
+│   ├── intro1.sh         # mashq
 │   ├── intro1.hint.md    # bosqichli maslahatlar
 │   └── ...
 └── (kelajakda) 02_navigation/, 03_pipes/, ...
@@ -34,10 +34,9 @@ exercises/
 ## Mashq ishlatish jarayoni
 
 1. Faylni oching: `exercises/01_intro/intro1.sh`
-2. Yuqorida `# I AM NOT DONE` qatorini ko'rasiz — bu sizning to-do markeringiz
-3. Kodda **bilib qo'yilgan xato** yoki **TODO** bor
-4. Tuzating va `# I AM NOT DONE` qatorini o'chiring
-5. `bashlings run intro1` (yoki `watch` rejimida o'z-o'zidan tekshiradi)
+2. Kodda **bilib qo'yilgan xato** yoki **TODO** bor — tuzating
+3. `bashlings run intro1` (yoki `watch` rejimida saqlashingiz bilan tekshiriladi)
+4. Testlar o'tsa, mashq "tugatildi" deb belgilanadi (`.bashlings/state.toml`)
 
 ## Sandbox
 

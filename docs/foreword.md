@@ -69,9 +69,9 @@ Batafsil → [Setup](/setup)
 2. **`bashlings watch` ni oching** — terminal'da yashil ✓ to'plang
 3. **Bo'limning oxiridagi qo'shimcha vazifalarni** terminalda qo'l bilan sinab ko'ring
 
-::: info "I AM NOT DONE" tushunchasi
-Har mashq `# I AM NOT DONE` marker bilan boshlanadi. Mashqni tugatdingizmi —
-shu qatorni o'chiring. CLI buni progress ko'rsatkichi sifatida ishlatadi.
+::: info Progress qanday hisoblanadi
+Mashq faqat uning testlari o'tganda "tugatildi" deb belgilanadi — CLI buni
+`.bashlings/state.toml` faylida saqlaydi, mashq faylingizga tegmaydi.
 :::
 
 ### 3. Boblar tartibida (yoki o'zingizga moslang)

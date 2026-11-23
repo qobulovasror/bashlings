@@ -166,8 +166,8 @@ A construct for repeated execution. In Bash: `for`, `while`, `until`.
 ### `man`
 A manual page — a full guide about a command. `man bash`, `man curl`.
 
-### Marker (I AM NOT DONE)
-In Bashlings, the `# I AM NOT DONE` line in every exercise file. It's removed after you finish the exercise — the CLI uses it as an `is_done` indicator.
+### Progress (`.bashlings/state.toml`)
+Where Bashlings records which exercises passed their tests. An exercise is done only once its tests pass; `bashlings reset <name>` makes it pending again.
 
 ### Multiplexing (SSH)
 Multiple SSH sessions over a single TCP connection (`ControlMaster`). For fast reconnection.

@@ -1,17 +1,18 @@
 //! `bashlings watch` — re-runs the first pending exercise every time a `.sh`
-//! file under `exercises/` is saved. Auto-advances when an exercise passes
-//! (the `# I AM NOT DONE` marker is auto-removed by `run::run_exercise`).
+//! file under `exercises/` is saved. When it passes, the success screen stays
+//! up until the learner moves on (`n`), so the unlocked solution is one key away.
 //!
 //! Also accepts keyboard hotkeys via crossterm raw mode:
 //!   - `h`        — show hint for current exercise
 //!   - `s`        — show solution (gated on test pass)
 //!   - `r`        — re-run current exercise
+//!   - `n`        — next exercise (after a pass)
 //!   - `l`        — list compact progress
 //!   - `q` / Esc  — quit
 //!   - Ctrl+C     — quit
 
 use crate::style::Style;
-use crate::{commands, info, tr};
+use crate::{commands, info, state, tr};
 use anyhow::{Context, Result};
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyModifiers};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
@@ -69,17 +70,15 @@ pub fn run() -> Result<bool> {
     loop {
         // Re-read registry — info.toml or files may have changed.
         let info_data = info::load(&root)?;
+        let state = state::load(&root);
         let total = info_data.exercises.len();
         let done = info_data
             .exercises
             .iter()
-            .filter(|e| e.is_done(&root).unwrap_or(false))
+            .filter(|e| state.is_done(&e.name))
             .count();
 
-        let pending = info_data
-            .exercises
-            .iter()
-            .find(|e| !e.is_done(&root).unwrap_or(false));
+        let pending = info_data.exercises.iter().find(|e| !state.is_done(&e.name));
 
         let Some(ex) = pending else {
             if !first_iter {
@@ -99,9 +98,12 @@ pub fn run() -> Result<bool> {
         print_header(done, total, advanced);
 
         // Reuse the same display path as `bashlings run`.
-        let _ = commands::run::run_exercise(&root, ex)?;
+        let passed = commands::run::run_exercise(&root, ex)?;
 
-        print_footer();
+        // Saves that landed while the script ran are the one we just checked.
+        while rx.try_recv().is_ok() {}
+
+        print_footer(passed);
 
         let _ = std::io::stdout().flush();
 
@@ -161,8 +163,19 @@ fn print_header(done: usize, total: usize, advanced: bool) {
     }
 }
 
-fn print_footer() {
+fn print_footer(passed: bool) {
     println!();
+    if passed {
+        println!(
+            "  👉 {}   {}  {}    {}  solution 🔓    {}  quit",
+            tr!("Keyingi mashq:", "Next exercise:").bold(),
+            "n".bold().cyan(),
+            tr!("/ Enter", "/ Enter").dimmed(),
+            "s".bold().cyan(),
+            "q".bold().cyan()
+        );
+        return;
+    }
     println!(
         "  👀 {}",
         tr!("Faylni saqlang yoki tugma bosing:", "Save a file or press a key:").dimmed()
@@ -278,7 +291,10 @@ fn wait_for_action_inner(
                     KeyCode::Char('q') | KeyCode::Esc => return Ok(Action::Quit),
                     KeyCode::Char('h') => return Ok(Action::Hint),
                     KeyCode::Char('s') => return Ok(Action::Solution),
-                    KeyCode::Char('r') | KeyCode::Enter => return Ok(Action::Rerun),
+                    // After a pass the exercise is done, so a re-run lands on the next one.
+                    KeyCode::Char('r') | KeyCode::Char('n') | KeyCode::Enter => {
+                        return Ok(Action::Rerun)
+                    }
                     KeyCode::Char('l') | KeyCode::Char('p') => return Ok(Action::List),
                     _ => continue,
                 }
