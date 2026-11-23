@@ -114,6 +114,8 @@ fn main() -> ExitCode {
     unsafe {
         libc::signal(libc::SIGPIPE, libc::SIG_DFL);
     }
+    #[cfg(unix)]
+    test::forward_fatal_signals();
 
     style::set_enabled(color_enabled());
 

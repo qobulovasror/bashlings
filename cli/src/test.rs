@@ -7,6 +7,7 @@ use anyhow::{anyhow, Context, Result};
 use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::mpsc;
 use std::time::{Duration, Instant};
 
@@ -19,17 +20,22 @@ const SCRIPT_TIMEOUT: Duration = Duration::from_secs(SCRIPT_TIMEOUT_SECS);
 ///
 /// Timeout + process-group kill handle a runaway loop, but a fork bomb would
 /// still saturate the machine for the full timeout — so cap the process count
-/// at "whatever this user already runs, plus a little headroom", and cap file
-/// size at 64 MB. Both are fail-open: on a system where the hard limit is
-/// lower, or `ps` is unavailable, the script simply runs unrestricted.
+/// at "whatever this user already runs, plus headroom", and cap file size at
+/// 64 MB. Both are fail-open: on a system where the hard limit is lower, or
+/// `ps` fails, the script simply runs unrestricted.
+///
+/// Linux counts RLIMIT_NPROC in *threads*, so there the snapshot must count
+/// threads too — a browser alone holds hundreds, and a process count would put
+/// the limit below current usage, failing every fork in the script.
 const HARDEN_PREAMBLE: &str = r#"
-__bl_procs=$(ps -U "$(id -u)" -o pid= 2>/dev/null | wc -l 2>/dev/null)
-case "$__bl_procs" in
-  ''|*[!0-9' ']*) : ;;
-  *) ulimit -u "$((__bl_procs + 64))" 2>/dev/null || : ;;
-esac
+__bl_cmd="ps -U $(id -u) -o pid="
+[ "$(uname -s 2>/dev/null)" = Linux ] && __bl_cmd="ps -L -U $(id -u) -o lwp="
+if __bl_ps=$($__bl_cmd 2>/dev/null) && [ -n "$__bl_ps" ]; then
+  # ponytail: snapshot at start; another app spawning >1024 threads mid-run still starves forks.
+  ulimit -u "$(( $(printf '%s\n' "$__bl_ps" | wc -l) + 1024 ))" 2>/dev/null || :
+fi
 ulimit -f 65536 2>/dev/null || :
-unset __bl_procs
+unset __bl_cmd __bl_ps
 exec bash "$0" "$@"
 "#;
 
@@ -400,6 +406,7 @@ pub fn run_script(path: &Path, ctx: &RunCtx) -> Result<ScriptOutput> {
         tr!("'bash {}' ni ishga tushira olmadik", "could not run 'bash {}'", path.display())
     })?;
     let pgid = child.id();
+    let _group = RunningGroup::set(pgid);
 
     // Drain stdout/stderr on separate threads so a chatty script can't fill the
     // pipe buffer and deadlock while we poll for the timeout.
@@ -506,6 +513,54 @@ fn collect(rx: &mpsc::Receiver<Vec<u8>>, pgid: u32, group_killed: &mut bool) -> 
             #[cfg(not(unix))]
             {
                 Vec::new()
+            }
+        }
+    }
+}
+
+/// Process group of the script being run right now (0 = none), for the
+/// handler installed by [`forward_fatal_signals`].
+static RUNNING_PGID: AtomicU32 = AtomicU32::new(0);
+
+/// Publishes the running script's group for as long as the guard lives, so a
+/// recycled pgid is never signalled after the run.
+struct RunningGroup;
+
+impl RunningGroup {
+    fn set(pgid: u32) -> Self {
+        RUNNING_PGID.store(pgid, Ordering::SeqCst);
+        RunningGroup
+    }
+}
+
+impl Drop for RunningGroup {
+    fn drop(&mut self) {
+        RUNNING_PGID.store(0, Ordering::SeqCst);
+    }
+}
+
+/// The script runs in its own process group, so the terminal's Ctrl+C (and a
+/// closed terminal's SIGHUP) never reach it. Without this, quitting the CLI
+/// mid-run would orphan an infinite loop at 100% CPU.
+#[cfg(unix)]
+pub fn forward_fatal_signals() {
+    extern "C" fn handler(sig: libc::c_int) {
+        // Only async-signal-safe calls: atomic load, killpg, signal, raise.
+        let pgid = RUNNING_PGID.load(Ordering::SeqCst);
+        unsafe {
+            if pgid > 0 {
+                libc::killpg(pgid as libc::pid_t, libc::SIGKILL);
+            }
+            libc::signal(sig, libc::SIG_DFL);
+            libc::raise(sig);
+        }
+    }
+    let handler = handler as extern "C" fn(libc::c_int) as libc::sighandler_t;
+    for sig in [libc::SIGINT, libc::SIGTERM, libc::SIGHUP] {
+        unsafe {
+            // Keep an inherited "ignore" (`nohup`, background jobs) as it was.
+            if libc::signal(sig, handler) == libc::SIG_IGN {
+                libc::signal(sig, libc::SIG_IGN);
             }
         }
     }
@@ -1512,5 +1567,26 @@ mod tests {
             "leftover background job hung the runner for {:?}",
             start.elapsed()
         );
+    }
+
+    #[test]
+    fn forks_survive_a_thread_heavy_session() {
+        // Linux counts RLIMIT_NPROC in threads: a process-count snapshot put the
+        // limit below what a browser alone holds, failing every fork.
+        let release = std::sync::Arc::new(std::sync::Barrier::new(301));
+        let idle: Vec<_> = (0..300)
+            .map(|_| {
+                let release = release.clone();
+                std::thread::spawn(move || {
+                    release.wait();
+                })
+            })
+            .collect();
+        let out = run_snippet("threads", "ls / >/dev/null && echo ok\n", &[]);
+        release.wait();
+        for t in idle {
+            let _ = t.join();
+        }
+        assert_eq!(out.stdout.trim(), "ok", "stderr: {}", out.stderr);
     }
 }

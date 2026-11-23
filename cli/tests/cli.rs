@@ -111,6 +111,60 @@ fn english_via_flag() {
         .stdout(contains("failed"));
 }
 
+/// Ctrl+C on the CLI must take the script down too: it lives in its own process
+/// group, which the terminal's SIGINT never reaches.
+#[cfg(unix)]
+#[test]
+fn sigint_kills_the_running_script() {
+    use std::time::{Duration, Instant};
+
+    let ws = std::env::temp_dir().join(format!("bashlings-sigint-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&ws);
+    std::fs::create_dir_all(ws.join("exercises/x")).unwrap();
+    std::fs::write(
+        ws.join("exercises/info.toml"),
+        "[[exercises]]\nname = \"loop1\"\npath = \"x/loop1.sh\"\nmode = \"exit\"\n",
+    )
+    .unwrap();
+    std::fs::write(
+        ws.join("exercises/x/loop1.sh"),
+        "echo $$ > \"$BL_PIDFILE\"\nwhile :; do :; done\n# @test:exit: 0\n",
+    )
+    .unwrap();
+    let pidfile = ws.join("script.pid");
+
+    let mut cli = std::process::Command::new(assert_cmd::cargo::cargo_bin("bashlings"))
+        .args(["run", "loop1"])
+        .current_dir(&ws)
+        .env("BL_PIDFILE", &pidfile)
+        .stdout(std::process::Stdio::null())
+        .spawn()
+        .unwrap();
+
+    let deadline = Instant::now() + Duration::from_secs(5);
+    let script_pid: i32 = loop {
+        let pid = std::fs::read_to_string(&pidfile).ok();
+        if let Some(pid) = pid.and_then(|s| s.trim().parse().ok()) {
+            break pid;
+        }
+        assert!(Instant::now() < deadline, "script never started");
+        std::thread::sleep(Duration::from_millis(20));
+    };
+
+    unsafe { libc::kill(cli.id() as i32, libc::SIGINT) };
+    assert!(!cli.wait().unwrap().success());
+
+    let deadline = Instant::now() + Duration::from_secs(3);
+    while unsafe { libc::kill(script_pid, 0) } == 0 {
+        if Instant::now() > deadline {
+            unsafe { libc::kill(script_pid, libc::SIGKILL) };
+            panic!("script {script_pid} outlived the CLI");
+        }
+        std::thread::sleep(Duration::from_millis(20));
+    }
+    let _ = std::fs::remove_dir_all(&ws);
+}
+
 #[test]
 fn english_via_env() {
     bashlings()
