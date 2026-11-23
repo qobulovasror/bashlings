@@ -21,11 +21,6 @@
 # Hint: brace expansion → `{1,2,3}` expands to "1 2 3" for the shell.
 # Or as a range: `{1..3}`.
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-nav4
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-
 # TODO: bitta touch chaqiruvi bilan 3 ta faylni yarating
 
 ls

@@ -19,8 +19,6 @@
 #
 # Hint: there is a single command for this (whoami) or a special variable ($USER).
 
-# I AM NOT DONE
-
 echo "TODO: foydalanuvchi nomi"
 
 # === TEST META ===

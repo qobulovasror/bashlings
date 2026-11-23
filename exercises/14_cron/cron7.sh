@@ -35,8 +35,6 @@
 #   - `2>&1`        — stderr to the same place too
 #   - Order MATTERS: first `> /dev/null`, then `2>&1`
 
-# I AM NOT DONE
-
 SCRIPT="/opt/clean.sh"
 
 # TODO: @daily qatorini chiqaring

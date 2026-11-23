@@ -27,8 +27,6 @@
 #   - `tr ' ' '\n'`  — replaces a space with a newline character
 #   - with the `|` operator, send the output of the first command into the second
 
-# I AM NOT DONE
-
 # TODO: echo + pipe + tr ishlatib har so'zni yangi qatorga chiqaring
 
 # === TEST META ===

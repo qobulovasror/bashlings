@@ -25,10 +25,6 @@
 #     new tale
 #     new music
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-sed1
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf 'old wine\nold tale\nold music\n' > input.txt
 
 # TODO: sed bilan "old" -> "new" almashtiring

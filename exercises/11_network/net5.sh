@@ -30,8 +30,6 @@
 #   - `grep -c PATTERN` — returns the NUMBER of matches
 #   - the word `succeeded` appears only on OPEN port lines
 
-# I AM NOT DONE
-
 scan_output='Connection to localhost 22 port [tcp/ssh] succeeded!
 nc: connectx to localhost port 23 (tcp) failed: Connection refused
 Connection to localhost 80 port [tcp/http] succeeded!

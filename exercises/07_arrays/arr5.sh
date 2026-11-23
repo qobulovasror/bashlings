@@ -37,8 +37,6 @@
 #   - `user[key]="value"` — set an element
 #   - `${user[key]}` — get a value
 
-# I AM NOT DONE
-
 # TODO: declare -A user
 
 

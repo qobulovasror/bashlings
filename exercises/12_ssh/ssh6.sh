@@ -33,8 +33,6 @@
 #
 # As a result, `psql -h localhost -p 5433` connects to the internal DB.
 
-# I AM NOT DONE
-
 LOCAL_PORT=5433
 REMOTE_HOST="db.internal"
 REMOTE_PORT=5432

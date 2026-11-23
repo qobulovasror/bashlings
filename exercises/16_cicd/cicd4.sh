@@ -45,8 +45,6 @@
 #   - `'${{ matrix.os }}'`  — single quotes (most reliable)
 #   - `"\${{ matrix.os }}"` — double quotes + escape
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi YAML'ni chiqaring
 echo "strategy:"
 

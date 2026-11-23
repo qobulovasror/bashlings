@@ -29,10 +29,6 @@
 #   - `sed 'Nd'` — delete line N
 #   - Multiple: `sed '2d;4d'` or `sed -e '2d' -e '4d'`
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-sed2
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf 'qator-1\nqator-2\nqator-3\nqator-4\nqator-5\n' > log.txt
 
 # TODO: 2 va 4 qatorlarni sed bilan o'chiring

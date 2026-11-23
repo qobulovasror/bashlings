@@ -33,8 +33,6 @@
 # Hint: 2 lines, the second is indented with 2 spaces (under the parent
 # list element).
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi step blokini chiqaring
 echo "- name: ..."
 

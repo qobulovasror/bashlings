@@ -31,8 +31,6 @@
 #   - `IFS=','` applies only to this read (handy!)
 #   - 2nd element = `${names[1]}` (starts from 0)
 
-# I AM NOT DONE
-
 csv="Ali,Vali,Gulnora"
 
 # TODO: csv'ni names massivga ajrating

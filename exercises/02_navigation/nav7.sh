@@ -19,8 +19,6 @@
 #
 # Hint: `mv <old-name> <new-name>` — in one command it both moves and renames.
 
-# I AM NOT DONE
-
 # TODO: eski.txt ni yangi.txt ga rename qiling
 
 # TODO: ls

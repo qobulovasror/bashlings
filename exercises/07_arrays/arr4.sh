@@ -29,8 +29,6 @@
 #   - Position = index + 1 (because it starts from 0)
 #   - Element: `${arr[$i]}`
 
-# I AM NOT DONE
-
 nums=(10 20 30)
 
 # TODO: for loop bilan indeks va element chiqaring

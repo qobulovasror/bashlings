@@ -21,10 +21,6 @@
 #
 # Hint: `cp <source> <destination>`
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-nav6
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 echo "salom dunyo" > manba.txt
 
 # TODO: cp orqali nusxa.txt yarating

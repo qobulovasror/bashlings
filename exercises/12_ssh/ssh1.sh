@@ -27,8 +27,6 @@
 #   - The default SSH port is 22; a non-standard port is given with `-p N`
 #   - Format: ssh -p <port> <user>@<host>
 
-# I AM NOT DONE
-
 USER="deploy"
 HOST="example.com"
 PORT=2222

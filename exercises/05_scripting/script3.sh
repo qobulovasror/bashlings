@@ -37,8 +37,6 @@
 #             ...
 #         fi
 
-# I AM NOT DONE
-
 yosh=20
 
 # TODO: if/else bilan tasniflash

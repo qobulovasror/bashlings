@@ -35,8 +35,6 @@
 #
 # Note: this exercise is a very powerful pattern — environment variable + command substitution.
 
-# I AM NOT DONE
-
 # TODO: $PWD va $(basename ...) ni birlashtirib chiqaring
 
 # === TEST META ===

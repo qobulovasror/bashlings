@@ -31,8 +31,6 @@
 #   - `${1:-default}` — if $1 is empty or unset, returns "default"
 #   - Inside the function: `local name="${1:-Anonim}"`
 
-# I AM NOT DONE
-
 greet() {
     # TODO: ${1:-Anonim} orqali default qiymat bilan name o'zgaruvchisi
     local name="$1"

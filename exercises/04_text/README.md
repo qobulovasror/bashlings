@@ -14,7 +14,7 @@
 
 ## Sandbox
 
-Har mashq `/tmp/bashlings-textN/` ichida ishlaydi.
+Har mashq bir martalik sandbox ichida (`.bashlings/sandbox/<nom>-…/work/`) ishlaydi — sizning workspace'ingiz ifloslanmaydi, run tugagach katalog o'chiriladi.
 
 ## Boshlash
 

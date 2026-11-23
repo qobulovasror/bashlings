@@ -29,8 +29,6 @@
 #   - Then print its `.name`
 #   - `-r` — without quotes
 
-# I AM NOT DONE
-
 input='[{"name":"A","score":80},{"name":"B","score":95},{"name":"C","score":70}]'
 
 # TODO: eng yuqori ball egasi ismini chiqaring (raw)

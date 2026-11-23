@@ -41,8 +41,6 @@
 #   - Capture the function output: `status=$(curl "$url")`
 #   - Format: `echo "$url=$status"`
 
-# I AM NOT DONE
-
 # Mock curl — offline test uchun fixed javoblar
 curl() {
     case "$1" in

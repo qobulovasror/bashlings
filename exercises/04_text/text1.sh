@@ -19,10 +19,6 @@
 #
 # Hint: `head -n <number> <file>`
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-text1
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 seq 1 10 > log.txt
 
 # TODO: log.txt'ning birinchi 3 qatorini chiqaring

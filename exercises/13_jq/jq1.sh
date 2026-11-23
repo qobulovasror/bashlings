@@ -29,8 +29,6 @@
 #   - `jq '.name'`     — with quotes: "Ali"
 #   - `jq -r '.name'`  — raw (without quotes): Ali
 
-# I AM NOT DONE
-
 input='{"name":"Ali","age":25,"city":"Toshkent"}'
 
 # TODO: jq bilan name ni chiqaring (raw)

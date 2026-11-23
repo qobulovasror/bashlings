@@ -23,8 +23,6 @@
 #     asosiy ish
 #     tozalandi
 
-# I AM NOT DONE
-
 # TODO: cleanup funksiyasini yozing
 cleanup() {
     :

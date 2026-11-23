@@ -29,8 +29,6 @@
 #   - List: `1,3,5` — NO spaces
 #   - hour = 8, minute = 0
 
-# I AM NOT DONE
-
 # TODO: ifodani chiqaring
 echo "TODO"
 

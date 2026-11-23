@@ -37,8 +37,6 @@
 #   - `awk '{print $9}'` — "for USER from IP" — USER is the 9th column
 #   - `sort -u` — sort alphabetically + remove duplicates
 
-# I AM NOT DONE
-
 log='May 26 08:14:01 host sshd[1234]: Accepted publickey for deploy from 10.0.0.5 port 51200 ssh2
 May 26 08:14:05 host sshd[1235]: Failed password for invalid user admin from 10.0.0.7
 May 26 08:15:11 host sshd[1240]: Accepted publickey for root from 10.0.0.5 port 51210 ssh2

@@ -23,10 +23,6 @@
 #
 # Expected: "Ali Vali.txt"
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-rob2
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 touch "Ali Vali.txt"
 
 name="Ali Vali.txt"

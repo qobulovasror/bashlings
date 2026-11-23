@@ -39,8 +39,6 @@
 #   - `"$@"` — keeps every argument a single word (the quotes matter!)
 #   - `printf '%s | %s\n' "$@"` — prints two arguments with a separator
 
-# I AM NOT DONE
-
 # TODO: argumentlar sonini chiqaring — "Jami: N"
 
 # TODO: birinchi argumentni chiqaring — "Birinchi: ..."

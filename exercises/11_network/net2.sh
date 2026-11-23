@@ -33,8 +33,6 @@
 #   - `head -1` — only the first line
 #   - `awk '{print $2}'` — the 2nd column separated by whitespace
 
-# I AM NOT DONE
-
 response='HTTP/2 200
 content-type: text/html
 cache-control: max-age=3600

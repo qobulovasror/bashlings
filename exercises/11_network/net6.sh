@@ -37,8 +37,6 @@
 #   - `sed -E 's|[:/].*$||'`     — remove the port or path
 #   - Both substitutions in one sed command (with ';') or in consecutive pipes
 
-# I AM NOT DONE
-
 urls='https://api.github.com/users/octocat
 http://example.org:8080/path
 https://www.google.com/search?q=bash'

@@ -31,8 +31,6 @@
 #
 # Use the variables inside double quotes: "...$USER..."
 
-# I AM NOT DONE
-
 echo "TODO 1"
 echo "TODO 2"
 echo "TODO 3"

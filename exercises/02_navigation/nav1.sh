@@ -17,8 +17,6 @@
 #
 # Hint: there is a single command, made of 3 letters.
 
-# I AM NOT DONE
-
 echo "TODO: joriy katalogni chiqarish"
 
 # === TEST META ===

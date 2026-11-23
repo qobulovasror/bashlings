@@ -29,8 +29,6 @@
 #   - `tail -n 3`    — prints the last 3 lines of the input
 #   - connect them with `|`
 
-# I AM NOT DONE
-
 # TODO: seq + pipe + tail
 
 # === TEST META ===

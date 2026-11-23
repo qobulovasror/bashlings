@@ -29,8 +29,6 @@
 #
 # Hint: a heredoc `cat <<EOF ... EOF`.
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi YAML'ni chiqaring
 echo "name: ..."
 

@@ -49,8 +49,6 @@
 #             ;;
 #     esac
 
-# I AM NOT DONE
-
 tugma="b"
 
 # TODO: case bilan to'g'ri tarmoqni tanlang

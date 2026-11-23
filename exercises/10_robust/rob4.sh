@@ -4,7 +4,7 @@
 # DARAJA: ★★★☆☆
 # MAVZU: part2/05-robust-scripting · idempotent + mkdir -p
 #
-# Skript ikki marta /tmp/bashlings-rob4 katalogini yaratishga harakat qiladi.
+# Skript ikki marta `natija` katalogini yaratishga harakat qiladi.
 # `set -e` ostida — ikkinchi `mkdir` skriptni to'xtatadi (xato).
 #
 # `-p` flagini qo'shing — qayta yaratish bezararsiz bo'lsin.
@@ -16,17 +16,15 @@
 # LEVEL: ★★★☆☆
 # TOPIC: part2/05-robust-scripting · idempotent + mkdir -p
 #
-# The script tries to create the /tmp/bashlings-rob4 directory twice.
+# The script tries to create the `natija` directory twice.
 # Under `set -e` — the second `mkdir` stops the script (error).
 #
 # Add the `-p` flag — so recreating it is harmless.
 #
 # Expected: "tayyor"
 
-# I AM NOT DONE
-
 set -e
-work=/tmp/bashlings-rob4
+work=natija
 rm -rf "$work"
 
 # TODO: mkdir -p ishlatib idempotent qiling

@@ -33,8 +33,6 @@
 #   - In the main code, call them with command substitution `$()`
 #   - Example: `r=$(add 1 2)` then `r2=$(multiply "$r" 3)`
 
-# I AM NOT DONE
-
 # TODO: add funksiyasi
 
 

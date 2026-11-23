@@ -31,8 +31,6 @@
 # Alternative (but in this exercise we learn <<<):
 #   echo "5+7" | bc
 
-# I AM NOT DONE
-
 # TODO: bc ga "5+7" ni <<< orqali uzating
 
 # === TEST META ===

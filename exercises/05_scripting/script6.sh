@@ -35,8 +35,6 @@
 #         done
 #   - Increment the counter: `((i++))` or `i=$((i + 1))`
 
-# I AM NOT DONE
-
 # TODO: i=1 dan boshlang, while loop yozing
 
 # === TEST META ===

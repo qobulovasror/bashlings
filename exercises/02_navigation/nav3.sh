@@ -21,11 +21,6 @@
 # Hint: `mkdir` accepts several arguments at once.
 #           the `-p` flag also creates the path components.
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-nav3
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-
 # TODO: bu yerda 3 ta katalogni yarating
 
 ls

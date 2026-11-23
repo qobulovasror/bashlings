@@ -31,8 +31,6 @@
 #   - `trap 'echo "tozalandi"' EXIT`
 #   - EXIT — a bash pseudo-signal, called in every case
 
-# I AM NOT DONE
-
 # TODO: trap o'rnating
 
 

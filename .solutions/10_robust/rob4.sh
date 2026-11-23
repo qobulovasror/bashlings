@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SOLUTION: rob4
 set -e
-work=/tmp/bashlings-rob4
+work=natija
 rm -rf "$work"
 
 mkdir -p "$work"

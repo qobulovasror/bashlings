@@ -29,8 +29,6 @@
 #   - `add` — the sum of array elements
 #   - Or: `map(.price) | add`
 
-# I AM NOT DONE
-
 input='[{"price":10},{"price":20},{"price":30},{"price":15}]'
 
 # TODO: narxlar yig'indisini chiqaring

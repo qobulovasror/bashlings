@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SOLUTION: rob5
-lock=/tmp/bashlings-rob5.lock
+lock="${TMPDIR:-/tmp}/bashlings-rob5.lock"
 echo 12345 > "$lock"
 
 if [[ -f "$lock" ]]; then

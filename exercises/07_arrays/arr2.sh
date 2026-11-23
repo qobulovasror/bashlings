@@ -25,8 +25,6 @@
 #   - Last element: `${arr[-1]}` (Bash 4.2+)
 #   - Or: `${arr[${#arr[@]}-1]}` (older bash)
 
-# I AM NOT DONE
-
 colors=("qizil" "kok")
 
 # TODO: yashil rangni qo'shing

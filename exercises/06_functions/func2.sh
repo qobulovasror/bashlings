@@ -33,8 +33,6 @@
 #   - The real value: `echo $((...))` + `result=$(square 5)` (command substitution)
 #   - Arithmetic: `$((a * b))`
 
-# I AM NOT DONE
-
 # TODO: square funksiyasini yozing
 
 

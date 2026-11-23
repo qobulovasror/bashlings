@@ -17,12 +17,7 @@
 
 ## Sandbox
 
-3–8 raqamli mashqlar **`/tmp/bashlings-navN/`** ichida ishlaydi — sizning workspace'ingiz ifloslanmaydi. Har skript boshida quyidagi shablon bor:
-
-```bash
-work=/tmp/bashlings-navN
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-```
+Har mashq bir martalik sandbox ichida (`.bashlings/sandbox/<nom>-…/work/`) ishlaydi — sizning workspace'ingiz ifloslanmaydi, run tugagach katalog o'chiriladi.
 
 ## Boshlash
 

@@ -27,8 +27,6 @@
 #   - Inside "..." double quotes a variable is substituted automatically: `"Salom, $name!"`
 #   - Inside '...' single quotes there is no interpolation (wrong way)
 
-# I AM NOT DONE
-
 # TODO: name o'zgaruvchisiga "Bash" qiymatini bering
 
 # TODO: "Salom, $name!" matnini chiqaring

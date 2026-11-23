@@ -19,9 +19,7 @@
 #
 # Hint: the home directory path is stored in a special environment variable.
 
-# I AM NOT DONE
-
-echo $HOME
+echo "TODO: home katalog yo'li"
 
 # === TEST META ===
 # @test:stdout-cmd: echo "$HOME"

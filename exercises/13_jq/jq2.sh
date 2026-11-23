@@ -27,8 +27,6 @@
 #   - `.[]` — iterates over the array elements
 #   - `.[].name` — the name of each element
 
-# I AM NOT DONE
-
 input='[{"name":"Ali"},{"name":"Vali"},{"name":"Gulnora"}]'
 
 # TODO: har user.name ni alohida qatorda chiqaring

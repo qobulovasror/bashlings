@@ -31,8 +31,6 @@
 #
 # Hint: 5 stars, with a single space between each.
 
-# I AM NOT DONE
-
 # TODO: cron ifodasini chiqaring
 echo "TODO"
 

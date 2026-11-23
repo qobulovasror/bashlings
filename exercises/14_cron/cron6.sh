@@ -36,8 +36,6 @@
 #   - `cut -d' ' -f6-` — everything from the 6th field onward
 #   - Or: `awk '{$1=$2=$3=$4=$5=""; print substr($0,6)}'`
 
-# I AM NOT DONE
-
 line="0 5 * * * /opt/sync.sh --quiet"
 
 # TODO: faqat buyruq qismini chiqaring

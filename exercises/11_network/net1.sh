@@ -10,7 +10,7 @@
 #     curl -fsSL https://api.github.com
 #
 # Hozir `eko` xato — bash bunday buyruqni bilmaydi.
-# Tuzating va `# I AM NOT DONE` qatorini o'chiring.
+# Tuzating.
 #
 # Maslahat:
 #   -f → 4xx/5xx da xato qaytar (server response'ni body qilib qaytarmasin)
@@ -29,15 +29,13 @@
 #     curl -fsSL https://api.github.com
 #
 # Right now `eko` is wrong — bash does not know such a command.
-# Fix it and remove the `# I AM NOT DONE` line.
+# Fix it.
 #
 # Hint:
 #   -f → return an error on 4xx/5xx (don't return the server response as the body)
 #   -s → turn off the progress bar
 #   -S → still show a real error despite -s (not silent)
 #   -L → follow redirects
-
-# I AM NOT DONE
 
 URL="https://api.github.com"
 

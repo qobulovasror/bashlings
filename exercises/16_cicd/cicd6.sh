@@ -31,8 +31,6 @@
 #
 # Hint: wrapping in `${{ ... }}` is not needed for if: (the expression is boolean).
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi step blokini chiqaring
 echo "- name: ..."
 

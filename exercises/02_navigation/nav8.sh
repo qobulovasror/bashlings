@@ -19,8 +19,6 @@
 #
 # ⚠ Note: a file deleted by `rm` cannot be recovered! Use it carefully.
 
-# I AM NOT DONE
-
 # TODO: tmp2.txt ni o'chiring
 
 # TODO: ls bilan qolganlarini ko'rsating

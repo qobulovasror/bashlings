@@ -35,8 +35,6 @@
 #   - Or: `sed -E 's/^✗ FAIL  //'`
 #   - At the end: `sort`
 
-# I AM NOT DONE
-
 log='✓ PASS  Checkout code
 ✓ PASS  Setup Node.js
 ✗ FAIL  Type check
