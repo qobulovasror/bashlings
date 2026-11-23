@@ -22,9 +22,10 @@ progressni ko'rish:
 | Vosita     | Talab | Sabab                                       |
 |------------|-------|---------------------------------------------|
 | **Bash 4+** | majburiy | Mashqlar shu versiyaga taqalgan (assoc array, `mapfile`) |
-| **Rust** (cargo) | majburiy | `bashlings` CLI ni build qilish uchun |
+| **Rust** (cargo) | ixtiyoriy | Faqat CLI'ni manbadan build qilish uchun (brew / install skript tayyor binar beradi) |
 | **git**    | majburiy | Repo'ni klon qilish |
 | **jq**     | tavsiya etiladi | Part 3 / `13_jq` mashqlari uchun |
+| **bc**     | tavsiya etiladi | `pipe8` mashqi uchun (minimal Linux / WSL'da bo'lmasligi mumkin: `sudo apt install bc`) |
 | **Node.js 18+** | ixtiyoriy | Kitobni `npm run docs:dev` orqali lokal ko'rish uchun |
 
 ---
@@ -66,20 +67,26 @@ bash --version    # odatda 5.x
 
 ### Windows
 
-Bash'ni Windows'da to'g'ridan-to'g'ri ishlatib bo'lmaydi. **WSL2** yoki **Git Bash** kerak:
+Rasmiy yo'l — **WSL2**: Ubuntu o'rnating va keyingi barcha qadamlarni WSL
+terminalida Linux bo'yicha bajaring.
 
 ```powershell
-# WSL2 (tavsiya etiladi)
 wsl --install -d Ubuntu
-
-# Yoki Git for Windows: https://git-scm.com/download/win
 ```
+
+::: warning Native Windows — eksperimental
+Releases sahifasida Windows binari (`bashlings-x86_64-pc-windows-msvc.tar.gz`)
+bor, lekin u faqat Git Bash ichida ishlatish uchun va to'liq sinalmagan
+(timeout jarayon daraxtini to'liq to'xtata olmaydi, `perm`/`symlink`
+fixture'lari ishlamaydi). Muammoga duch kelsangiz — WSL2'dan foydalaning.
+:::
 
 ---
 
-## 2. Rust toolchain o'rnatish
+## 2. Rust toolchain (ixtiyoriy)
 
-`bashlings` CLI Rust'da yozilgan — `cargo` bilan build qilamiz.
+Faqat CLI'ni manbadan build qilmoqchi bo'lsangiz kerak. Tayyor binar
+(Homebrew yoki install skript) uchun bu bo'limni o'tkazib yuboring.
 
 ```bash
 # Linux / macOS / WSL — rustup orqali
@@ -97,16 +104,16 @@ cargo --version    # cargo 1.70+
 ## 3. Bashlings CLI o'rnatish
 
 ```bash
-# 1. Repo'ni klon qiling
+# 1. Repo'ni klon qiling — mashqlar shu yerda
 git clone https://github.com/qobulovasror/bashlings
 cd bashlings
 
-# 2. CLI ni build + install qiling
-cd cli
-cargo install --path .
+# 2. CLI'ni o'rnating — bittasini tanlang:
+brew install qobulovasror/tap/bashlings      # macOS / Linux, tayyor binar
+curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts/install.sh | sh
+cargo install --path cli                      # manbadan (Rust kerak)
 
 # 3. Tekshirish — repo ildizidan
-cd ..
 bashlings list
 ```
 
@@ -121,14 +128,6 @@ bashlings list
 
   Keyingi: intro1
 ```
-
-::: tip Homebrew
-macOS va Linux'da Homebrew orqali ham o'rnatish mumkin (tayyor binar, Rust shart emas):
-
-```bash
-brew install qobulovasror/tap/bashlings
-```
-:::
 
 ### Asosiy buyruqlar — qisqacha
 
@@ -236,11 +235,12 @@ oching va to'g'rilang!
 ## Tez-tez uchraydigan muammolar
 
 ::: details "command not found: bashlings"
-`cargo install --path .` muvaffaqiyatli o'tdi, lekin `bashlings` topilmaydi?
+O'rnatish muvaffaqiyatli o'tdi, lekin `bashlings` topilmaydi?
 
-`~/.cargo/bin` PATH'da emas. `.bashrc` yoki `.zshrc` ga qo'shing:
+Binar katalogi PATH'da emas: install skript uchun `~/.local/bin`, cargo uchun
+`~/.cargo/bin`. `.bashrc` yoki `.zshrc` ga qo'shing:
 ```bash
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 ```
 Keyin: `source ~/.bashrc` (yoki yangi terminal oching).
 :::

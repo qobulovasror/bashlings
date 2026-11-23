@@ -13,7 +13,11 @@ const SECTIONS: Record<string, { uz: string; en: string }> = {
 export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
-  sitemap: { hostname: HOSTNAME },
+  sitemap: {
+    hostname: HOSTNAME,
+    // Vercel `trailingSlash: false` `/en/` ni `/en` ga 308 qiladi — sitemap redirect'ni ko'rsatmasin
+    transformItems: (items) => items.map((i) => ({ ...i, url: i.url.replace(/(.)\/$/, '$1') }))
+  },
 
   head: [
     ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
@@ -31,9 +35,10 @@ export default defineConfig({
     const slug = pageData.relativePath
       .replace(/(^|\/)index\.md$/, '$1')
       .replace(/\.md$/, '')
-    const isEn = slug === 'en/' || slug.startsWith('en/')
+      .replace(/\/$/, '') // en/index.md → 'en' (canonical redirect'siz URL)
+    const isEn = slug === 'en' || slug.startsWith('en/')
     const uzSlug = isEn ? slug.slice(3) : slug
-    const enSlug = isEn ? slug : `en/${slug}`
+    const enSlug = isEn ? slug : slug ? `en/${slug}` : 'en'
     const lang = isEn ? 'en-US' : 'uz-UZ'
     const url = `${HOSTNAME}/${slug}`
     const fallbackTitle = isEn ? 'Bash & Linux Guide' : 'Bash & Linux Darsligi'
@@ -44,7 +49,7 @@ export default defineConfig({
     const description =
       pageData.frontmatter.description || pageData.description || fallbackDescription
 
-    const isHome = slug === '' || slug === 'en/'
+    const isHome = slug === '' || slug === 'en'
 
     const jsonLd = isHome
       ? {
@@ -387,7 +392,7 @@ export default defineConfig({
 })
 
 function buildCrumbs(slug: string, uzSlug: string, title: string, isEn: boolean) {
-  const home = isEn ? `${HOSTNAME}/en/` : `${HOSTNAME}/`
+  const home = isEn ? `${HOSTNAME}/en` : `${HOSTNAME}/`
   const crumbs: Array<Record<string, unknown>> = [
     { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Bosh sahifa', item: home }
   ]

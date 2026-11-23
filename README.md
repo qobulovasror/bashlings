@@ -19,10 +19,19 @@
 ## Tezkor boshlash
 
 > 📺 **Jonli demo:** o'rnatish va ishlatishning terminal yozuvi
-> [setup sahifasida](https://github.com/qobulovasror/bashlings#) (kitobning
+> [setup sahifasida](https://www.bashlings.uz/setup) (kitobning
 > "O'rnatish" bo'limida asciinema player).
 
-### 1. CLI ni o'rnatish
+### 1. Repo'ni klon qilish
+
+Mashqlar shu repo ichida — CLI ularni joriy katalogdan qidiradi:
+
+```bash
+git clone https://github.com/qobulovasror/bashlings
+cd bashlings
+```
+
+### 2. CLI ni o'rnatish
 
 **Bir qatorli install skript** (tayyor binar — Rust shart emas):
 
@@ -30,7 +39,8 @@
 curl -fsSL https://raw.githubusercontent.com/qobulovasror/bashlings/main/scripts/install.sh | sh
 ```
 
-> Linux/macOS (x86_64 + arm64). Windows uchun [Releases](https://github.com/qobulovasror/bashlings/releases) sahifasidan `.tar.gz` ni qo'lda yuklab oling.
+> Linux/macOS (x86_64 + arm64). Windows'da **WSL2** ichida xuddi Linux kabi o'rnating;
+> native Windows binari ([Releases](https://github.com/qobulovasror/bashlings/releases)) — eksperimental.
 
 **Homebrew:**
 
@@ -52,7 +62,7 @@ cargo build --release
 cp target/release/bashlings ~/.local/bin/   # PATH ichida bo'lsin
 ```
 
-### 2. Mashqlarni ishga tushirish
+### 3. Mashqlarni ishga tushirish
 
 Repo ildizidan:
 
@@ -66,7 +76,7 @@ bashlings hint intro1    # progressiv maslahat (har chaqiruvda keyingi bosqich)
 bashlings next           # birinchi pending mashq nomini chiqarish (CI uchun)
 ```
 
-### 3. Kitobni o'qish
+### 4. Kitobni o'qish
 
 Kitob VitePress orqali render bo'ladi:
 
@@ -128,6 +138,14 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | `# @test:stderr: <matn>`             | stderr aynan berilgan satrga teng           |
 | `# @test:exit: <kod>`                | Skript exit code'i teng                     |
 | `# @test:file-exists: <yo'l>`        | Berilgan fayl/katalog skriptdan keyin mavjud |
+| `# @test:file-missing: <yo'l>`       | Yo'lda hech narsa qolmagan (singan symlink ham) |
+| `# @test:file-content: <yo'l> :: <matn>`  | Fayl tarkibi aynan berilgan matnga teng |
+| `# @test:file-contains: <yo'l> :: <matn>` | Fayl berilgan kichik satrni o'z ichiga oladi |
+| `# @test:perm: <yo'l> <0755>`        | Fayl huquq bitlari teng (Unix)              |
+| `# @test:tree: <a>, <b>, ...`        | Ish katalogida aynan shu fayllar qolgan     |
+
+Fixture (`# @setup:file`, `mkdir`, `args`, `stdin`, `timeout`, ...) direktivalari —
+[exercises/README.md](exercises/README.md)'da.
 
 ---
 
