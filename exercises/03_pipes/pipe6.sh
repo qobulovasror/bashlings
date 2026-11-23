@@ -31,10 +31,6 @@
 #   - `uniq`          — removes CONSECUTIVE duplicates (use after sort)
 #   - connect them with `|`
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-pipe6
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf 'olma\nuzum\nolma\nbanan\nuzum\n' > fruits.txt
 
 # TODO: sort + uniq pipeline

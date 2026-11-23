@@ -37,8 +37,6 @@
 #   - In bash, variables are not expanded inside single quotes; the literal
 #     string is printed with printf or echo.
 
-# I AM NOT DONE
-
 URL="https://httpbin.org/post"
 BODY='{"city":"Toshkent"}'
 

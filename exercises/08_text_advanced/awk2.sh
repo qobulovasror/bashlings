@@ -31,10 +31,6 @@
 #   - `awk '{sum += $2} END {print sum}'`
 #   - The END block runs after all lines have been read
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-awk2
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf 'ali 80\nvali 75\ngulnora 90\n' > scores.txt
 
 # TODO: 2-ustun yig'indisini awk bilan

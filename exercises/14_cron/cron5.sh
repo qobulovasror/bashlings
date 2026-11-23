@@ -29,8 +29,6 @@
 #   - `2>&1`     — send stderr to the log too
 #   - in cron, always redirecting STDERR to a file too — good practice
 
-# I AM NOT DONE
-
 SCHEDULE="30 2 * * *"
 SCRIPT="/usr/local/bin/backup.sh"
 LOG="/var/log/backup.log"

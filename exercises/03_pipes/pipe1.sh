@@ -21,11 +21,6 @@
 #   - `echo "text" > fayl.txt`  — write to a file (overwritten if it exists)
 #   - `cat fayl.txt`            — print the file contents
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-pipe1
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-
 # TODO: faylga "salom" so'zini yozing va keyin uni chiqaring
 
 # === TEST META ===

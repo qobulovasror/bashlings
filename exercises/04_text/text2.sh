@@ -27,10 +27,6 @@
 #   - `grep -c` — prints the number of matches
 #   - You can combine the two flags: `grep -ic` or `grep -i -c`
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-text2
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 cat > log.txt <<EOF
 [info] system ok
 [ERROR] disk full

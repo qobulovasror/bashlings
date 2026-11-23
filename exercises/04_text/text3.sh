@@ -27,10 +27,6 @@
 #
 # Hint: the `-n` flag (numeric).
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-text3
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf '42\n5\n100\n7\n23\n' > scores.txt
 
 # TODO: scores.txt'ni raqam bo'yicha tartiblang

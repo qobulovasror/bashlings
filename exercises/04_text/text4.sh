@@ -33,10 +33,6 @@
 #   - `-d','` — split on comma
 #   - `-f1`   — the 1st field
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-text4
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 cat > users.csv <<EOF
 ali,25,toshkent
 vali,30,samarqand

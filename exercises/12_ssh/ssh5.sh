@@ -39,8 +39,6 @@
 #   ./dist  → copy the "dist" directory itself too
 #   ./dist/ → copy the files INSIDE "dist"
 
-# I AM NOT DONE
-
 SRC="./dist/"
 USER="deploy"
 HOST="server.io"

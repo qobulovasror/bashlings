@@ -17,7 +17,7 @@
 
 ## Sandbox
 
-Fayl yaratish/redirect bilan ishlovchi mashqlar `/tmp/bashlings-pipeN/` ichida ishlaydi.
+Har mashq bir martalik sandbox ichida (`.bashlings/sandbox/<nom>-…/work/`) ishlaydi — sizning workspace'ingiz ifloslanmaydi, run tugagach katalog o'chiriladi.
 
 ## Boshlash
 

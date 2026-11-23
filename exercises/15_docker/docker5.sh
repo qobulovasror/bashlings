@@ -33,8 +33,6 @@
 #
 # Hint: simple string concatenation inside `echo "..."`.
 
-# I AM NOT DONE
-
 REGISTRY="ghcr.io"
 OWNER="myorg"
 NAME="api"

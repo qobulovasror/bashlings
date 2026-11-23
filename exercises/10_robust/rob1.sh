@@ -29,8 +29,6 @@
 #
 # Hint: at the top of the script, `set -o pipefail`
 
-# I AM NOT DONE
-
 # TODO: set -o pipefail qo'shing
 
 

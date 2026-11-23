@@ -37,8 +37,6 @@
 #
 # Hint: via a heredoc, with EXACTLY this indentation.
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi step blokini chiqaring
 echo "- name: ..."
 

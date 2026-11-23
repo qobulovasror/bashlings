@@ -31,8 +31,6 @@
 #   - hour   = 3
 #   - the remaining 3 fields  = *  (every day, every month, every weekday)
 
-# I AM NOT DONE
-
 # TODO: ifodani chiqaring
 echo "TODO"
 

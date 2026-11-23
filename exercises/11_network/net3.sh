@@ -33,8 +33,6 @@
 #   - Note: -m (--max-time) is for the whole request, while --connect-timeout
 #     is only for the connection phase. For scripts, -m is used more often.
 
-# I AM NOT DONE
-
 URL="https://api.example.com/data"
 
 # TODO: yuqoridagi kombinatsiyani chiqaring

@@ -19,8 +19,6 @@
 #
 # Hint: `*` means any character(s). `*.txt` — all .txt files.
 
-# I AM NOT DONE
-
 # TODO: faqat .txt bilan tugaydigan fayllarni listing qiling
 
 # === SETUP (qo'l urmang) ===

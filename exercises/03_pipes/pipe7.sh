@@ -23,11 +23,6 @@
 #
 # The name tee comes from splitting water into two directions through a T-shaped pipe 🚰
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-pipe7
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
-
 # TODO: echo + pipe + tee orqali out.txt'ga yozing va stdout'ga ham chiqaring
 
 # === TEST META ===

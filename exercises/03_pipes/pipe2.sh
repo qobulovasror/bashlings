@@ -21,10 +21,6 @@
 #
 # Hint: > overwrites, >> appends.
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-pipe2
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 echo "birinchi" > log.txt
 
 # TODO: log.txt'ga "ikkinchi" qatorini qo'shing

@@ -88,8 +88,6 @@ chapter = "part1/01-introduction"
 #   - <hint 1>
 #   - <hint 2>
 
-# I AM NOT DONE
-
 # TODO: vazifani bajaring
 echo "TODO"
 

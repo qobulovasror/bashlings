@@ -37,8 +37,6 @@
 #             echo "$i"
 #         done
 
-# I AM NOT DONE
-
 # TODO: for loop yozing
 
 # === TEST META ===

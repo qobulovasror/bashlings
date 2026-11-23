@@ -27,8 +27,6 @@
 #   - `$fruits` — WRONG: returns only the first element
 #   - Always write `"${arr[@]}"` inside double quotes
 
-# I AM NOT DONE
-
 fruits=("olma" "anor" "uzum")
 
 # TODO: hamma elementlarni chiqaring

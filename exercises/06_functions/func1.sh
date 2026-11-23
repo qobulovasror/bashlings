@@ -35,8 +35,6 @@
 #   - $1 — the first argument
 #   - `echo "Salom, $1!"` — use the argument inside double quotes
 
-# I AM NOT DONE
-
 # TODO: greet funksiyasini yozing
 
 

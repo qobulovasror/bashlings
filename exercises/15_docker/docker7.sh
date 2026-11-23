@@ -45,8 +45,6 @@
 #   - 2 spaces per level
 #   - Quotes stay literal (port "8080:80")
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi YAML'ni chiqaring
 echo "services:"
 

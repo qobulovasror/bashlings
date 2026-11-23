@@ -29,8 +29,6 @@
 #   - `[ ... | select(...) ] | length` — wrap in an array to count, then length
 #   - Or: `map(select(...)) | length`
 
-# I AM NOT DONE
-
 input='[{"age":15},{"age":20},{"age":17},{"age":30},{"age":22}]'
 
 # TODO: kattalar (yoshi >= 18) sonini chiqaring

@@ -23,8 +23,6 @@
 # The `*/N` operator — "every N values". So `*/15` in the minute field —
 # 0, 15, 30, 45.
 
-# I AM NOT DONE
-
 # TODO: ifodani chiqaring
 echo "TODO"
 

@@ -27,8 +27,6 @@
 #   -C "..."    → comment (usually an email)
 #   -f <path>   → which file to save the key to
 
-# I AM NOT DONE
-
 EMAIL="ali@example.com"
 PATH_KEY="~/.ssh/id_ed25519"
 

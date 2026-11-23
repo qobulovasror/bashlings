@@ -23,10 +23,6 @@
 #   - `grep -c <pattern> <fayl>`   — how many lines the pattern occurs on (just the number)
 #   - Or: `grep <pattern> <fayl> | wc -l` — but on macOS wc has leading whitespace
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-pipe5
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 cat > log.txt <<EOF
 [INFO] start
 [ERROR] disk full

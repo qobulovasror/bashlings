@@ -29,8 +29,6 @@
 #   - Remote target form: `user@host:/path/`
 #   - No prefix is needed when the source is a local file path
 
-# I AM NOT DONE
-
 SRC="./backup.tar.gz"
 USER="deploy"
 HOST="server.io"

@@ -29,8 +29,6 @@
 #
 # Hint: `${VAR:-default}` — if VAR is empty, it returns default.
 
-# I AM NOT DONE
-
 # TODO: ${LOG_LEVEL:-info} bilan to'ldiring
 level="$LOG_LEVEL"
 

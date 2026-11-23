@@ -31,8 +31,6 @@
 #     asosiy ish
 #     tmp o'chirildi
 
-# I AM NOT DONE
-
 tmpfile=$(mktemp)
 echo "data" > "$tmpfile"
 

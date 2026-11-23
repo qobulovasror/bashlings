@@ -37,8 +37,6 @@
 #   - `cat <<EOF ... EOF` — heredoc
 #   - No variable interpolation is needed — show it literally
 
-# I AM NOT DONE
-
 # TODO: Dockerfile mazmunini chiqaring
 echo "FROM ..."
 

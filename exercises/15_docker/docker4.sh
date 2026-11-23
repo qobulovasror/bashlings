@@ -33,8 +33,6 @@
 #   - `tail -n +2` — skip the header (start from line 2)
 #   - `awk '{print $1}'` — the first column (ID)
 
-# I AM NOT DONE
-
 ps_output='CONTAINER ID   IMAGE          STATUS    NAMES
 a1b2c3d4e5f6   nginx:alpine   Up 5min   web
 b2c3d4e5f6a7   redis:7        Up 1h     cache

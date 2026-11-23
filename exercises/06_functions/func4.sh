@@ -33,8 +33,6 @@
 # Hint:
 #   - Use `local` for every new variable inside a function
 
-# I AM NOT DONE
-
 inner() {
     # TODO: `local` qo'shing
     name="ichki"

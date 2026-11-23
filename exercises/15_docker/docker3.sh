@@ -29,8 +29,6 @@
 #   -w     → working directory inside the container
 #   -e K=V → environment variable
 
-# I AM NOT DONE
-
 HOST_DIR="/data"
 CTR_DIR="/app"
 IMAGE="node:20"

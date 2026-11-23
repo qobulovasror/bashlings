@@ -41,8 +41,6 @@
 #
 # Hint: a heredoc — `cat <<EOF ... EOF` prints the whole text to stdout.
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi Dockerfile'ni chiqaring
 echo "TODO"
 

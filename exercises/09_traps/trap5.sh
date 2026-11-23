@@ -27,8 +27,6 @@
 #     main
 #     tozalandi
 
-# I AM NOT DONE
-
 __done=0
 cleanup() {
     # TODO: agar __done == 1 bo'lsa, darhol return qiling

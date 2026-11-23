@@ -41,8 +41,6 @@
 #   - cat <<'EOF' (with quotes) — NO interpolation
 #   - We need interpolation → unquoted EOF
 
-# I AM NOT DONE
-
 HOST_ALIAS="prod"
 HOSTNAME="192.168.1.100"
 USER="deploy"

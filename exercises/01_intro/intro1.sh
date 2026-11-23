@@ -7,7 +7,7 @@
 # Skript "Salom, Bash!" deb chiqarishi kerak.
 # Hozir `eko` xato — bash bu nomdagi buyruqni bilmaydi.
 #
-# Tuzating va quyidagi `# I AM NOT DONE` qatorini o'chiring.
+# Tuzating va `bashlings run intro1` bilan tekshiring.
 #
 # --- English ---
 # TASK: Hello, Bash!
@@ -17,9 +17,7 @@
 # The script must print "Salom, Bash!".
 # Right now `eko` is wrong — bash does not know that command.
 #
-# Fix it and remove the `# I AM NOT DONE` line below.
-
-# I AM NOT DONE
+# Fix it and check with `bashlings run intro1`.
 
 eko "Salom, Bash!"
 

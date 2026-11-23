@@ -29,10 +29,6 @@
 #
 # In other words: first cut the 1-7 range, then take the last 3 of those.
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-text5
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 seq 1 100 > big.txt
 
 # TODO: big.txt'dan 5, 6, 7 qatorlarini head + tail orqali oling

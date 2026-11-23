@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # SOLUTION: awk3
-work=/tmp/bashlings-awk3
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 cat > log.txt <<EOF
 INFO start
 ERROR disk

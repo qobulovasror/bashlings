@@ -31,8 +31,6 @@
 # Hint:
 #   - Format: `docker run -d -p $HOST_PORT:$CTR_PORT $IMAGE`
 
-# I AM NOT DONE
-
 IMAGE="nginx:alpine"
 HOST_PORT=8080
 CTR_PORT=80

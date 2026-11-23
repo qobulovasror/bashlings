@@ -29,10 +29,6 @@
 #   - awk associative array order is non-deterministic — sort it with sort
 #   - Pipeline: `awk ... | sort`
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-awk3
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 cat > log.txt <<EOF
 INFO start
 ERROR disk

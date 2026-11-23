@@ -23,8 +23,6 @@
 #   - `${#arr[@]}` — the number of elements
 #   - `${#arr[0]}` — the LENGTH of the first element (character count) — a different thing!
 
-# I AM NOT DONE
-
 fruits=("olma" "anor" "uzum" "banan")
 
 # TODO: massiv elementlari sonini chiqaring

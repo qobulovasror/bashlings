@@ -31,8 +31,6 @@
 #     Exit: 7
 # Script exit code: 7
 
-# I AM NOT DONE
-
 cleanup() {
     # TODO: local rc=$?  (eng birinchi qator bo'lishi kerak!)
     # TODO: "Exit: $rc" chiqaring

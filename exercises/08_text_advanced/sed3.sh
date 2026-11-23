@@ -37,10 +37,6 @@
 #   - `\3`, `\2`, `\1` — backreferences
 #   - `/` must be escaped with `\` (or change the delimiter and use `s|...|...|`)
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-sed3
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf '2026-05-17\n2024-01-01\n' > date.txt
 
 # TODO: sed -E bilan format o'zgartirish

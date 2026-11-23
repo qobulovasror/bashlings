@@ -19,8 +19,6 @@
 # Hint: `cd ~` — a shortcut for home.
 # You can chain two commands with `&&`.
 
-# I AM NOT DONE
-
 # TODO: cd va pwd ni shu yerda yozing
 
 # === TEST META ===

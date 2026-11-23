@@ -41,8 +41,6 @@
 #
 # Hint: via a heredoc, keep the indentation EXACTLY.
 
-# I AM NOT DONE
-
 # TODO: yuqoridagi YAML'ni chiqaring
 echo "jobs:"
 

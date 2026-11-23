@@ -33,8 +33,6 @@
 #   - String concatenation: `.a + " " + .b`
 #   - `-c` — not pretty-print, one line
 
-# I AM NOT DONE
-
 input='{"firstName":"Ali","lastName":"Karim"}'
 
 # TODO: jq -c bilan {"fullName":"Ali Karim"} yarating

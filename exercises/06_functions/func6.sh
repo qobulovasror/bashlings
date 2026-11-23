@@ -41,8 +41,6 @@
 #   - 0 = even = return 0 = if true
 #   - 1 = odd = return 1 = if false
 
-# I AM NOT DONE
-
 is_even() {
     # TODO: $1 % 2 qoldig'ini return qiling
     return 1

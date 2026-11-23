@@ -25,10 +25,6 @@
 #     toshkent
 #     samarqand
 
-# I AM NOT DONE
-
-work=/tmp/bashlings-awk1
-rm -rf "$work" && mkdir -p "$work" && cd "$work" || exit 1
 printf 'ali 25 toshkent\nvali 30 samarqand\n' > data.txt
 
 # TODO: awk bilan 3-ustunni chiqaring

@@ -44,8 +44,6 @@
 #   - `read` consumes only one line — the rest stays on stdin
 #   - count the rest with `while read -r _; do ...; done`
 
-# I AM NOT DONE
-
 # TODO: birinchi qatorni o'qing va "Salom, <ism>!" deb chiqaring
 
 # TODO: qolgan qatorlarni sanang va "Qolganlari: N" deb chiqaring

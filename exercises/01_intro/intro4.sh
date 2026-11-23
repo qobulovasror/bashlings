@@ -27,8 +27,6 @@
 #
 # Hint: look at the `%F` flag of `date`, or `man date`.
 
-# I AM NOT DONE
-
 echo "TODO"
 
 # === TEST META ===
