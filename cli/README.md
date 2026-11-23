@@ -40,7 +40,7 @@ bashlings watch
 | `bashlings list`                 | All exercises and their status (`--pending`/`--done`/`--json`) |
 | `bashlings run [name]`           | Check an exercise; no name → the next pending one            |
 | `bashlings verify`               | Run all in order, stop at the first failure                 |
-| `bashlings watch`                | Auto-recheck on save + hotkeys (`h`/`s`/`r`/`l`/`q`)         |
+| `bashlings watch`                | Auto-recheck on save + hotkeys (`h`/`s`/`r`/`n`/`l`/`q`)         |
 | `bashlings hint <name>`          | Progressive hint, one step per call (`--all`/`--reset`)     |
 | `bashlings solution <name>`      | Reveal the solution — **only after tests pass**            |
 | `bashlings reset <name>`         | Restore an exercise to its original state (`git checkout`)  |

@@ -1,10 +1,10 @@
 //! `bashlings verify` — run every exercise in order and stop at the first
 //! one that doesn't pass. Passing exercises are shown as a compact ✓ line and
-//! their `# I AM NOT DONE` marker is auto-removed (same as `run`). The first
-//! failing exercise is shown in full detail — that's where the learner is.
+//! recorded as done (same as `run`). The first failing exercise is shown in
+//! full detail — that's where the learner is.
 
 use crate::style::Style;
-use crate::{commands, info, test, tr};
+use crate::{commands, info, state, test, tr};
 use anyhow::Result;
 
 pub fn run() -> Result<bool> {
@@ -25,8 +25,7 @@ pub fn run() -> Result<bool> {
 
         let report = test::run_full(&path, &root)?;
         if report.all_passed() {
-            // Mark as done so `list`/`progress` agree, then show a compact line.
-            let _ = info::strip_done_marker(&path);
+            state::set_done(&root, &ex.name, true)?;
             println!(
                 "  {}  {}  {}",
                 "✓".green(),
@@ -34,8 +33,10 @@ pub fn run() -> Result<bool> {
                 format!("({}/{})", report.passed_count(), report.total()).dimmed()
             );
         } else {
-            // Re-run through the full display path for the stuck exercise.
-            commands::run::run_exercise(&root, ex)?;
+            // Show the stuck exercise in full, from the report we already have —
+            // re-running it would double a timeout and could disagree.
+            commands::run::print_header(&root, ex);
+            commands::run::show_report(&root, ex, &report)?;
             println!(
                 "  {} {}",
                 "⏸".yellow(),

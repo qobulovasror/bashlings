@@ -11,7 +11,7 @@
 | Pillar          | Mavzu                              | Texnologiya       |
 |-----------------|------------------------------------|-------------------|
 | 📘 **Kitob**     | 16 ta bob, ~8 500 qator markdown   | VitePress         |
-| 🧪 **Mashqlar**   | 103 ta `# I AM NOT DONE` mashq     | Bash skript fayllar |
+| 🧪 **Mashqlar**   | 103 ta interaktiv mashq            | Bash skript fayllar |
 | ⚡ **CLI**       | `bashlings` runner + watch         | Rust              |
 
 ---
@@ -87,7 +87,7 @@ bash-doc/
 │   ├── part1/            # 5 bob — Linux & Bash asoslari
 │   ├── part2/            # 5 bob — Advanced scripting
 │   └── part3/            # 6 bob — Real-world ko'nikmalar
-├── exercises/            # 🧪 Mashqlar (har biri "# I AM NOT DONE" markerli)
+├── exercises/            # 🧪 Mashqlar
 │   ├── info.toml         # markaziy registry
 │   ├── 01_intro/         ... 16_cicd/
 ├── .solutions/           # 🔐 Yechimlar (yashirin — CLI orqali ochiladi)
@@ -106,7 +106,7 @@ Har mashq quyidagi 3 ta fayldan iborat:
 
 ```
 exercises/01_intro/
-├── intro1.sh             # mashq (# I AM NOT DONE markerli)
+├── intro1.sh             # mashq
 ├── intro1.hint.md        # 3-bosqichli maslahat
 └── README.md             # bobni umumiy tavsifi
 ```
@@ -176,14 +176,14 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | `bashlings list --pending`   | Faqat hali tugatilmagan mashqlar                       |
 | `bashlings list --done`      | Faqat tugatilgan mashqlar                              |
 | `bashlings list --json`      | Mashqlar ro'yxati JSON ko'rinishida (skript/IDE uchun) |
-| `bashlings run [name]`       | Mashqni tekshirish + pass'da marker avto-o'chadi (nomsiz — keyingi pending) |
+| `bashlings run [name]`       | Mashqni tekshirish; pass bo'lsa "tugatildi" deb saqlanadi (nomsiz — keyingi pending) |
 | `bashlings verify`           | Barcha mashqlarni tartibda tekshirish, birinchi xatoda to'xtash |
 | `bashlings watch`            | **Interaktiv rejim** — fayl saqlash + hotkeys (h/s/r/l/q) |
 | `bashlings hint <name>`      | Progressiv maslahat — har chaqiruvda keyingi bosqich (yechim YO'Q) |
 | `bashlings hint <name> --all`   | Barcha maslahat bosqichlarini birato'la ko'rsatish  |
 | `bashlings hint <name> --reset` | Ochilgan maslahat bosqichlarini qayta tiklash       |
 | `bashlings solution <name>`  | Yechim — **faqat mashq pass bo'lgandan keyin ochiladi** |
-| `bashlings reset <name>`     | Mashqni asl holatga qaytarish (git checkout — asl kod + marker) |
+| `bashlings reset <name>`     | Mashqni asl holatga qaytarish (git checkout + qayta pending) |
 | `bashlings progress`         | Compact statistika — umumiy + qism bo'yicha (`--json` ham) |
 | `bashlings next`             | Birinchi pending mashq nomini chiqarish (`--json` ham) |
 | `bashlings completions <shell>` | Shell completion skripti (bash/zsh/fish/...)       |
@@ -197,6 +197,7 @@ Har `.sh` fayl oxirida `# @test:...` direktivalar:
 | `h`       | Maslahat ko'rsatish                              |
 | `s`       | Yechimni ko'rsatish (faqat test pass bo'lsa)      |
 | `r` / `Enter` | Joriy mashqni qayta tekshirish                |
+| `n`       | Keyingi mashqqa o'tish (pass'dan keyin)         |
 | `l` / `p` | Progress overview                                |
 | `q` / `Esc` / `Ctrl+C` | Chiqish                              |
 

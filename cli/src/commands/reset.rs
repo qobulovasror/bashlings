@@ -1,8 +1,7 @@
 //! `bashlings reset <name>` — restore an exercise to its original state.
 //!
-//! Preferred path: `git checkout` the committed (pristine) file, which brings
-//! back BOTH the original broken code AND the `# I AM NOT DONE` marker.
-//! Fallback (no git / untracked file): re-insert the marker only.
+//! The exercise goes back to pending and its hints start over; the code is
+//! restored with `git checkout` of the committed (pristine) file when possible.
 
 use crate::style::Style;
 use crate::{info, state, tr};
@@ -22,9 +21,8 @@ pub fn run(name: &str) -> Result<bool> {
         ))
     })?;
 
-    let path = ex.full_path(&root);
-
-    // Forget any revealed hint steps — a clean reset starts the hints over too.
+    // Pending again, and the hints start over too.
+    state::set_done(&root, name, false)?;
     let _ = state::set_hint_level(&root, name, 0);
 
     println!();
@@ -36,30 +34,19 @@ pub fn run(name: &str) -> Result<bool> {
             "♻".cyan(),
             name.bold(),
             "git checkout".dimmed(),
-            tr!("asl kod + marker tiklandi", "original code + marker restored")
+            tr!("asl kod tiklandi", "original code restored")
         );
         println!();
         return Ok(true);
     }
 
-    // Fallback: git unavailable or file untracked — restore only the marker.
-    let inserted = info::restore_done_marker(&path)?;
-    if inserted {
-        println!(
-            "  {} {} — {} {}",
-            "♻".cyan(),
-            name.bold(),
-            "`# I AM NOT DONE`".dimmed(),
-            tr!("marker qaytarildi.", "marker restored.")
-        );
-    } else {
-        println!(
-            "  {} {} — {}",
-            "ℹ".cyan(),
-            name.bold(),
-            tr!("marker allaqachon o'rnatilgan.", "marker already present.")
-        );
-    }
+    // git unavailable or file untracked — only the progress could be reset.
+    println!(
+        "  {} {} — {}",
+        "♻".cyan(),
+        name.bold(),
+        tr!("pending holatga qaytarildi.", "marked as pending again.")
+    );
     println!(
         "  {} {}",
         "⚠".yellow(),
