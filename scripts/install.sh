@@ -34,7 +34,7 @@ os="$(uname -s)"
 arch="$(uname -m)"
 
 case "$os" in
-    Linux) os_part="unknown-linux-gnu" ;;
+    Linux) os_part="unknown-linux-musl" ;;   # statik — glibc versiyasiga bog'liq emas
     Darwin) os_part="apple-darwin" ;;
     *) err "qo'llab-quvvatlanmaydigan OS: $os (Windows uchun Release sahifasidan qo'lda yuklab oling)" ;;
 esac

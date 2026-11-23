@@ -5,7 +5,32 @@ Bu loyihaning barcha sezilarli o'zgarishlari shu faylda hujjatlanadi.
 Format [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) asosida,
 versiyalash [SemVer](https://semver.org/) bo'yicha.
 
-## [Unreleased]
+## [0.1.2] — chiqarilmagan
+
+### Qo'shildi
+
+- 🧪 **Bir martalik sandbox + `# @setup:` direktivalari** (`file`, `mkdir`, `fixture`, `perm`, `symlink`, `env`, `args`, `stdin`, `timeout`, `isolate-home`) va yangi test rejimlari; `script7`/`script8` mashqlari (jami 103)
+- 🔢 **`info.toml` → `min_cli_version`** — eski CLI yangi mashqlarda tushunarli "yangilang" xabarini beradi
+- ⌨️ **`watch`: pass ekrani** — mashq o'tganda ekran saqlanadi; `n`/Enter — keyingi mashq, `s` — yechim
+- 🪟 **Windows binari (eksperimental)** — rasmiy yo'l WSL2
+
+### O'zgartirildi
+
+- 📊 **Progress `.bashlings/state.toml`'da** — mashq faqat testlari o'tganda "tugatildi"; CLI mashq fayliga endi tegmaydi, `# I AM NOT DONE` marker olib tashlandi. Eski progressni tiklash: `bashlings verify`
+- 🐧 **Linux binarlari musl (statik)** — eski glibc'li distrolarda ham ishlaydi
+- 🍺 **Homebrew formula `qobulovasror/homebrew-tap` ga ko'chirildi** — o'rnatish: `brew install qobulovasror/tap/bashlings`; `cli/Formula/` olib tashlandi, `scripts/update-formula.sh` endi tap'dagi formulani yangilaydi
+- 🧹 **22 mashq `/tmp/bashlings-*` o'rniga sandbox'da ishlaydi**
+
+### Tuzatildi
+
+- 🐛 **Linux/WSL: ko'p thread'li sessiyada har `fork` yiqilardi** — `ulimit -u` endi thread'lar bo'yicha hisoblanadi
+- 🐛 **Ctrl+C mashq skriptini to'xtatmasdi** (cheksiz tsikl CPU'ni egallab qolardi)
+- 🐛 **`intro3` tegilmasdan o'tardi**; `verify` yiqilgan mashqni ikki marta ishga tushirardi
+- 🐛 **Windows build** (crossterm `windows` feature)
+- 🧪 `test-solutions.sh`: lokal build'ni ishlatadi, Ctrl+C'da fayllarni tiklaydi, tegilmagan mashq yiqilishini tekshiradi
+- 📘 Kitob: `${...:?...}` ichidagi apostrof sintaksis xatosi, `/en` canonical, README'da `git clone` qadami
+
+## [0.1.1] — 2026-06-14
 
 ### Qo'shildi
 
@@ -34,7 +59,6 @@ versiyalash [SemVer](https://semver.org/) bo'yicha.
 
 ### O'zgartirildi
 
-- 🍺 **Homebrew formula `qobulovasror/homebrew-tap` ga ko'chirildi** — o'rnatish: `brew install qobulovasror/tap/bashlings`; `cli/Formula/` olib tashlandi, `scripts/update-formula.sh` endi tap'dagi formulani yangilaydi
 - 🔐 **`solutions/` → `.solutions/`** — yechim fayllari yashirin katalogga ko'chirildi (rustlings-style)
 - ⚡ **Test pass'da `# I AM NOT DONE` AVTO-o'chadi** — manual edit'dan friction olib tashlandi
 - 📘 **Hint fayllaridan `## ✅ Yechim` bo'limi olib tashlandi** (101 fayl) — yechim faqat `bashlings solution` orqali
