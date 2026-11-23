@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -35,9 +35,12 @@ jobs:
             ${{ runner.os }}-cargo-
 
       - name: cargo build --release
-        run: cargo build --release --manifest-path cli/Cargo.toml
+        # --locked: release.yml ham shunday quradi, eskirgan Cargo.lock shu yerda ushlanadi.
+        run: cargo build --release --locked --manifest-path cli/Cargo.toml
 
       - name: cargo test
+        # Native Windows eksperimental: faqat build + clippy, testlar Unix'da.
+        if: runner.os != 'Windows'
         run: cargo test --manifest-path cli/Cargo.toml
 
       - name: cargo clippy (deny warnings)
